@@ -1,0 +1,4 @@
+#!/bin/sh
+set -e
+npm run validate-frontmatter --prefix scripts
+git add startos/src/ start-tunnel/src/

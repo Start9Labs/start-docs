@@ -1,4 +1,4 @@
-name: Build, index, and deploy docs
+name: Build and deploy docs
 
 on:
   push:
@@ -41,48 +41,24 @@ jobs:
         id: pages
         uses: actions/configure-pages@v5
 
-      - name: Build with mdBook
-        run: mdbook build
+      - name: Install mdbook-tabs
+        run: |
+          cargo install mdbook-tabs --version 0.3.4
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+      - name: Build all books
+        run: ./build.sh
+
+      - name: Generate llms.txt
+        run: |
+          cd scripts
+          npm ci
+          npm run generate-llms-txt
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./docs
-
-  check-src-changes:
-    runs-on: ubuntu-latest
-    outputs:
-      src_changed: ${{ steps.filter.outputs.src }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v3
-        id: filter
-        with:
-          filters: |
-            src:
-              - 'src/**'
-
-  index:
-    runs-on: ubuntu-latest
-    needs: check-src-changes
-    if: needs.check-src-changes.outputs.src_changed == 'true' || github.event_name == 'workflow_dispatch'
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-
-      - name: Index documentation for RAG
-        env:
-          VOYAGE_API_KEY: ${{ secrets.VOYAGE_API_KEY }}
-          DOCS_INDEX_API_KEY: ${{ secrets.DOCS_INDEX_API_KEY }}
-          DOCS_API_URL: https://start9.me/_api/docs
-        run: |
-          cd scripts
-          npm ci
-          npm run index
 
   deploy:
     environment:
