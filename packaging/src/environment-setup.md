@@ -1,7 +1,7 @@
 ---
 title: "Environment Setup"
 description: "Install the required development tools for building StartOS service packages."
-section: "startos/packaging-guide"
+section: "packaging"
 type: "guide"
 keywords: ["development", "setup", "docker", "nodejs", "start-cli", "squashfs"]
 ---
@@ -9,7 +9,7 @@ keywords: ["development", "setup", "docker", "nodejs", "start-cli", "squashfs"]
 
 ## StartOS Device
 
-You must have a computer running StartOS to test your packages. Follow the [installation guide](../installing.md) to install StartOS on a physical device or VM.
+You must have a computer running StartOS to test your packages. Follow the [installation guide](/startos/installing.html) to install StartOS on a physical device or VM.
 
 ## Docker
 

@@ -1,7 +1,7 @@
 ---
 title: "Versions"
 description: "How StartOS uses Extended Versioning (ExVer) for package version management and migrations."
-section: "startos/packaging-guide"
+section: "packaging"
 type: "guide"
 keywords: ["versioning", "ExVer", "migrations", "version file", "VersionInfo", "VersionGraph", "prerelease"]
 ---

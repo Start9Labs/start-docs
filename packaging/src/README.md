@@ -1,7 +1,7 @@
 ---
 title: "Packaging Guide"
 description: "Learn how to package self-hosted services for StartOS using the Start SDK."
-section: "startos/packaging-guide"
+section: "packaging"
 type: "index"
 keywords: ["packaging", "developer", "sdk", "services", "s9pk"]
 ---

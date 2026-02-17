@@ -1,7 +1,7 @@
 ---
 title: "Main"
 description: "How to configure daemons, health checks, volume mounts, and config file generation in main.ts."
-section: "startos/packaging-guide"
+section: "packaging"
 type: "guide"
 keywords:
   [

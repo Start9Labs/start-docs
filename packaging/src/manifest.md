@@ -1,7 +1,7 @@
 ---
 title: "Manifest"
 description: "How to define service identity, metadata, and build configuration in the manifest."
-section: "startos/packaging-guide"
+section: "packaging"
 type: "guide"
 keywords: ["manifest", "setupManifest", "images", "Docker", "alerts", "dependencies", "volumes", "i18n"]
 ---

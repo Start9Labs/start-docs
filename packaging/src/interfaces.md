@@ -1,7 +1,7 @@
 ---
 title: "Interfaces"
 description: "How to define and expose network interfaces for a StartOS service package."
-section: "startos/packaging-guide"
+section: "packaging"
 type: "guide"
 keywords: ["interfaces", "networking", "ports", "MultiHost", "ui", "api"]
 ---

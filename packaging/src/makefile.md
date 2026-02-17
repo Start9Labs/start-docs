@@ -1,7 +1,7 @@
 ---
 title: "Makefile Build System"
 description: "How the two-file Makefile system works for building and installing StartOS packages."
-section: "startos/packaging-guide"
+section: "packaging"
 type: "guide"
 keywords:
   ["makefile", "build", "install", "s9pk", "architecture", "make", "s9pk.mk"]

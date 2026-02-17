@@ -2,10 +2,10 @@
 authors = ["Start9"]
 language = "en"
 src = "src"
-title = "StartOS"
+title = "Service Packaging"
 
 [build]
-build-dir = "../docs/startos"
+build-dir = "../docs/packaging"
 
 [preprocessor.strip-frontmatter]
 command = "node ../scripts/mdbook-strip-frontmatter.mjs"
@@ -23,8 +23,8 @@ preferred-dark-theme = "ayu"
 additional-css = ["./theme/docs-agent.css", "./theme/youtube.css", "./theme/tabs.css", "./accent.css"]
 additional-js = ["./theme/docs-agent-init.js", "./theme/docs-agent.js", "./theme/youtube.js", "./theme/tabs.js"]
 git-repository-url = "https://github.com/start9labs/docs"
-edit-url-template = "https://github.com/start9labs/docs/edit/master/startos/{path}"
-site-url = "/startos/"
+edit-url-template = "https://github.com/start9labs/docs/edit/master/packaging/{path}"
+site-url = "/packaging/"
 
 [output.html.fold]
 enable = true

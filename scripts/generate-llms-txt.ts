@@ -6,7 +6,8 @@ export {};
  * Discovers books by scanning for {name}/book.toml at repo root,
  * parses each book's SUMMARY.md to get page hierarchy,
  * reads YAML frontmatter from each page for title and description,
- * and outputs docs/llms.txt and docs/llms-full.txt.
+ * and outputs per-book files (docs/<book>/llms.txt, docs/<book>/llms-full.txt)
+ * plus global combined files (docs/llms.txt, docs/llms-full.txt).
  *
  * Usage: npx tsx generate-llms-txt.ts
  */
@@ -39,6 +40,7 @@ function discoverBooks(): Book[] {
   const labels: Record<string, string> = {
     startos: "StartOS",
     "start-tunnel": "StartTunnel",
+    packaging: "Service Packaging",
   };
   return bookTomls.map((tomlPath) => {
     const name = tomlPath.split("/")[0];
@@ -103,12 +105,90 @@ function pathToUrl(bookName: string, relPath: string): string {
   return `${BASE_URL}/${bookName}/${htmlPath}`;
 }
 
-// Generate llms.txt
-function generateLlmsTxt(books: Book[]): string {
+// Generate llms.txt content for a single book
+function generateBookLlmsTxt(book: Book): string {
+  const entries = parseSummary(book.summaryPath);
+  const lines: string[] = [
+    `# ${book.label}`,
+    "",
+  ];
+
+  // Read the book homepage for a description
+  const homeFm = readFrontmatter(book.srcDir, "README.md");
+  if (homeFm?.description) {
+    lines.push(`> ${homeFm.description}`);
+    lines.push("");
+  }
+
+  let currentSection = "";
+
+  for (const entry of entries) {
+    const fm = readFrontmatter(book.srcDir, entry.path);
+    const title = fm?.title || entry.title;
+    const description = fm?.description || "";
+    const url = pathToUrl(book.name, entry.path);
+
+    if (entry.indent === 0) {
+      if (currentSection) lines.push("");
+      currentSection = title;
+      lines.push(`## ${title}`);
+    } else {
+      if (description) {
+        lines.push(`- [${title}](${url}): ${description}`);
+      } else {
+        lines.push(`- [${title}](${url})`);
+      }
+    }
+  }
+
+  lines.push("");
+  return lines.join("\n");
+}
+
+// Generate llms-full.txt content for a single book
+function generateBookLlmsFullTxt(book: Book): string {
+  const entries = parseSummary(book.summaryPath);
+  const parts: string[] = [
+    `# ${book.label} — Full Content`,
+    "",
+  ];
+
+  const homeFm = readFrontmatter(book.srcDir, "README.md");
+  if (homeFm?.description) {
+    parts.push(`> ${homeFm.description}`);
+    parts.push("");
+  }
+
+  for (const entry of entries) {
+    const filePath = join(book.srcDir, entry.path);
+    if (!existsSync(filePath)) continue;
+
+    const raw = readFileSync(filePath, "utf-8");
+    const { content, data } = matter(raw);
+    const title = data.title || entry.title;
+    const body = content.trim();
+
+    if (!body) continue;
+
+    parts.push(`---`);
+    parts.push(`## Page: ${title}`);
+    if (data.description) {
+      parts.push(`> ${data.description}`);
+    }
+    parts.push("");
+    parts.push(body);
+    parts.push("");
+  }
+
+  return parts.join("\n");
+}
+
+// Generate combined llms.txt across all books
+function generateGlobalLlmsTxt(books: Book[]): string {
   const lines: string[] = [
     "# Start9 Documentation",
     "",
-    "> Documentation for Start9 products including StartOS and StartTunnel.",
+    `> Documentation for Start9 products including ${books.map((b) => b.label).join(", ")}.`,
     "",
   ];
 
@@ -127,7 +207,6 @@ function generateLlmsTxt(books: Book[]): string {
       const description = fm?.description || "";
       const url = pathToUrl(book.name, entry.path);
 
-      // Top-level entries (indent 0) are section headers
       if (entry.indent === 0) {
         if (currentSection) lines.push("");
         currentSection = title;
@@ -147,12 +226,12 @@ function generateLlmsTxt(books: Book[]): string {
   return lines.join("\n");
 }
 
-// Generate llms-full.txt — concatenation of all page content
-function generateLlmsFullTxt(books: Book[]): string {
+// Generate combined llms-full.txt across all books
+function generateGlobalLlmsFullTxt(books: Book[]): string {
   const parts: string[] = [
     "# Start9 Documentation — Full Content",
     "",
-    "> Complete documentation for Start9 products including StartOS and StartTunnel.",
+    `> Complete documentation for Start9 products including ${books.map((b) => b.label).join(", ")}.`,
     "",
   ];
 
@@ -200,14 +279,33 @@ function main() {
     mkdirSync(OUT_DIR, { recursive: true });
   }
 
-  // Generate llms.txt
-  const llmsTxt = generateLlmsTxt(books);
+  // Per-book llms.txt and llms-full.txt
+  for (const book of books) {
+    if (!existsSync(book.summaryPath)) continue;
+
+    const bookOutDir = join(OUT_DIR, book.name);
+    if (!existsSync(bookOutDir)) {
+      mkdirSync(bookOutDir, { recursive: true });
+    }
+
+    const bookLlmsTxt = generateBookLlmsTxt(book);
+    const bookLlmsTxtPath = join(bookOutDir, "llms.txt");
+    writeFileSync(bookLlmsTxtPath, bookLlmsTxt);
+    console.log(`  Wrote ${bookLlmsTxtPath}`);
+
+    const bookLlmsFullTxt = generateBookLlmsFullTxt(book);
+    const bookLlmsFullPath = join(bookOutDir, "llms-full.txt");
+    writeFileSync(bookLlmsFullPath, bookLlmsFullTxt);
+    console.log(`  Wrote ${bookLlmsFullPath} (${(bookLlmsFullTxt.length / 1024).toFixed(0)}KB)`);
+  }
+
+  // Global combined llms.txt and llms-full.txt
+  const llmsTxt = generateGlobalLlmsTxt(books);
   const llmsTxtPath = join(OUT_DIR, "llms.txt");
   writeFileSync(llmsTxtPath, llmsTxt);
   console.log(`  Wrote ${llmsTxtPath}`);
 
-  // Generate llms-full.txt
-  const llmsFullTxt = generateLlmsFullTxt(books);
+  const llmsFullTxt = generateGlobalLlmsFullTxt(books);
   const llmsFullPath = join(OUT_DIR, "llms-full.txt");
   writeFileSync(llmsFullPath, llmsFullTxt);
   console.log(`  Wrote ${llmsFullPath} (${(llmsFullTxt.length / 1024).toFixed(0)}KB)`);

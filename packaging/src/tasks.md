@@ -1,7 +1,7 @@
 ---
 title: "Tasks"
 description: "Create tasks that prompt users to run actions at the right time."
-section: "startos/packaging-guide"
+section: "packaging"
 type: "guide"
 keywords: ["tasks", "prompts", "createOwnTask", "createTask", "notifications", "actions"]
 ---

@@ -29,22 +29,6 @@
 
 - [Architecture](architecture.md)
 
-- [Service Packaging](packaging-guide/README.md)
-  - [Environment Setup](packaging-guide/environment-setup.md)
-  - [Quick Start](packaging-guide/quick-start.md)
-  - [Project Structure](packaging-guide/project-structure.md)
-  - [Manifest](packaging-guide/manifest.md)
-  - [Versions](packaging-guide/versions.md)
-  - [Main](packaging-guide/main.md)
-  - [Initialization](packaging-guide/init.md)
-  - [Interfaces](packaging-guide/interfaces.md)
-  - [Actions](packaging-guide/actions.md)
-  - [Tasks](packaging-guide/tasks.md)
-  - [File Models](packaging-guide/file-models.md)
-  - [Dependencies](packaging-guide/dependencies.md)
-  - [Makefile](packaging-guide/makefile.md)
-  - [Writing READMEs](packaging-guide/writing-readmes.md)
-
 - [Firmware](firmware/README.md)
   - [Server Pure](firmware/pure.md)
   - [Server One (2023)](firmware/one-2023.md)

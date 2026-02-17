@@ -1,7 +1,7 @@
 ---
 title: "Writing Service READMEs"
 description: "How to write a README for a StartOS service package that documents differences from upstream."
-section: "startos/packaging-guide"
+section: "packaging"
 type: "guide"
 keywords: ["readme", "documentation", "service", "upstream", "packaging"]
 ---

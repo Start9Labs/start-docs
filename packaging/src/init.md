@@ -1,7 +1,7 @@
 ---
 title: "Initialization"
 description: "How to use setupOnInit for one-time setup, password generation, and bootstrap tasks during service installation."
-section: "startos/packaging-guide"
+section: "packaging"
 type: "guide"
 keywords: ["init", "initialization", "setupOnInit", "install", "restore", "password", "bootstrap", "runUntilSuccess"]
 ---

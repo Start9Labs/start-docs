@@ -15,7 +15,6 @@ start-docs/
 │       ├── architecture.md
 │       ├── installing.md
 │       ├── user-manual/
-│       ├── packaging-guide/
 │       ├── faq/
 │       └── firmware/
 ├── start-tunnel/         ← StartTunnel book
@@ -28,6 +27,16 @@ start-docs/
 │       ├── installing/
 │       ├── user-manual/
 │       └── faq.md
+├── packaging/            ← Service Packaging book
+│   ├── book.toml
+│   ├── theme -> ../theme
+│   └── src/
+│       ├── SUMMARY.md
+│       ├── README.md
+│       ├── environment-setup.md
+│       ├── quick-start.md
+│       ├── ... (14 guide pages)
+│       └── assets/
 ├── landing/              ← Static landing page at docs.start9.com/
 ├── theme/                ← Shared theme (CSS, JS, favicon)
 ├── widget/               ← docs-agent chat widget (TypeScript)

@@ -29,7 +29,7 @@ We welcome contributions! Whether you spot a typo or want to suggest new content
    ./serve.sh
    ```
 
-   This builds both books and serves at http://localhost:3000. For live-reload while editing a single book:
+   This builds all books and serves at http://localhost:3000. For live-reload while editing a single book:
 
    ```
    cd startos && mdbook serve -p 3001
@@ -37,7 +37,7 @@ We welcome contributions! Whether you spot a typo or want to suggest new content
 
 ## Writing Docs
 
-All documentation lives under `startos/src/` or `start-tunnel/src/` as Markdown files. The sidebar for each book is defined by its `src/SUMMARY.md`.
+All documentation lives under `startos/src/`, `start-tunnel/src/`, or `packaging/src/` as Markdown files. The sidebar for each book is defined by its `src/SUMMARY.md`.
 
 ### Frontmatter
 

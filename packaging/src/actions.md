@@ -1,7 +1,7 @@
 ---
 title: "Actions"
 description: "Define user-triggered actions and SMTP configuration for StartOS services"
-section: "startos/packaging-guide"
+section: "packaging"
 type: "guide"
 keywords: [actions, smtp, tasks, prompts, input-spec, service-actions]
 ---

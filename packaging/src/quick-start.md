@@ -1,7 +1,7 @@
 ---
 title: "Quick Start"
 description: "Build and install the hello-world service package on StartOS."
-section: "startos/packaging-guide"
+section: "packaging"
 type: "guide"
 keywords: ["quick start", "hello world", "template", "packaging", "s9pk"]
 ---

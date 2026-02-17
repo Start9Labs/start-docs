@@ -36,6 +36,6 @@ A Linux-based operating system purpose-built for running a personal server. Inst
 
 - [Architecture](architecture.md) — How StartOS is designed and how its components fit together
 - [FAQ](faq/) — Common issues and solutions
-- [Service Packaging](packaging-guide/) — Build and publish services for StartOS
+- [Service Packaging](/packaging/) — Build and publish services for StartOS
 - [Source Code](https://github.com/Start9Labs/start-os) — StartOS is fully open source
 - [Contact Support](https://start9.com/contact) — Get help from the Start9 team

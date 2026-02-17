@@ -1,7 +1,7 @@
 ---
 title: "File Models"
 description: "Define type-safe file configurations with automatic parsing and runtime validation"
-section: "startos/packaging-guide"
+section: "packaging"
 type: "guide"
 keywords: [file-models, configuration, type-safety, matches, FileHelper, store]
 ---

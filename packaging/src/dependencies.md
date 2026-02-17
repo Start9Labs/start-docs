@@ -1,7 +1,7 @@
 ---
 title: "Dependencies"
 description: "Declare and interact with cross-service dependencies in StartOS"
-section: "startos/packaging-guide"
+section: "packaging"
 type: "guide"
 keywords: [dependencies, cross-service, interfaces, volumes, tasks, manifest]
 ---

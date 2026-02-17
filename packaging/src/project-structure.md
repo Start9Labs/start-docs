@@ -1,7 +1,7 @@
 ---
 title: "Project Structure"
 description: "Directory layout and file structure of a StartOS service package."
-section: "startos/packaging-guide"
+section: "packaging"
 type: "guide"
 keywords:
   [
