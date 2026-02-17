@@ -1,12 +1,6 @@
----
-title: "FAQ"
-description: "Solutions to common StartOS issues and troubleshooting steps."
-section: "startos/faq"
-type: "index"
-keywords: ["troubleshooting", "issues", "problems", "solutions", "faq"]
----
-
 # FAQ
+
+Common issues encountered during setup and daily use of StartOS, including network connectivity problems, diagnostic mode, clock sync failures, and service-specific troubleshooting.
 
 ## I do not have access to Ethernet
 

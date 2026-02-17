@@ -63,21 +63,11 @@ The `theme/` directory at repo root is the single source of truth for styling. E
 
 `build.sh` runs `mdbook build` in each book directory. Output goes to `docs/<book-name>/`. The landing page is copied to `docs/index.html`. CI then generates `llms.txt` and `llms-full.txt` for LLM consumption.
 
-## Frontmatter System
-
-Every Markdown page has YAML frontmatter used for llms.txt generation — `title` and `description` populate `llms.txt` (sitemap for LLMs) and `llms-full.txt` (full content dump). The docs-agent chat widget fetches `llms-full.txt` at runtime as its knowledge base.
-
-mdBook doesn't understand frontmatter natively, so `mdbook-strip-frontmatter.mjs` runs as a preprocessor to remove it before rendering.
-
-The `validate-frontmatter.ts` pre-commit hook enforces consistency: it auto-syncs deterministic fields (`title` from H1, `section` from file path, `type` from filename) and validates that human-written fields (`description`, `keywords`) are present.
-
 ## Scripts
 
 | Script | Purpose |
 |--------|---------|
-| `validate-frontmatter.ts` | Pre-commit hook: auto-syncs and validates frontmatter |
-| `generate-llms-txt.ts` | Produces `llms.txt` (index) and `llms-full.txt` (full content) |
-| `mdbook-strip-frontmatter.mjs` | mdBook preprocessor: strips YAML frontmatter before rendering |
+| `generate-llms-txt.ts` | Produces `llms.txt` (index) and `llms-full.txt` (full content) for LLM consumption |
 
 ## Cross-Book Links
 

@@ -1,12 +1,3 @@
----
-title: "Makefile Build System"
-description: "How the two-file Makefile system works for building and installing StartOS packages."
-section: "packaging"
-type: "guide"
-keywords:
-  ["makefile", "build", "install", "s9pk", "architecture", "make", "s9pk.mk"]
----
-
 # Makefile Build System
 
 StartOS packages use a two-file Makefile system that separates reusable build logic from project-specific configuration.

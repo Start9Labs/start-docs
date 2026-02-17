@@ -1,11 +1,3 @@
----
-title: "Quick Start"
-description: "Build and install the hello-world service package on StartOS."
-section: "packaging"
-type: "guide"
-keywords: ["quick start", "hello world", "template", "packaging", "s9pk"]
----
-
 # Quick Start
 
 This guide walks you through creating your own service package repository from the [Hello World](https://github.com/Start9Labs/hello-world-startos) template, building it, and installing it on StartOS.

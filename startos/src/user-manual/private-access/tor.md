@@ -1,12 +1,6 @@
----
-title: "Tor"
-description: "Access your StartOS server over the Tor network for maximum privacy."
-section: "startos/user-manual"
-type: "guide"
-keywords: ["tor", "onion", "privacy", "remote access"]
----
-
 # Tor
+
+Access your server over the Tor network using `.onion` addresses. This method provides anonymous, censorship-resistant connections and requires installing the Tor service from the StartOS marketplace.
 
 ## Use Case
 

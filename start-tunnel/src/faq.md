@@ -1,12 +1,6 @@
----
-title: "FAQ"
-description: "Frequently asked questions about StartTunnel."
-section: "start-tunnel"
-type: "guide"
-keywords: ["faq", "start-tunnel", "troubleshooting", "wireguard", "cgnat", "vps"]
----
-
 # FAQ
+
+Answers to common questions about StartTunnel's security model, compatibility, VPS requirements, and what happens if Start9 goes away.
 
 ## Can anyone else see my traffic?
 

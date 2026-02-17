@@ -1,11 +1,6 @@
----
-title: "User Manual"
-description: "Guides for setting up and using your StartOS server."
-section: "startos/user-manual"
-type: "index"
-keywords: ["startos", "user manual", "setup", "configuration"]
----
 # User Manual
+
+This section covers everything from initial setup and certificate trust to network access methods (LAN, VPN, Tor, Holesail, clearnet), service installation, backups, and system administration.
 
 - [Initial Setup](initial-setup.md)
 - [Trusting Your Root CA](trust-ca.md)

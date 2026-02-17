@@ -1,10 +1,3 @@
----
-title: "Initialization"
-description: "How to use setupOnInit for one-time setup, password generation, and bootstrap tasks during service installation."
-section: "packaging"
-type: "guide"
-keywords: ["init", "initialization", "setupOnInit", "install", "restore", "password", "bootstrap", "runUntilSuccess"]
----
 # Initialization
 
 `setupOnInit` runs during container initialization. The `kind` parameter indicates why init is running:

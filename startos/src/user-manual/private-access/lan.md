@@ -1,12 +1,6 @@
----
-title: "LAN"
-description: "Connect to your StartOS server over your local network using its .local address or IP."
-section: "startos/user-manual"
-type: "guide"
-keywords: ["local", "lan", "mdns", "local address", "private domains", "dns"]
----
-
 # LAN
+
+Connect to your server over your local network using its `.local` mDNS address or direct IP address. This is the fastest connection method, as traffic stays on your LAN and never reaches the Internet.
 
 ## Use Case
 

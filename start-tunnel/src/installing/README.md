@@ -1,11 +1,6 @@
----
-title: "Installing"
-description: "Install StartTunnel on a Debian VPS for private remote access and clearnet hosting."
-section: "start-tunnel/installing"
-type: "index"
-keywords: ["install", "vps", "debian", "start-tunnel", "setup"]
----
 # Installing
+
+Install StartTunnel on a Debian VPS by renting a server, running the one-line installer script, and initializing the web interface. The entire process takes just a few minutes.
 
 ## 1. Get a VPS
 

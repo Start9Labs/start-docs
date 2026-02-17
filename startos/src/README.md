@@ -1,11 +1,3 @@
----
-title: "StartOS"
-description: "Documentation for StartOS, a Linux-based operating system for self-hosting services on a personal server."
-section: "startos"
-type: "index"
-keywords: ["startos", "start9", "self-hosting", "sovereign computing", "personal server"]
----
-
 # StartOS
 
 A Linux-based operating system purpose-built for running a personal server. Install, configure, and manage self-hosted services through a simple graphical interface — no command line required.

@@ -1,11 +1,6 @@
----
-title: "Restoring Backups"
-description: "Restore your StartOS server or individual services from an encrypted backup."
-section: "startos/user-manual"
-type: "guide"
-keywords: ["restore", "backup", "recovery", "data"]
----
 # Restoring Backups
+
+Restore previously created backups to recover individual services or your entire server. This is for disaster recovery when a service is accidentally uninstalled or when your data drive is lost or corrupted.
 
 ## Restoring Individual Services
 

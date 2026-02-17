@@ -1,11 +1,3 @@
----
-title: "Tor"
-description: "Use Tor onion addresses for censorship-resistant and optionally anonymous public hosting."
-section: "startos/user-manual"
-type: "guide"
-keywords: ["tor", "onion", "public", "hosting", "censorship", "anonymous"]
----
-
 # Tor
 
 Tor onion addresses (`.onion`) can be used for public hosting. Unlike clearnet domains, onion addresses do not require purchasing a domain, configuring DNS, or opening ports. Anyone with a Tor-enabled browser can reach them.

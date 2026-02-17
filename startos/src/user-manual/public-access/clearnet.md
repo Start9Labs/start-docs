@@ -1,12 +1,6 @@
----
-title: "Clearnet"
-description: "Expose your StartOS services to the public internet using a clearnet domain."
-section: "startos/user-manual"
-type: "guide"
-keywords: ["clearnet", "domain", "public access", "port forwarding"]
----
-
 # Clearnet
+
+Make your services publicly reachable on the Internet using standard domains (`.com`, `.net`, etc.) or public IP addresses. This requires a gateway, a domain name, and DNS configuration.
 
 ## Use Case
 

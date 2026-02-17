@@ -1,10 +1,3 @@
----
-title: "Private Access"
-description: "Methods for privately accessing your StartOS server and installed services."
-section: "startos/user-manual"
-type: "index"
-keywords: ["private access", "lan", "vpn", "tor", "holesail"]
----
 # Private Access
 
 Private access means only you and people you explicitly authorize can reach your server. There are four methods available, each with different use cases and tradeoffs.

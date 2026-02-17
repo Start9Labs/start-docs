@@ -1,11 +1,6 @@
----
-title: "Holesail"
-description: "Access your StartOS server remotely using Holesail peer-to-peer tunnels."
-section: "startos/user-manual"
-type: "guide"
-keywords: ["holesail", "p2p", "tunnel", "remote access"]
----
 # Holesail
+
+Access your server remotely using Holesail's peer-to-peer tunneling. This method creates direct encrypted connections without port forwarding, static IPs, or centralized servers, and requires installing the Holesail service from the StartOS marketplace.
 
 ## Use Case
 

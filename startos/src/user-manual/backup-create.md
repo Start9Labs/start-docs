@@ -1,11 +1,3 @@
----
-title: "Creating Backups"
-description: "Create encrypted backups of your StartOS server to a physical drive or network folder."
-section: "startos/user-manual"
-type: "guide"
-keywords: ["backup", "encryption", "physical drive", "network folder"]
----
-
 # Creating Backups
 
 > [!IMPORTANT]

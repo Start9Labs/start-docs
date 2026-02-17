@@ -1,24 +1,3 @@
----
-title: "Trusting Your Root CA"
-description: "Download and trust your StartOS server's Root CA certificate for secure HTTPS connections on your local network."
-section: "startos/user-manual"
-type: "guide"
-keywords:
-  [
-    "root ca",
-    "certificate",
-    "https",
-    "tls",
-    "ssl",
-    "trust",
-    "linux",
-    "mac",
-    "windows",
-    "android",
-    "ios",
-  ]
----
-
 # Trusting Your Root CA
 
 In order to establish a secure (HTTPS) connection with your server on the local network, it is necessary to download and trust your server's Root Certificate Authority (Root CA).

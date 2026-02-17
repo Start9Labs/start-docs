@@ -1,11 +1,3 @@
----
-title: "Port Forwarding"
-description: "Expose a device's port on your VPS's public IP address using StartTunnel."
-section: "start-tunnel/user-manual"
-type: "guide"
-keywords: ["start-tunnel", "port forwarding", "public", "clearnet", "expose"]
----
-
 # Port Forwarding
 
 Port forwarding exposes a device's port on your VPS's public IP address. This is how you make services reachable from the public Internet.

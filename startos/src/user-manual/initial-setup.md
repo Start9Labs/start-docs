@@ -1,11 +1,3 @@
----
-title: "Initial Setup"
-description: "Complete your StartOS server's initial setup, including creating a password and downloading your Root CA."
-section: "startos/user-manual"
-type: "guide"
-keywords: ["setup", "password", "root ca", "first boot"]
----
-
 # Initial Setup
 
 1. Connect your server to power and Ethernet.

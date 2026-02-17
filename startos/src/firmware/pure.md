@@ -1,10 +1,3 @@
----
-title: "Flashing Firmware - Server Pure"
-description: "Update the firmware on your Server Pure."
-section: "startos/firmware"
-type: "guide"
-keywords: ["server pure", "firmware", "update"]
----
 # Flashing Firmware - Server Pure
 
 This page is for the Server Pure _only_. It will not work on other devices.

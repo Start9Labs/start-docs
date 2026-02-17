@@ -1,10 +1,3 @@
----
-title: "Writing Service READMEs"
-description: "How to write a README for a StartOS service package that documents differences from upstream."
-section: "packaging"
-type: "guide"
-keywords: ["readme", "documentation", "service", "upstream", "packaging"]
----
 # Writing Service READMEs
 
 Every StartOS package README should document **how your service on StartOS differs from the upstream version**. Users should be able to read your README and understand exactly what is different -- everything else, they can find in the upstream docs.

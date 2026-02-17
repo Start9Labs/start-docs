@@ -7,9 +7,6 @@ title = "StartOS"
 [build]
 build-dir = "../docs/startos"
 
-[preprocessor.strip-frontmatter]
-command = "node ../scripts/mdbook-strip-frontmatter.mjs"
-
 [preprocessor.tabs]
 
 [output]

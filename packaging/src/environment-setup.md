@@ -1,11 +1,6 @@
----
-title: "Environment Setup"
-description: "Install the required development tools for building StartOS service packages."
-section: "packaging"
-type: "guide"
-keywords: ["development", "setup", "docker", "nodejs", "start-cli", "squashfs"]
----
 # Environment Setup
+
+Before building service packages, you need to install several development tools on your workstation. This page lists each prerequisite and how to install it.
 
 ## StartOS Device
 

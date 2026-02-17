@@ -39,24 +39,6 @@ We welcome contributions! Whether you spot a typo or want to suggest new content
 
 All documentation lives under `startos/src/`, `start-tunnel/src/`, or `packaging/src/` as Markdown files. The sidebar for each book is defined by its `src/SUMMARY.md`.
 
-### Frontmatter
-
-Every page requires YAML frontmatter:
-
-```yaml
----
-title: "Page Title"
-description: "One-sentence summary"
-section: "startos/user-manual"
-type: "guide"
-keywords: [keyword1, keyword2]
----
-```
-
-A pre-commit hook auto-syncs `title`, `section`, and `type` from the file's location and content. You must provide `description` and `keywords` — the hook errors if they're missing.
-
-New files without frontmatter get a skeleton added automatically. Fill in the description and keywords, then commit again.
-
 ### Admonitions
 
 Use mdBook's built-in admonition syntax:
@@ -105,5 +87,4 @@ Within a book, use relative paths as usual.
 
 1. Fork and create a branch
 2. Make your changes
-3. The pre-commit hook validates frontmatter — fix any errors it reports
-4. Submit a PR against `master`
+3. Submit a PR against `master`

@@ -1,10 +1,3 @@
----
-title: "SSH"
-description: "Access your StartOS server's command line via SSH."
-section: "startos/user-manual"
-type: "guide"
-keywords: ["ssh", "command line", "terminal", "remote access"]
----
 # SSH
 
 Like other Linux distributions, StartOS allows you to go "under-the-hood" via Secure Shell Protocol (SSH).

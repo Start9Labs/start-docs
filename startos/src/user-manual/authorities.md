@@ -1,10 +1,3 @@
----
-title: "Untitled"
-description: "Your server provides its own Root Certificate Authority (Root CA) and uses it to issues SSL/TLS certificates."
-section: "startos/user-manual"
-type: "guide"
-keywords: ["user manual", "authorities"]
----
 <!-- # Certificate Authorities
 
 ## Background

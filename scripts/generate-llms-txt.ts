@@ -5,7 +5,7 @@ export {};
  *
  * Discovers books by scanning for {name}/book.toml at repo root,
  * parses each book's SUMMARY.md to get page hierarchy,
- * reads YAML frontmatter from each page for title and description,
+ * reads each page's H1 title and intro prose,
  * and outputs per-book files (docs/<book>/llms.txt, docs/<book>/llms-full.txt)
  * plus global combined files (docs/llms.txt, docs/llms-full.txt).
  *
@@ -15,7 +15,6 @@ export {};
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
 import { join } from "path";
 import { globSync } from "glob";
-import matter from "gray-matter";
 
 const ROOT_DIR = join(import.meta.dirname, "..");
 const OUT_DIR = join(ROOT_DIR, "docs");
@@ -24,6 +23,7 @@ const BASE_URL = "https://docs.start9.com";
 type Book = {
   name: string;
   label: string;
+  description: string;
   srcDir: string;
   summaryPath: string;
 };
@@ -34,19 +34,35 @@ type SummaryEntry = {
   indent: number;
 };
 
+/** Book metadata: display labels and one-line descriptions */
+const bookInfo: Record<string, { label: string; description: string }> = {
+  startos: {
+    label: "StartOS",
+    description:
+      "Documentation for StartOS, a Linux-based operating system for self-hosting services on a personal server.",
+  },
+  "start-tunnel": {
+    label: "StartTunnel",
+    description:
+      "A self-hosted WireGuard VPN for private remote access and clearnet hosting of your personal server.",
+  },
+  packaging: {
+    label: "Service Packaging",
+    description:
+      "Learn how to package self-hosted services for StartOS using the Start SDK.",
+  },
+};
+
 /** Discover all books by finding {name}/book.toml at repo root */
 function discoverBooks(): Book[] {
   const bookTomls = globSync("*/book.toml", { cwd: ROOT_DIR });
-  const labels: Record<string, string> = {
-    startos: "StartOS",
-    "start-tunnel": "StartTunnel",
-    packaging: "Service Packaging",
-  };
   return bookTomls.map((tomlPath) => {
     const name = tomlPath.split("/")[0];
+    const info = bookInfo[name] || { label: name, description: "" };
     return {
       name,
-      label: labels[name] || name,
+      label: info.label,
+      description: info.description,
       srcDir: join(ROOT_DIR, name, "src"),
       summaryPath: join(ROOT_DIR, name, "src", "SUMMARY.md"),
     };
@@ -73,11 +89,11 @@ function parseSummary(summaryPath: string): SummaryEntry[] {
   return entries;
 }
 
-// Read frontmatter from a markdown file
-function readFrontmatter(
+// Read a markdown file and extract its H1 title
+function readPage(
   srcDir: string,
   relPath: string
-): { title: string; description: string } | null {
+): { title: string; content: string } | null {
   const filePath = join(srcDir, relPath);
   if (!existsSync(filePath)) {
     console.warn(`  Warning: ${relPath} not found`);
@@ -86,14 +102,71 @@ function readFrontmatter(
 
   try {
     const content = readFileSync(filePath, "utf-8");
-    const { data } = matter(content);
-    return {
-      title: data.title || "",
-      description: data.description || "",
-    };
+    const titleMatch = content.match(/^#\s+(.+)$/m);
+    const title = titleMatch ? titleMatch[1].trim() : "";
+    return { title, content };
   } catch {
     return null;
   }
+}
+
+// Extract H2 headings from markdown content
+function extractHeadings(content: string): string[] {
+  const headings: string[] = [];
+  for (const line of content.split("\n")) {
+    const match = line.match(/^##\s+(.+)$/);
+    if (match) headings.push(match[1].trim());
+  }
+  return headings;
+}
+
+// Extract introductory prose: text between the H1 heading and the first H2.
+// Strips markdown links, images, admonitions, code blocks, and HTML tags
+// to produce clean plaintext suitable for an llms.txt summary.
+function extractIntro(content: string): string {
+  const lines = content.split("\n");
+
+  // Find start (line after H1) and end (first H2 or EOF)
+  let start = -1;
+  let end = lines.length;
+  for (let i = 0; i < lines.length; i++) {
+    if (start === -1 && /^#\s+/.test(lines[i])) {
+      start = i + 1;
+      continue;
+    }
+    if (start !== -1 && /^##\s+/.test(lines[i])) {
+      end = i;
+      break;
+    }
+  }
+
+  if (start === -1) return "";
+
+  const intro = lines
+    .slice(start, end)
+    .filter((line) => {
+      // Drop code fences, admonitions, images, HTML tags, and blank lines
+      if (/^```/.test(line)) return false;
+      if (/^>\s*\[!/.test(line)) return false;
+      if (/^!\[/.test(line)) return false;
+      if (/^</.test(line)) return false;
+      return true;
+    })
+    .map((line) =>
+      line
+        // Convert markdown links [text](url) to just text
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+        // Strip bold/italic markers
+        .replace(/\*{1,2}([^*]+)\*{1,2}/g, "$1")
+        .replace(/_{1,2}([^_]+)_{1,2}/g, "$1")
+        // Strip inline code backticks
+        .replace(/`([^`]+)`/g, "$1")
+        .trim()
+    )
+    .filter(Boolean)
+    .join(" ");
+
+  return intro;
 }
 
 // Convert a markdown path to a URL for a specific book
@@ -105,7 +178,33 @@ function pathToUrl(bookName: string, relPath: string): string {
   return `${BASE_URL}/${bookName}/${htmlPath}`;
 }
 
+// Render a page entry for llms.txt: title link, intro prose, sections
+function renderPageEntry(
+  book: Book,
+  entry: SummaryEntry,
+  headingLevel: string
+): string[] {
+  const page = readPage(book.srcDir, entry.path);
+  const title = page?.title || entry.title;
+  const url = pathToUrl(book.name, entry.path);
+  const headings = page ? extractHeadings(page.content) : [];
+  const intro = page ? extractIntro(page.content) : "";
+
+  const lines: string[] = [];
+  lines.push(`${headingLevel} [${title}](${url})`);
+  if (intro) {
+    lines.push(intro);
+  }
+  if (headings.length > 0) {
+    lines.push(`Sections: ${headings.join(", ")}`);
+  }
+  lines.push("");
+  return lines;
+}
+
 // Generate llms.txt content for a single book
+// Lists every page with its intro prose and section headings
+// so an AI can decide which pages to fetch for full content.
 function generateBookLlmsTxt(book: Book): string {
   const entries = parseSummary(book.summaryPath);
   const lines: string[] = [
@@ -113,35 +212,20 @@ function generateBookLlmsTxt(book: Book): string {
     "",
   ];
 
-  // Read the book homepage for a description
-  const homeFm = readFrontmatter(book.srcDir, "README.md");
-  if (homeFm?.description) {
-    lines.push(`> ${homeFm.description}`);
+  if (book.description) {
+    lines.push(`> ${book.description}`);
     lines.push("");
   }
 
-  let currentSection = "";
+  lines.push(`Full content: ${BASE_URL}/${book.name}/llms-full.txt`);
+  lines.push("");
+  lines.push("## Pages");
+  lines.push("");
 
   for (const entry of entries) {
-    const fm = readFrontmatter(book.srcDir, entry.path);
-    const title = fm?.title || entry.title;
-    const description = fm?.description || "";
-    const url = pathToUrl(book.name, entry.path);
-
-    if (entry.indent === 0) {
-      if (currentSection) lines.push("");
-      currentSection = title;
-      lines.push(`## ${title}`);
-    } else {
-      if (description) {
-        lines.push(`- [${title}](${url}): ${description}`);
-      } else {
-        lines.push(`- [${title}](${url})`);
-      }
-    }
+    lines.push(...renderPageEntry(book, entry, "###"));
   }
 
-  lines.push("");
   return lines.join("\n");
 }
 
@@ -153,28 +237,22 @@ function generateBookLlmsFullTxt(book: Book): string {
     "",
   ];
 
-  const homeFm = readFrontmatter(book.srcDir, "README.md");
-  if (homeFm?.description) {
-    parts.push(`> ${homeFm.description}`);
+  if (book.description) {
+    parts.push(`> ${book.description}`);
     parts.push("");
   }
 
   for (const entry of entries) {
-    const filePath = join(book.srcDir, entry.path);
-    if (!existsSync(filePath)) continue;
+    const page = readPage(book.srcDir, entry.path);
+    if (!page) continue;
 
-    const raw = readFileSync(filePath, "utf-8");
-    const { content, data } = matter(raw);
-    const title = data.title || entry.title;
-    const body = content.trim();
+    const title = page.title || entry.title;
+    const body = page.content.trim();
 
     if (!body) continue;
 
     parts.push(`---`);
     parts.push(`## Page: ${title}`);
-    if (data.description) {
-      parts.push(`> ${data.description}`);
-    }
     parts.push("");
     parts.push(body);
     parts.push("");
@@ -184,13 +262,23 @@ function generateBookLlmsFullTxt(book: Book): string {
 }
 
 // Generate combined llms.txt across all books
+// Uses the same detailed format as per-book llms.txt, grouped by book.
 function generateGlobalLlmsTxt(books: Book[]): string {
   const lines: string[] = [
     "# Start9 Documentation",
     "",
     `> Documentation for Start9 products including ${books.map((b) => b.label).join(", ")}.`,
     "",
+    "Per-book indexes:",
   ];
+
+  for (const book of books) {
+    lines.push(`- [${book.label}](${BASE_URL}/${book.name}/llms.txt)`);
+  }
+
+  lines.push("");
+  lines.push(`Full content: ${BASE_URL}/llms-full.txt`);
+  lines.push("");
 
   for (const book of books) {
     if (!existsSync(book.summaryPath)) continue;
@@ -199,28 +287,9 @@ function generateGlobalLlmsTxt(books: Book[]): string {
     lines.push(`## ${book.label}`);
     lines.push("");
 
-    let currentSection = "";
-
     for (const entry of entries) {
-      const fm = readFrontmatter(book.srcDir, entry.path);
-      const title = fm?.title || entry.title;
-      const description = fm?.description || "";
-      const url = pathToUrl(book.name, entry.path);
-
-      if (entry.indent === 0) {
-        if (currentSection) lines.push("");
-        currentSection = title;
-        lines.push(`### ${title}`);
-      } else {
-        if (description) {
-          lines.push(`- [${title}](${url}): ${description}`);
-        } else {
-          lines.push(`- [${title}](${url})`);
-        }
-      }
+      lines.push(...renderPageEntry(book, entry, "###"));
     }
-
-    lines.push("");
   }
 
   return lines.join("\n");
@@ -244,21 +313,16 @@ function generateGlobalLlmsFullTxt(books: Book[]): string {
     parts.push("");
 
     for (const entry of entries) {
-      const filePath = join(book.srcDir, entry.path);
-      if (!existsSync(filePath)) continue;
+      const page = readPage(book.srcDir, entry.path);
+      if (!page) continue;
 
-      const raw = readFileSync(filePath, "utf-8");
-      const { content, data } = matter(raw);
-      const title = data.title || entry.title;
-      const body = content.trim();
+      const title = page.title || entry.title;
+      const body = page.content.trim();
 
       if (!body) continue;
 
       parts.push(`---`);
       parts.push(`## Page: ${title}`);
-      if (data.description) {
-        parts.push(`> ${data.description}`);
-      }
       parts.push("");
       parts.push(body);
       parts.push("");

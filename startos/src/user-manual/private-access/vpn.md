@@ -1,11 +1,6 @@
----
-title: "VPN"
-description: "Set up a VPN gateway to access your StartOS server privately from anywhere."
-section: "startos/user-manual"
-type: "guide"
-keywords: ["vpn", "wireguard", "remote access", "gateway"]
----
 # VPN
+
+Access your server privately from anywhere in the world by routing traffic through a VPN server on your router or a cloud VPS. Only authorized devices with the VPN configuration can reach your server.
 
 ## Use Case
 

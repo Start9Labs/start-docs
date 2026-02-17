@@ -1,11 +1,3 @@
----
-title: "File Models"
-description: "Define type-safe file configurations with automatic parsing and runtime validation"
-section: "packaging"
-type: "guide"
-keywords: [file-models, configuration, type-safety, matches, FileHelper, store]
----
-
 # File Models
 
 File Models represent configuration files as TypeScript definitions, providing type safety and runtime enforcement throughout your codebase.

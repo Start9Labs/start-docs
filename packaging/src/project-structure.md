@@ -1,21 +1,6 @@
----
-title: "Project Structure"
-description: "Directory layout and file structure of a StartOS service package."
-section: "packaging"
-type: "guide"
-keywords:
-  [
-    "project structure",
-    "directory layout",
-    "startos directory",
-    "actions",
-    "fileModels",
-    "init",
-    "install",
-  ]
----
-
 # Project Structure
+
+Every StartOS service package follows a standard directory layout. This page documents the purpose of each file and directory in the project.
 
 ## Root Directory Layout
 

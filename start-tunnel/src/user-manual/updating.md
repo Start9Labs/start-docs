@@ -1,11 +1,6 @@
----
-title: "Updating / Uninstalling"
-description: "Update StartTunnel to the latest version or decommission your VPS."
-section: "start-tunnel/user-manual"
-type: "guide"
-keywords: ["start-tunnel", "update", "upgrade", "uninstall", "decommission"]
----
 # Updating / Uninstalling
+
+Keep StartTunnel up to date by re-running the installer, or remove it entirely when decommissioning a VPS.
 
 ## Updating
 

@@ -1,11 +1,3 @@
----
-title: "Dependencies"
-description: "Declare and interact with cross-service dependencies in StartOS"
-section: "packaging"
-type: "guide"
-keywords: [dependencies, cross-service, interfaces, volumes, tasks, manifest]
----
-
 # Dependencies
 
 Cross-service dependencies allow your service to interact with other StartOS services. Use them when your service needs to:

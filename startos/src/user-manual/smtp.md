@@ -1,11 +1,3 @@
----
-title: "SMTP"
-description: "Configure SMTP email credentials on StartOS so services can send notifications."
-section: "startos/user-manual"
-type: "guide"
-keywords: ["smtp", "email", "notifications", "gmail", "amazon ses"]
----
-
 # SMTP
 
 > [!WARNING]

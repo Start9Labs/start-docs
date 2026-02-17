@@ -7,9 +7,6 @@ title = "StartTunnel"
 [build]
 build-dir = "../docs/start-tunnel"
 
-[preprocessor.strip-frontmatter]
-command = "node ../scripts/mdbook-strip-frontmatter.mjs"
-
 [preprocessor.tabs]
 
 [output]

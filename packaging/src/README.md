@@ -1,10 +1,3 @@
----
-title: "Packaging Guide"
-description: "Learn how to package self-hosted services for StartOS using the Start SDK."
-section: "packaging"
-type: "index"
-keywords: ["packaging", "developer", "sdk", "services", "s9pk"]
----
 # Packaging Guide
 
 StartOS is a _Server OS_ -- a Linux distribution optimized for administering servers. While operating systems like Mac, Windows, and Ubuntu are designed for client devices such as phones and laptops, StartOS provides a graphical interface for server administration that eliminates the need to "pop the hood" and use the command line.

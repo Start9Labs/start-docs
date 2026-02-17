@@ -1,19 +1,3 @@
----
-title: "StartTunnel"
-description: "A self-hosted WireGuard VPN for private remote access and clearnet hosting of your personal server."
-section: "start-tunnel"
-type: "index"
-keywords:
-  [
-    "start-tunnel",
-    "vpn",
-    "wireguard",
-    "clearnet",
-    "remote access",
-    "self-hosted",
-  ]
----
-
 # StartTunnel
 
 A self-hosted WireGuard VPN optimized for creating VLANs and reverse tunneling to personal servers.

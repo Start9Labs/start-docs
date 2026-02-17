@@ -1,10 +1,3 @@
----
-title: "CLI Reference"
-description: "Complete command-line reference for managing StartTunnel subnets, devices, port forwards, and the web interface."
-section: "start-tunnel/user-manual"
-type: "guide"
-keywords: ["start-tunnel", "cli", "command line", "reference", "subnets", "devices", "port forwarding"]
----
 # CLI Reference
 
 StartTunnel can be fully managed from the command line.

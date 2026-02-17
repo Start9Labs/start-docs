@@ -1,11 +1,3 @@
----
-title: "Updating StartOS"
-description: "Update your StartOS server to the latest version. No automatic updates in StartOS."
-section: "startos/user-manual"
-type: "guide"
-keywords: ["update", "upgrade", "version"]
----
-
 # Updating StartOS
 
 > [!NOTE]

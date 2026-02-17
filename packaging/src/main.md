@@ -1,20 +1,3 @@
----
-title: "Main"
-description: "How to configure daemons, health checks, volume mounts, and config file generation in main.ts."
-section: "packaging"
-type: "guide"
-keywords:
-  [
-    "main",
-    "daemons",
-    "health checks",
-    "volumes",
-    "config",
-    "subcontainer",
-    "oneshot",
-  ]
----
-
 # Main
 
 `setupMain()` defines the runtime behavior of your service -- daemons, health checks, volume mounts, environment variables, and config file generation. It runs each time the service is started.

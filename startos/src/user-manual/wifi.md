@@ -1,11 +1,3 @@
----
-title: "WiFi"
-description: "Connect your StartOS server to a WiFi network."
-section: "startos/user-manual"
-type: "guide"
-keywords: ["wifi", "wireless", "network"]
----
-
 # WiFi
 
 > [!WARNING]

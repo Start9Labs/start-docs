@@ -7,9 +7,6 @@ title = "Service Packaging"
 [build]
 build-dir = "../docs/packaging"
 
-[preprocessor.strip-frontmatter]
-command = "node ../scripts/mdbook-strip-frontmatter.mjs"
-
 [preprocessor.tabs]
 
 [output]

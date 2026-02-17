@@ -1,11 +1,3 @@
----
-title: "Actions"
-description: "Define user-triggered actions and SMTP configuration for StartOS services"
-section: "packaging"
-type: "guide"
-keywords: [actions, smtp, tasks, prompts, input-spec, service-actions]
----
-
 # Actions
 
 Actions are user-triggered operations that appear in the StartOS UI for your service. They can display information, accept user input, modify configuration, and more.

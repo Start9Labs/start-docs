@@ -5,12 +5,10 @@
   "type": "module",
   "scripts": {
     "generate-llms-txt": "npx tsx generate-llms-txt.ts",
-    "validate-frontmatter": "npx tsx validate-frontmatter.ts",
     "prepare": "cd .. && husky"
   },
   "dependencies": {
-    "glob": "^10.3.0",
-    "gray-matter": "^4.0.3"
+    "glob": "^10.3.0"
   },
   "devDependencies": {
     "@types/node": "^20.10.0",

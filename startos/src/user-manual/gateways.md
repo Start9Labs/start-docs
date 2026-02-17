@@ -1,10 +1,3 @@
----
-title: "Gateways"
-description: "Configure inbound and outbound network gateways on your StartOS server."
-section: "startos/user-manual"
-type: "guide"
-keywords: ["gateway", "router", "start-tunnel", "wireguard", "outbound", "vpn", "mullvad", "proton"]
----
 # Gateways
 
 A gateway is what connects your server to the Internet. Gateways handle both _inbound_ traffic (people connecting to your server) and _outbound_ traffic (your server connecting to the Internet).

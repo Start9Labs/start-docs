@@ -1,11 +1,6 @@
----
-title: "User Manual"
-description: "Guides for configuring and using your StartTunnel instance."
-section: "start-tunnel/user-manual"
-type: "index"
-keywords: ["start-tunnel", "user manual", "configuration"]
----
 # User Manual
+
+Guides for managing subnets, adding devices, configuring port forwards, updating StartTunnel, and using the CLI.
 
 - [Subnets](subnets.md)
 - [Devices](devices.md)

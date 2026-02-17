@@ -1,11 +1,3 @@
----
-title: "Architecture"
-description: "How StartOS is built and how its components work together."
-section: "startos"
-type: "guide"
-keywords: ["architecture", "design", "containers", "networking", "security", "s9pk", "patch-db"]
----
-
 # Architecture
 
 StartOS is a Linux distribution purpose-built for running a personal server. Unlike general-purpose operating systems designed for desktops and laptops, StartOS provides a graphical interface for discovering, installing, configuring, and managing self-hosted services — no command line required.

@@ -1,11 +1,3 @@
----
-title: "Subnets"
-description: "Create and manage isolated VLANs in StartTunnel."
-section: "start-tunnel/user-manual"
-type: "guide"
-keywords: ["start-tunnel", "subnet", "vlan", "network"]
----
-
 # Subnets
 
 A subnet is an isolated `/24` VLAN (up to 254 devices). All devices on the same subnet can communicate with each other.

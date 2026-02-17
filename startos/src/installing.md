@@ -1,23 +1,3 @@
----
-title: "Installing StartOS"
-description: "Flash StartOS to a USB drive and install it on your hardware."
-section: "startos"
-type: "guide"
-keywords:
-  [
-    "x86",
-    "x86_64",
-    "amd64",
-    "arm",
-    "aarch64",
-    "risc-v",
-    "riscv64",
-    "flash",
-    "usb",
-    "install",
-  ]
----
-
 # Installing StartOS
 
 This guide is for flashing StartOS to a USB drive, then installing it onto a desktop, laptop, or mini PC. For an up-to-date list of known-good hardware, please check out this [forum post](https://community.start9.com/t/known-good-hardware-master-list-hardware-capable-of-running-startos/).

@@ -1,11 +1,3 @@
----
-title: "Tasks"
-description: "Create tasks that prompt users to run actions at the right time."
-section: "packaging"
-type: "guide"
-keywords: ["tasks", "prompts", "createOwnTask", "createTask", "notifications", "actions"]
----
-
 # Tasks
 
 Tasks are notifications that appear in the StartOS UI prompting the user to run a specific [action](./actions.md). They are commonly used to surface important information after install or restore, request required configuration, or coordinate setup with dependency services.

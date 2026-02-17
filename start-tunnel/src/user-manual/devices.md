@@ -1,11 +1,3 @@
----
-title: "Devices"
-description: "Add servers, phones, laptops, and other devices to a StartTunnel subnet."
-section: "start-tunnel/user-manual"
-type: "guide"
-keywords: ["start-tunnel", "device", "wireguard", "server", "client", "gateway"]
----
-
 # Devices
 
 Every device on a StartTunnel subnet — whether it's a server, phone, or laptop — is added the same way. Each device gets a unique WireGuard configuration file.

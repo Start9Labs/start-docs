@@ -1,10 +1,3 @@
----
-title: "Interfaces"
-description: "How to define and expose network interfaces for a StartOS service package."
-section: "packaging"
-type: "guide"
-keywords: ["interfaces", "networking", "ports", "MultiHost", "ui", "api"]
----
 # Interfaces
 
 `setupInterfaces()` defines the network interfaces your service exposes and how they are made available to the user. This function runs on service install, update, and config save.

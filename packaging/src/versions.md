@@ -1,10 +1,3 @@
----
-title: "Versions"
-description: "How StartOS uses Extended Versioning (ExVer) for package version management and migrations."
-section: "packaging"
-type: "guide"
-keywords: ["versioning", "ExVer", "migrations", "version file", "VersionInfo", "VersionGraph", "prerelease"]
----
 # Versions
 
 StartOS uses Extended Versioning (ExVer) to manage package versions, allowing downstream maintainers to release updates without upstream changes.

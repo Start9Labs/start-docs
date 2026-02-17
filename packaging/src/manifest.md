@@ -1,10 +1,3 @@
----
-title: "Manifest"
-description: "How to define service identity, metadata, and build configuration in the manifest."
-section: "packaging"
-type: "guide"
-keywords: ["manifest", "setupManifest", "images", "Docker", "alerts", "dependencies", "volumes", "i18n"]
----
 # Manifest
 
 The manifest defines service identity, metadata, and build configuration. It lives in `startos/manifest/` as two files:

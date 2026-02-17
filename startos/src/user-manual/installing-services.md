@@ -1,12 +1,6 @@
----
-title: "Installing Services"
-description: "Browse the marketplace and install self-hosted services on your StartOS server."
-section: "startos/user-manual"
-type: "guide"
-keywords: ["services", "marketplace", "install", "packages"]
----
-
 # Installing Services
+
+StartOS services are installed from the Marketplace, which consists of curated registries. You can also sideload packages directly from `.s9pk` files.
 
 ## From the Marketplace
 
