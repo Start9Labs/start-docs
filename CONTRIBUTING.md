@@ -32,12 +32,12 @@ We welcome contributions! Whether you spot a typo or want to suggest new content
    This builds all books and serves at http://localhost:3000. For live-reload while editing a single book:
 
    ```
-   cd startos && mdbook serve -p 3001
+   cd start-os && mdbook serve -p 3001
    ```
 
 ## Writing Docs
 
-All documentation lives under `startos/src/`, `start-tunnel/src/`, or `packaging/src/` as Markdown files. The sidebar for each book is defined by its `src/SUMMARY.md`.
+All documentation lives under `start-os/src/`, `start-tunnel/src/`, or `packaging/src/` as Markdown files. The sidebar for each book is defined by its `src/SUMMARY.md`.
 
 ### Admonitions
 

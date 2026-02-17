@@ -23,7 +23,7 @@ See README.md for what this project is, CONTRIBUTING.md for how to work on it, a
 
 - `./build.sh` — Build all books into `docs/`
 - `./serve.sh` — Build + serve on http://localhost:3000
-- `cd startos && mdbook serve -p 3001` — Live-reload a single book
+- `cd start-os && mdbook serve -p 3001` — Live-reload a single book
 - `cd scripts && npm run generate-llms-txt` — Regenerate llms.txt files
 
 ## Product Context

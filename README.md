@@ -8,7 +8,7 @@ The official documentation for [Start9](https://start9.com) products — coverin
 
 | Product | URL | Content |
 |---------|-----|---------|
-| [StartOS](startos/) | [docs.start9.com/startos](https://docs.start9.com/startos/) | Installation, user manual, architecture, FAQ, firmware |
+| [StartOS](start-os/) | [docs.start9.com/start-os](https://docs.start9.com/start-os/) | Installation, user manual, architecture, FAQ, firmware |
 | [StartTunnel](start-tunnel/) | [docs.start9.com/start-tunnel](https://docs.start9.com/start-tunnel/) | Installation, user manual, architecture, FAQ |
 | [Service Packaging](packaging/) | [docs.start9.com/packaging](https://docs.start9.com/packaging/) | Developer guide for building and publishing StartOS services |
 

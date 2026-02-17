@@ -36,7 +36,7 @@ type SummaryEntry = {
 
 /** Book metadata: display labels and one-line descriptions */
 const bookInfo: Record<string, { label: string; description: string }> = {
-  startos: {
+  "start-os": {
     label: "StartOS",
     description:
       "Documentation for StartOS, a Linux-based operating system for self-hosting services on a personal server.",

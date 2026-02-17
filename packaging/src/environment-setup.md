@@ -4,7 +4,7 @@ Before building service packages, you need to install several development tools 
 
 ## StartOS Device
 
-You must have a computer running StartOS to test your packages. Follow the [installation guide](/startos/installing.html) to install StartOS on a physical device or VM.
+You must have a computer running StartOS to test your packages. Follow the [installation guide](/start-os/installing.html) to install StartOS on a physical device or VM.
 
 ## Docker
 

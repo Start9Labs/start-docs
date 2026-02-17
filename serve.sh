@@ -22,10 +22,10 @@ cd ..
 ./build.sh
 
 # Serve docs directory
-BOOK="${1:-startos}"
+BOOK="${1:-start-os}"
 echo "Serving from docs/ at http://localhost:3000"
 echo "  Landing:     http://localhost:3000/"
-echo "  StartOS:     http://localhost:3000/startos/"
+echo "  StartOS:     http://localhost:3000/start-os/"
 echo "  StartTunnel: http://localhost:3000/start-tunnel/"
 echo "  Packaging:   http://localhost:3000/packaging/"
 echo ""

@@ -6,7 +6,7 @@ The site is composed of independent mdBook instances — one per product. Each b
 
 ```
 start-docs/
-├── startos/              ← StartOS book
+├── start-os/             ← StartOS book
 │   ├── book.toml
 │   ├── theme -> ../theme
 │   └── src/
@@ -52,7 +52,7 @@ This design was chosen over a single monolithic book because:
 
 ## Shared Theme
 
-The `theme/` directory at repo root is the single source of truth for styling. Each book symlinks to it (`startos/theme -> ../theme`). This includes:
+The `theme/` directory at repo root is the single source of truth for styling. Each book symlinks to it (`start-os/theme -> ../theme`). This includes:
 - docs-agent widget CSS/JS
 - YouTube embed styling
 - mdbook-tabs CSS/JS

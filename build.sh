@@ -6,7 +6,7 @@ rm -rf docs
 mkdir -p docs
 
 # Build books
-(cd startos && mdbook build)
+(cd start-os && mdbook build)
 (cd start-tunnel && mdbook build)
 (cd packaging && mdbook build)
 

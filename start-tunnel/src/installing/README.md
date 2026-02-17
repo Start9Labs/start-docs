@@ -33,7 +33,7 @@ curl -sSL https://start9labs.github.io/start-tunnel/install.sh | sh
 start-tunnel web init
 ```
 
-You will be guided through setup and shown your web URL, password, and Root CA certificate. To access the web interface without browser warnings, [trust the Root CA on your device](/startos/user-manual/trust-ca.html).
+You will be guided through setup and shown your web URL, password, and Root CA certificate. To access the web interface without browser warnings, [trust the Root CA on your device](/start-os/user-manual/trust-ca.html).
 
 On subsequent runs (e.g. after updating), the password is not shown again. If you forget it, reset it with `start-tunnel auth reset-password`.
 
