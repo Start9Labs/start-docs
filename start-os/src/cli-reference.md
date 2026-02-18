@@ -1,6 +1,6 @@
 # CLI Reference
 
-StartOS can be fully managed from the command line using `start-cli`. Connect via [SSH](ssh.md) and run:
+StartOS can be fully managed from the command line using `start-cli`. Connect via [SSH](user-manual/ssh.md) and run:
 
 ```
 start-cli --help
