@@ -26,6 +26,7 @@
   - [WiFi](user-manual/wifi.md)
   - [Updating StartOS](user-manual/updating-startos.md)
   - [Resetting Your Password](user-manual/reset-password.md)
+  - [CLI Reference](user-manual/cli-reference.md)
 
 - [Architecture](architecture.md)
 
