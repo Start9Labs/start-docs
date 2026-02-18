@@ -13,9 +13,7 @@ This guide walks you through creating your own service package repository from t
 
 1. Navigate to the [Hello World Template](https://github.com/Start9Labs/hello-world-startos) on GitHub.
 
-1. Click **"Use this template > Create new repository"**.
-
-   ![use Github template](./assets/use-github-template.png)
+1. In the top right, click **"Use this template > Create new repository"**.
 
 1. Name your repository using the convention `<service-name>-startos` (e.g., `nextcloud-startos`).
 

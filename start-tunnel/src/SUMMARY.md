@@ -11,7 +11,8 @@
   - [Devices](user-manual/devices.md)
   - [Port Forwarding](user-manual/port-forwarding.md)
   - [Updating / Uninstalling](user-manual/updating.md)
-  - [CLI Reference](user-manual/cli-reference.md)
+
+- [CLI Reference](cli-reference.md)
 
 - [Architecture](architecture.md)
 
