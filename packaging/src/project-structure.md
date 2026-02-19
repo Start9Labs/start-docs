@@ -8,6 +8,10 @@ A StartOS package follows this organizational pattern:
 
 ```
 my-service-startos/
+├── .github/
+│   └── workflows/
+│       ├── buildService.yml   # CI build on push/PR
+│       └── releaseService.yml # Release on tag push
 ├── assets/                 # Supplementary files (required, can be empty)
 │   └── README.md
 ├── startos/                # Primary development directory
@@ -32,6 +36,7 @@ my-service-startos/
 │   ├── sdk.ts              # SDK initialization (boilerplate)
 │   └── utils.ts            # Package-specific utilities
 ├── .gitignore
+├── CONTRIBUTING.md         # Build instructions for contributors
 ├── Dockerfile              # Optional - for custom images
 ├── icon.svg                # Service icon (max 40 KiB)
 ├── LICENSE                 # Package license (symlink to upstream)
@@ -39,7 +44,7 @@ my-service-startos/
 ├── s9pk.mk                 # Shared build logic (boilerplate)
 ├── package.json
 ├── package-lock.json
-├── README.md
+├── README.md               # Service documentation (see Writing READMEs)
 ├── tsconfig.json
 └── upstream-project/       # Git submodule (optional)
 ```
@@ -56,6 +61,64 @@ These files typically require minimal modification:
 - `package.json` / `package-lock.json`
 - `tsconfig.json`
 
+### .github/workflows/
+
+Every package should include two GitHub Actions workflows that delegate to [shared-workflows](https://github.com/start9labs/shared-workflows):
+
+**buildService.yml** -- builds the `.s9pk` on push/PR:
+
+```yaml
+name: Build Service
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths-ignore: ['*.md']
+    branches: ['main', 'master']
+  push:
+    paths-ignore: ['*.md']
+    branches: ['main', 'master']
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    if: github.event.pull_request.draft == false
+    uses: start9labs/shared-workflows/.github/workflows/buildService.yml@master
+    secrets:
+      DEV_KEY: ${{ secrets.DEV_KEY }}
+```
+
+**releaseService.yml** -- publishes on tag push:
+
+```yaml
+name: Release Service
+
+on:
+  push:
+    tags:
+      - 'v*.*'
+
+jobs:
+  release:
+    uses: start9labs/shared-workflows/.github/workflows/releaseService.yml@master
+    with:
+      REGISTRY: ${{ vars.REGISTRY }}
+      S3_S9PKS_BASE_URL: ${{ vars.S3_S9PKS_BASE_URL }}
+    secrets:
+      DEV_KEY: ${{ secrets.DEV_KEY }}
+      S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
+      S3_SECRET_KEY: ${{ secrets.S3_SECRET_KEY }}
+    permissions:
+      contents: write
+```
+
+### CONTRIBUTING.md
+
+Build instructions for contributors. Keep it short -- link to the [StartOS Packaging Guide](https://docs.start9.com/packaging-guide/) for environment setup, then provide `npm ci` and `make` as a quick start.
+
 ### Dockerfile (optional)
 
 It is recommended to pull an existing Docker image as shown in the [Quick Start](./quick-start.md). If necessary, you can define a custom image using a Dockerfile in the project root.
@@ -66,15 +129,19 @@ The service's visual identifier. Maximum size is 40 KiB. Accepts `.svg`, `.png`,
 
 ### LICENSE
 
-The package's software license, which should always match the upstream service's license. If your package contains multiple upstream services with different licenses, select the more restrictive license. Create a symlink:
+The package's software license, which should always match the upstream service's license. If your package contains multiple upstream services with different licenses, select the more restrictive license.
+
+If you have a git submodule, symlink to its license:
 
 ```bash
 ln -sf upstream-project/LICENSE LICENSE
 ```
 
+If you are pulling a pre-built Docker image (no submodule), copy the license text directly from the upstream repository.
+
 ### README.md
 
-Documentation template that should be customized for your specific service.
+Service documentation following the structure described in [Writing READMEs](./writing-readmes.md). Every README should document how the StartOS package differs from the upstream service.
 
 ## assets/
 
@@ -173,11 +240,11 @@ It is common for packages to have a `store.json.ts` file model as a convenient p
 ```
 init/
 ├── index.ts
-├── customInitFn1.ts
-└── customInitFn2.ts
+├── taskCreateAdmin.ts
+└── seedDatabase.ts
 ```
 
-In the `init/` directory, you define the container initialization sequence for your package as well as optional custom init functions.
+In the `init/` directory, you define the container initialization sequence for your package as well as optional custom init functions. Name each init file specifically for what it does (e.g., `taskCreateAdmin.ts`, `seedDatabase.ts`) rather than using a generic name like `initializeService.ts`.
 
 Container initialization takes place under the following circumstances:
 

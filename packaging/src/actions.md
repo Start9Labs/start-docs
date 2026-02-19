@@ -106,6 +106,63 @@ result: {
 
 Actions can be surfaced to users as tasks — notifications that prompt them to run a specific action at the right time. See [Tasks](./tasks.md) for details.
 
+## Common Patterns
+
+### Auto-Generate Passwords
+
+Do not accept password input from users — users are bad at choosing passwords. Instead, auto-generate strong passwords and display them in action results:
+
+```typescript
+import { utils } from '@start9labs/start-sdk'
+
+// Generate a strong random password
+const password = utils.getDefaultString({ charset: 'a-z,A-Z,0-9', len: 22 })
+```
+
+If a user needs to recover a lost password, provide a "Reset Password" action that generates a new one and updates the service's database or config. Display the new password as a masked, copyable result.
+
+### Registration-Gated Services
+
+Some services require that "registrations" or "signups" be enabled for users to create accounts. This creates a security tension: the service must be open for the admin to register, but should be locked down after.
+
+The recommended pattern:
+
+1. **Start with registrations enabled** in the initial config.
+2. **Create an important task** in `setupOnInit` advising the user to disable registrations after creating their admin account.
+3. **Provide a toggle action** that reads the current registration state, flips it, and writes back.
+
+```typescript
+// In init/initializeService.ts
+export const initializeService = sdk.setupOnInit(async (effects, kind) => {
+  if (kind !== 'install') return
+  await sdk.action.createOwnTask(effects, toggleRegistrations, 'important', {
+    reason: 'After creating your admin account, disable registrations to prevent unauthorized signups.',
+  })
+})
+
+// In actions/toggleRegistrations.ts
+export const toggleRegistrations = sdk.Action.withoutInput(
+  'toggle-registrations',
+  async ({ effects }) => {
+    const allowed = await configToml.read((c) => c.allow_registration).const(effects)
+    return {
+      name: allowed ? i18n('Disable Registrations') : i18n('Enable Registrations'),
+      description: allowed
+        ? i18n('Registrations are currently enabled. Run this action to disable them.')
+        : i18n('Registrations are currently disabled. Run this action to enable them.'),
+      warning: allowed ? null : i18n('Anyone with your URL will be able to create an account.'),
+      allowedStatuses: 'any',
+      group: null,
+      visibility: 'enabled',
+    }
+  },
+  async ({ effects }) => {
+    const allowed = await configToml.read((c) => c.allow_registration).const(effects)
+    await configToml.merge(effects, { allow_registration: !allowed })
+  },
+)
+```
+
 ## SMTP Configuration
 
 The SDK provides a built-in SMTP input specification for managing email credentials. This supports three modes: disabled, system SMTP (from StartOS settings), or custom SMTP.

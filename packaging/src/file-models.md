@@ -140,6 +140,33 @@ const shape = object({
 })
 ```
 
+## Best Practices
+
+### Prefer Direct FileModel Over store.json + Environment Variables
+
+When an upstream service reads a config file (TOML, YAML, JSON, etc.), model that file directly with `FileHelper` rather than storing values in `store.json` and passing them as environment variables. A direct FileModel provides:
+
+- **Two-way binding**: Actions can read and write the upstream config file directly.
+- **Simpler main.ts**: No need to read from store, build env vars, and pass them to the daemon. Just write the FileModel to the subcontainer rootfs.
+- **Easy user configuration**: Exposing config options via Actions is as simple as `configToml.merge(effects, { key: newValue })`.
+
+Use `store.json` only for internal package state that has no upstream config file equivalent (e.g., a generated PostgreSQL password that the upstream service doesn't read from its own config file).
+
+```typescript
+// GOOD: Model the upstream config directly
+export const configToml = FileHelper.toml(
+  { base: sdk.volumes['mcaptcha-data'], subpath: 'config.toml' },
+  shape,
+)
+
+// In main.ts, write to subcontainer rootfs
+await writeFile(`${appSub.rootfs}/etc/mcaptcha/config.toml`,
+  await configToml.read((c) => c).const(effects))
+
+// In an action, toggle a setting directly
+await configToml.merge(effects, { allow_registration: !current })
+```
+
 ## Common Patterns
 
 ### Optional Fields with Defaults

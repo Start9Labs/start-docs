@@ -184,3 +184,46 @@ migrations: {
 
 > [!WARNING]
 > Migrations are only for migrating data that is _not_ migrated by the upstream service itself.
+
+## preInstall vs setupOnInit
+
+The `preInstall` function in `versionGraph.ts` and custom init functions registered via `setupOnInit` both run during installation, but at different points in the init sequence.
+
+### Use preInstall for:
+
+- Bootstrapping config files (writing initial FileModel values)
+- Generating passwords and secrets
+- Any setup that does **not** depend on interfaces, actions, or other init steps
+
+`preInstall` runs early — before interfaces, dependencies, and actions are set up.
+
+```typescript
+// versionGraph.ts
+export const versionGraph = VersionGraph.of({
+  current,
+  other,
+  preInstall: async (effects) => {
+    const postgresPassword = utils.getDefaultString({ charset: 'a-z,A-Z,0-9', len: 22 })
+    await storeJson.write(effects, { postgresPassword })
+    await configToml.write(effects, { /* initial config */ })
+  },
+})
+```
+
+### Use setupOnInit for:
+
+- Creating tasks (tasks reference actions, which aren't available until after `actions` runs in the init sequence)
+- Any setup that depends on a prior init step
+
+```typescript
+// init/initializeService.ts
+export const initializeService = sdk.setupOnInit(async (effects, kind) => {
+  if (kind !== 'install') return
+  await sdk.action.createOwnTask(effects, toggleRegistrations, 'important', {
+    reason: 'After creating your admin account, disable registrations.',
+  })
+})
+```
+
+> [!WARNING]
+> Do **not** create tasks in `preInstall`. Tasks reference actions, and actions are not registered until later in the init sequence. Creating a task in `preInstall` will fail.
