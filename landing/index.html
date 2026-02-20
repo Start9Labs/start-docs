@@ -32,26 +32,29 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 2rem;
+        padding: 1.5rem;
       }
 
       h1 {
-        font-size: 2.5rem;
+        font-size: 2rem;
         font-weight: 700;
         margin-bottom: 0.5rem;
+        text-align: center;
       }
 
       .subtitle {
         color: var(--text-muted);
         font-size: 1.1rem;
-        margin-bottom: 3rem;
+        margin-bottom: 2.5rem;
+        text-align: center;
       }
 
       .cards {
         display: grid;
-        grid-template-columns: repeat(2, 300px);
-        gap: 2rem;
-        justify-content: center;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        width: 100%;
+        max-width: 660px;
       }
 
       a.card {
@@ -59,13 +62,19 @@
         background: var(--card-bg);
         border: 1px solid var(--card-border);
         border-radius: 12px;
-        padding: 2rem;
-        width: 300px;
+        padding: 1.5rem;
         text-decoration: none;
         color: var(--text);
         transition:
           border-color 0.2s,
           transform 0.2s;
+      }
+
+      @media (max-width: 600px) {
+        .cards {
+          grid-template-columns: 1fr;
+          max-width: 400px;
+        }
       }
 
       a.card:hover {
