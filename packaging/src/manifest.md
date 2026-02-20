@@ -44,12 +44,11 @@ export const manifest = setupManifest({
   id: 'my-service',
   title: 'My Service',
   license: 'MIT',
-  wrapperRepo: 'https://github.com/Start9Labs/my-service-startos',
+  packageRepo: 'https://github.com/Start9Labs/my-service-startos',
   upstreamRepo: 'https://github.com/original/my-service',
-  supportSite: 'https://docs.example.com/',
-  marketingSite: 'https://example.com/',
+  marketingUrl: 'https://example.com/',
   donationUrl: null,
-  docsUrl: 'https://docs.example.com/guides',
+  docsUrls: ['https://docs.example.com/guides'],
   description: { short, long },
   volumes: ['main'],
   images: {
@@ -74,12 +73,11 @@ export const manifest = setupManifest({
 | `id`                | Unique identifier (lowercase, hyphens allowed)         |
 | `title`             | Display name shown in UI                               |
 | `license`           | SPDX identifier (`MIT`, `Apache-2.0`, `GPL-3.0`, etc.) |
-| `wrapperRepo`       | URL to the StartOS wrapper repository                  |
+| `packageRepo`       | URL to the StartOS package repository                  |
 | `upstreamRepo`      | URL to the original project repository                 |
-| `supportSite`       | URL for user support                                   |
-| `marketingSite`     | URL for the project's main website                     |
+| `marketingUrl`      | URL for the project's main website                     |
 | `donationUrl`       | Donation URL or `null`                                 |
-| `docsUrl`           | URL to **upstream** documentation (not wrapper docs)   |
+| `docsUrls`          | Array of URLs to **upstream** documentation            |
 | `description.short` | Locale object (see `manifest/i18n.ts`)                 |
 | `description.long`  | Locale object (see `manifest/i18n.ts`)                 |
 | `volumes`           | Storage volumes (usually `['main']`)                   |
@@ -89,10 +87,13 @@ export const manifest = setupManifest({
 
 ## License
 
-Check the upstream project's LICENSE file and use the correct SPDX identifier (e.g., `MIT`, `Apache-2.0`, `GPL-3.0`). Create a symlink from your project root to the upstream license:
+Check the upstream project's LICENSE file and use the correct SPDX identifier (e.g., `MIT`, `Apache-2.0`, `GPL-3.0`). If you have a git submodule, symlink to its license. Otherwise, copy the license text directly from the upstream repository:
 
 ```bash
+# With submodule
 ln -sf upstream-project/LICENSE LICENSE
+
+# Without submodule -- copy from upstream repo
 ```
 
 ## Icon
@@ -250,9 +251,13 @@ alerts: {
 
 ## Volumes
 
-Storage volumes for persistent data. Usually just `['main']`:
+Storage volumes for persistent data. When possible, prefer matching the upstream project's volume naming convention for clarity:
 
 ```typescript
+// If upstream docker-compose uses a volume named "mcaptcha-data"
+volumes: ['mcaptcha-data'],
+
+// Simple services can use 'main'
 volumes: ['main'],
 ```
 
@@ -262,7 +267,7 @@ For services needing separate storage areas:
 volumes: ['main', 'db', 'config'],
 ```
 
-Reference these in `main.ts` mounts as `'main'`, `'db'`, `'config'`.
+Reference these in `main.ts` mounts by the volume ID you chose.
 
 ## Dependencies
 

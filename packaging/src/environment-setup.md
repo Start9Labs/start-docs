@@ -81,3 +81,54 @@ start-cli --version
 
 > [!TIP]
 > If any command is not found, revisit the installation steps for that tool and ensure it is on your system PATH.
+
+## Coding with Claude (Recommended)
+
+AI coding tools like [Claude Code](https://docs.anthropic.com/en/docs/claude-code) can dramatically accelerate your packaging workflow. To get the best results, set up a workspace that gives Claude direct access to the packaging guide.
+
+### 1. Create a workspace directory
+
+Create a directory that will serve as your AI-assisted workspace. This is **not** inside your package repo — it sits alongside it.
+
+```
+mkdir my-workspace && cd my-workspace
+```
+
+### 2. Clone the docs
+
+Clone the Start9 docs repo so Claude can read the packaging guide locally:
+
+```
+git clone https://github.com/Start9Labs/docs.git start-docs
+```
+
+### 3. Add a CLAUDE.md
+
+> [!IMPORTANT]
+> This is critical. Without this file, Claude will not know how to package a service for StartOS.
+
+Download the provided `CLAUDE.md` and place it in your workspace root:
+
+<a href="SAMPLE-CLAUDE.txt" download="CLAUDE.md" style="display:inline-block;padding:0.5em 1.2em;background:#58a6ff;color:#fff;border-radius:6px;text-decoration:none;font-weight:600">Download CLAUDE.md</a>
+
+This file instructs Claude to use the local packaging guide as its primary reference.
+
+### 4. Add your package repo
+
+Clone or create your package repo inside the workspace:
+
+```
+git clone https://github.com/user/my-service-startos.git
+```
+
+Your workspace should look like this:
+
+```
+my-workspace/
+├── CLAUDE.md            ← AI instructions (not committed anywhere)
+├── start-docs/          ← packaging guide for Claude to read
+└── my-service-startos/  ← your package repo
+```
+
+> [!NOTE]
+> Do not put `start-docs/` or `CLAUDE.md` inside your package repo. They live alongside it in the workspace so they don't pollute your package's git history.

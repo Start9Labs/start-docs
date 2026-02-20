@@ -79,20 +79,24 @@ export const configYaml = FileHelper.yaml(
 
 ```typescript
 // One-time read (no restart on change) - returns null if file doesn't exist
-const store = await storeJson.read((s) => s).once()
+const store = await storeJson.read().once()
 
 // Handle missing file with nullish coalescing
 const keys = (await authorizedKeysFile.read().once()) ?? []
 
 // Reactive read (service restarts if value changes)
-const store = await storeJson.read((s) => s).const(effects)
+const store = await storeJson.read().const(effects)
 
 // Read only specific fields (subset reading)
 const password = await storeJson.read((s) => s.adminPassword).once()
 
-// Reactive subset read
+// Reactive subset read - daemon only restarts if secretKey changes
 const secretKey = await storeJson.read((s) => s.secretKey).const(effects)
 ```
+
+> [!WARNING]
+> Never use an identity mapper like `.read((s) => s)`. Either omit the mapper to get the full object (`.read()`) or use it to extract a specific field (`.read((s) => s.someField)`).
+
 
 ### Subset Reading
 
@@ -147,7 +151,7 @@ const shape = object({
 When an upstream service reads a config file (TOML, YAML, JSON, etc.), model that file directly with `FileHelper` rather than storing values in `store.json` and passing them as environment variables. A direct FileModel provides:
 
 - **Two-way binding**: Actions can read and write the upstream config file directly.
-- **Simpler main.ts**: No need to read from store, build env vars, and pass them to the daemon. Just write the FileModel to the subcontainer rootfs.
+- **Simpler main.ts**: Mount the config file from the volume into the subcontainer. No need to read and regenerate it.
 - **Easy user configuration**: Exposing config options via Actions is as simple as `configToml.merge(effects, { key: newValue })`.
 
 Use `store.json` only for internal package state that has no upstream config file equivalent (e.g., a generated PostgreSQL password that the upstream service doesn't read from its own config file).
@@ -155,17 +159,32 @@ Use `store.json` only for internal package state that has no upstream config fil
 ```typescript
 // GOOD: Model the upstream config directly
 export const configToml = FileHelper.toml(
-  { base: sdk.volumes['mcaptcha-data'], subpath: 'config.toml' },
+  { base: sdk.volumes['my-data'], subpath: 'config.toml' },
   shape,
 )
 
-// In main.ts, write to subcontainer rootfs
-await writeFile(`${appSub.rootfs}/etc/mcaptcha/config.toml`,
-  await configToml.read((c) => c).const(effects))
+// In main.ts, mount the volume so the config file is accessible in the subcontainer.
+// You can mount the individual file or an entire directory that contains it.
+const appSub = await sdk.SubContainer.of(effects, { imageId: 'my-app' },
+  sdk.Mounts.of().mountVolume({
+    volumeId: 'my-data',
+    subpath: 'config.toml',
+    mountpoint: '/etc/my-app/config.toml',
+    readonly: false,
+    type: 'file',
+  }),
+  'my-app-sub',
+)
+
+// Reactive read triggers daemon restart when config changes (e.g. via actions)
+await configToml.read((c) => c.some_mutable_setting).const(effects)
 
 // In an action, toggle a setting directly
 await configToml.merge(effects, { allow_registration: !current })
 ```
+
+> [!WARNING]
+> Do NOT read a FileModel in main.ts and then write it back to the subcontainer rootfs. The file already lives on the volume — just mount it.
 
 ## Common Patterns
 

@@ -48,11 +48,10 @@
       }
 
       .cards {
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(2, 300px);
         gap: 2rem;
-        flex-wrap: wrap;
         justify-content: center;
-        max-width: 700px;
       }
 
       a.card {
@@ -108,10 +107,17 @@
 
     <div class="cards">
       <a class="card" href="/start-os/">
-        <h2>StartOS</h2>
+        <h2>StartOS v0.4.0</h2>
         <p>
           A server operating system optimized for self-hosting services on a
           personal server.
+        </p>
+      </a>
+
+      <a class="card" href="/0.3.5.x/">
+        <h2>StartOS v0.3.5.1</h2>
+        <p>
+          Documentation for StartOS version 0.3.5.1 and earlier.
         </p>
       </a>
 

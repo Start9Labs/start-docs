@@ -232,34 +232,24 @@ sdk.Mounts.of()
 
 ## Writing to Subcontainer Rootfs
 
-For config files that are regenerated on every startup, write directly to the subcontainer's rootfs instead of using volume mounts. This is simpler and avoids file mount issues:
+For config files that are *generated from code* on every startup (e.g., a Python settings file built from hostnames and secrets), write directly to the subcontainer's rootfs:
 
 ```typescript
-// Create subcontainer first
-const appSub = await sdk.SubContainer.of(
-  effects,
-  { imageId: "my-service" },
-  sdk.Mounts.of().mountVolume({
-    volumeId: "main",
-    subpath: null,
-    mountpoint: "/data",
-    readonly: false,
-  }),
-  "my-service-sub",
-);
-
-// Write config directly to subcontainer rootfs
+// Write a generated config to subcontainer rootfs
 await writeFile(
   `${appSub.rootfs}/app/config.py`,
   generateConfig({ secretKey, allowedHosts }),
 );
 ```
 
+> [!WARNING]
+> If the config file is managed by a FileModel, do NOT read it and write it back to rootfs. Mount it from the volume instead — the file already exists there.
+
 **When to use rootfs vs volume mounts:**
 
-- **Rootfs**: Ephemeral config files regenerated on each startup (secrets, hostnames, etc.)
-- **Volume mount (directory)**: Persistent data that survives restarts (databases, user files)
-- **Volume mount (file)**: Persistent config that users might edit (requires `type: 'file'`)
+- **Rootfs**: Config files *generated from code* that don't exist on a volume (e.g., built from hostnames, env vars, or templates)
+- **Volume mount (directory)**: Mount a directory that contains the config file alongside other persistent data. The config file is just one of many files in the mounted directory.
+- **Volume mount (file)**: Mount a single config file with `type: 'file'` when the config lives on a volume that is otherwise unrelated to the container's filesystem.
 
 ## Executing Commands in SubContainers
 
