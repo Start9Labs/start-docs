@@ -48,6 +48,14 @@ start-tunnel auth key list
 start-tunnel auth key remove --key "ssh-ed25519 AAAA..."
 ```
 
+## Updating
+
+Check for and install updates.
+
+```bash
+start-tunnel update
+```
+
 ## Web Interface
 
 Manage the admin web UI.

@@ -4,6 +4,10 @@ Keep StartTunnel up to date by re-running the installer, or remove it entirely w
 
 ## Updating
 
+There are three ways to update StartTunnel.
+
+### Install script
+
 Re-run the install command:
 
 ```bash
@@ -11,6 +15,16 @@ curl -sSL https://start9labs.github.io/start-tunnel/install.sh | sh
 ```
 
 The installer detects the existing installation, prompts for confirmation, and restarts the service.
+
+### CLI
+
+```bash
+start-tunnel update
+```
+
+### Web UI
+
+Navigate to **Settings > Version > Check for Updates**.
 
 ## Uninstalling
 

@@ -18,10 +18,10 @@ Think of it as a "virtual router in the cloud." Use it for private remote access
 - [Devices](user-manual/devices.md) — Add servers, phones, and laptops to a subnet
 - [Port Forwarding](user-manual/port-forwarding.md) — Expose ports on your VPS's public IP
 - [Updating / Uninstalling](user-manual/updating.md) — Update to the latest version or decommission your VPS
-- [CLI Reference](user-manual/cli-reference.md) — Manage StartTunnel from the command line
+- [CLI Reference](cli-reference.md) — Manage StartTunnel from the command line
 
 ## Learn More
 
-- [How StartTunnel Works](architecture/) — Architecture deep-dive, comparison to Cloudflare and Tailscale, security model
+- [How StartTunnel Works](architecture.md) — Architecture deep-dive, comparison to Cloudflare and Tailscale, security model
 - [Source Code](https://github.com/Start9Labs/start-os) — StartTunnel lives in the StartOS monorepo
 - [Report Bugs](https://github.com/Start9Labs/start-os/issues) — Open an issue on GitHub

@@ -9,7 +9,7 @@ In order to establish a secure (HTTPS) connection with your server on the local 
 
 <div class="yt-video" data-id="BShfqimixEY" data-title="Trusting Your Root CA"></div>
 
-## 1. Download Your Root CA
+## Step 1 - Download
 
 There are multiple ways to download your server's Root CA.
 
@@ -23,13 +23,13 @@ There are multiple ways to download your server's Root CA.
 
 - ### Option 3: StartOS Dashboard
 
-  If you are logged into your server, click the "Start Menu" in the upper right corner, click "About this Server", and click the download icon for your "Root Ca".
+  If you are logged into your server, click the "System" tab _or_ the "Start Menu" (upper right corner), then click "About this Server".
 
 - ### Option 4: Yourself
 
   If you already have the Root CA on one device, you can send it to yourself using email or other messaging channel.
 
-## 2. Trust your Root CA
+## Step 2 - Trust
 
 Select your platform:
 
