@@ -17,6 +17,7 @@
   - [Public Access](user-manual/public-access/README.md)
     - [Clearnet](user-manual/public-access/clearnet.md)
     - [Tor](user-manual/public-access/tor.md)
+  - [System Settings](user-manual/system-settings.md)
   - [Installing Services](user-manual/installing-services.md)
   - [Gateways](user-manual/gateways.md)
   - [Creating Backups](user-manual/backup-create.md)

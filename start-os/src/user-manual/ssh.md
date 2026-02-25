@@ -11,12 +11,12 @@ Like other Linux distributions, StartOS allows you to go "under-the-hood" via Se
 
         ssh start9@SERVER-HOSTNAME
 
-    Replace `SERVER-HOSTNAME` with your server's `adjective-noun.local` address URL.
+    Replace `SERVER-HOSTNAME` with your server's `your-server-name.local` address.
 
 1.  The first time you connect, you will see something like this:
 
     ```
-    The authenticity of host 'adjective-noun.local (192.168.1.175)' can't be established.
+    The authenticity of host 'your-server-name.local (192.168.1.175)' can't be established.
     ED25519 key fingerprint is SHA256:BgYhzyIDbshm3annI1cfySd8C4/lh6Gfk2Oi3FdIVAa.
     This key is not known by any other names.
     Are you sure you want to continue connecting (yes/no/[fingerprint])?
@@ -36,7 +36,7 @@ Like other Linux distributions, StartOS allows you to go "under-the-hood" via Se
 
         ssh start9@SERVER-HOSTNAME
 
-    Replace `SERVER-HOSTNAME` with your server's `adjective-noun.local` address URL.
+    Replace `SERVER-HOSTNAME` with your server's `your-server-name.local` address.
 
 1.  Enter your key's passphrase (if any)
 

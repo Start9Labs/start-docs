@@ -70,7 +70,7 @@ StartOS provides multiple ways to access services, all managed through the UI.
 
 ### LAN Access
 
-Services are accessible over the local network using mDNS hostnames (`adjective-noun.local`). StartOS runs its own DNS resolver and issues TLS certificates from a local Certificate Authority (CA). Users trust this CA on their client devices to get HTTPS connections over LAN without browser warnings.
+Services are accessible over the local network using mDNS hostnames (`your-server-name.local`). StartOS runs its own DNS resolver and issues TLS certificates from a local Certificate Authority (CA). Users trust this CA on their client devices to get HTTPS connections over LAN without browser warnings.
 
 ### Tor
 

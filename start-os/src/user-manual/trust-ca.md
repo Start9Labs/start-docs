@@ -19,7 +19,7 @@ There are multiple ways to download your server's Root CA.
 
 - ### Option 2: HTTP LAN
 
-  Visit your server's HTTP (_not_ HTTPS) .local address (`http://<adjective-noun>.local`) or LAN IP address (`http://192.168...`).
+  Visit your server's HTTP (_not_ HTTPS) .local address (`http://your-server-name.local`) or LAN IP address (`http://192.168...`).
 
 - ### Option 3: StartOS Dashboard
 
@@ -75,7 +75,7 @@ Select your platform:
 
 1. Select "OK" when the import is successful.
 
-1. Verify your server's unique `<adjective-noun> Local Root CA` certificate is in the "Certificates" folder.
+1. Verify your server's unique `<your-server-name> Local Root CA` certificate is in the "Certificates" folder.
 
 1. You can save the console settings (where we added a snap-in), if desired. Your Root CA will remain imported to the CA certificate store either way, and you will likely use this guide if you need to import a new certificate.
 
@@ -109,7 +109,7 @@ Select your platform:
 
 This guide applies to Android 13+, GrapheneOS, CalyxOS, and LineageOS.
 
-1. Go to `Settings > Security > More security settings > Encryption & credentials > Install a certificate > CA Certificate > Install Anyway`, then select your custom-named `adjective-noun.crt` certificate.
+1. Go to `Settings > Security > More security settings > Encryption & credentials > Install a certificate > CA Certificate > Install Anyway`, then select your custom-named `your-server-name.crt` certificate.
 
 1. If using Firefox, you must use [Firefox Beta](https://play.google.com/store/apps/details?id=org.mozilla.firefox_beta), then complete [this final step](#android--graphene).
 
@@ -127,12 +127,11 @@ This should work for most Debian-based systems, such as Debian, Ubuntu, Mint, Po
 
         cd ~/Downloads
 
-1.  Add your Root CA to your OS trust store. Be certain to replace `adjective-noun` with your server's unique hostname in the first command:
+1.  Add your Root CA to your OS trust store. Be certain to replace `your-server-name` with your server's unique hostname:
 
-        adjnoun=adjective-noun
         sudo mkdir -p /usr/share/ca-certificates/start9
-        sudo cp "${adjnoun}.crt" /usr/share/ca-certificates/start9/
-        sudo bash -c "echo 'start9/${adjnoun}.crt' >> /etc/ca-certificates.conf"
+        sudo cp "your-server-name.crt" /usr/share/ca-certificates/start9/
+        sudo bash -c "echo 'start9/your-server-name.crt' >> /etc/ca-certificates.conf"
         sudo update-ca-certificates
 
     If successful, you will see the output `1 added`.
@@ -146,10 +145,10 @@ This should work for most Debian-based systems, such as Debian, Ubuntu, Mint, Po
 
         cd ~/Downloads
 
-1.  Add your Root CA to your OS trust store. Be certain to replace `adjective-noun` with your server's unique hostname in the second command:
+1.  Add your Root CA to your OS trust store. Be certain to replace `your-server-name` with your server's unique hostname in the second command:
 
         sudo pacman -S ca-certificates
-        sudo cp "adjective-noun.crt" /etc/ca-certificates/trust-source/anchors/
+        sudo cp "your-server-name.crt" /etc/ca-certificates/trust-source/anchors/
         sudo update-ca-trust
 
     Despite no output from the last command, you can test your app right away.
@@ -161,10 +160,10 @@ This should work for most Debian-based systems, such as Debian, Ubuntu, Mint, Po
 
         cd ~/Downloads
 
-1.  Add your Root CA to your OS trust store. Be certain to replace `adjective-noun` with your server's unique hostname in the second command:
+1.  Add your Root CA to your OS trust store. Be certain to replace `your-server-name` with your server's unique hostname in the second command:
 
         sudo dnf install ca-certificates
-        sudo cp "adjective-noun.crt" /etc/pki/ca-trust/source/anchors/
+        sudo cp "your-server-name.crt" /etc/pki/ca-trust/source/anchors/
         sudo update-ca-trust
 
     There will be no output if the update-ca-trust command completes successfully.

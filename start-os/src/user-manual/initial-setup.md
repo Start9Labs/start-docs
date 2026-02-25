@@ -13,6 +13,8 @@
 
 1. Set a strong master password. _Make it good. Write it down_. Resetting your password is non-trivial, but your data will be preserved.
 
+1. Set your server name. Your server's unique `.local` hostname is derived from this name. You can change your server name later in [System Settings](./system-settings.md).
+
 1. Following successful initialization, you will be prompted to download a `StartOS-info.html`. This file contains your server's permanent `.local` URL and Root Certificate Authority (Root CA). It is recommended to save this file for future reference.
 
 1. Click "Continue to Login" and follow instructions for [Trusting your Root CA](./trust-ca.md)
