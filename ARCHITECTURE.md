@@ -37,6 +37,12 @@ start-docs/
 │       ├── quick-start.md
 │       ├── ... (14 guide pages)
 │       └── assets/
+├── bitcoin-guides/       ← Bitcoin Guides book
+│   ├── book.toml
+│   ├── theme -> ../theme
+│   └── src/
+│       ├── SUMMARY.md
+│       └── README.md
 ├── landing/              ← Static landing page at docs.start9.com/
 ├── theme/                ← Shared theme (CSS, JS, favicon)
 ├── widget/               ← docs-agent chat widget (TypeScript)
@@ -67,6 +73,7 @@ Each book is versioned independently via `versions.conf` at repo root:
 START_OS_VERSION="0.4.0.x"
 START_TUNNEL_VERSION="1.0.x"
 PACKAGING_VERSION="0.4.0.x"
+BITCOIN_GUIDES_VERSION="0.4.0.x"
 ```
 
 Build output goes to `docs/<book>/<version>/` (e.g. `docs/start-os/0.4.0.x/`). The `site-url` is set via environment variable at build time so mdbook generates correct search indexes and canonical URLs for the versioned path.

@@ -1,6 +1,6 @@
 # Start9 Docs
 
-The official documentation for [Start9](https://start9.com) products — covering StartOS, StartTunnel, and Service Packaging.
+The official documentation for [Start9](https://start9.com) products — covering StartOS, StartTunnel, Service Packaging, and Bitcoin Guides.
 
 **Live site:** [docs.start9.com](https://docs.start9.com)
 
@@ -11,6 +11,7 @@ The official documentation for [Start9](https://start9.com) products — coverin
 | [StartOS](start-os/) | [docs.start9.com/start-os](https://docs.start9.com/start-os/) | Installation, user manual, architecture, FAQ, firmware |
 | [StartTunnel](start-tunnel/) | [docs.start9.com/start-tunnel](https://docs.start9.com/start-tunnel/) | Installation, user manual, architecture, FAQ |
 | [Service Packaging](packaging/) | [docs.start9.com/packaging](https://docs.start9.com/packaging/) | Developer guide for building and publishing StartOS services |
+| [Bitcoin Guides](bitcoin-guides/) | [docs.start9.com/bitcoin-guides](https://docs.start9.com/bitcoin-guides/) | Guides for running Bitcoin and related services on StartOS |
 
 ## How It Works
 

@@ -51,6 +51,11 @@ const bookInfo: Record<string, { label: string; description: string }> = {
     description:
       "Learn how to package self-hosted services for StartOS using the Start SDK.",
   },
+  "bitcoin-guides": {
+    label: "Bitcoin Guides",
+    description:
+      "Guides for running Bitcoin, Lightning and related services on StartOS.",
+  },
 };
 
 /** Discover all books by finding {name}/book.toml at repo root */
@@ -92,7 +97,7 @@ function parseSummary(summaryPath: string): SummaryEntry[] {
 // Read a markdown file and extract its H1 title
 function readPage(
   srcDir: string,
-  relPath: string
+  relPath: string,
 ): { title: string; content: string } | null {
   const filePath = join(srcDir, relPath);
   if (!existsSync(filePath)) {
@@ -161,7 +166,7 @@ function extractIntro(content: string): string {
         .replace(/_{1,2}([^_]+)_{1,2}/g, "$1")
         // Strip inline code backticks
         .replace(/`([^`]+)`/g, "$1")
-        .trim()
+        .trim(),
     )
     .filter(Boolean)
     .join(" ");
@@ -182,7 +187,7 @@ function pathToUrl(bookName: string, relPath: string): string {
 function renderPageEntry(
   book: Book,
   entry: SummaryEntry,
-  headingLevel: string
+  headingLevel: string,
 ): string[] {
   const page = readPage(book.srcDir, entry.path);
   const title = page?.title || entry.title;
@@ -207,10 +212,7 @@ function renderPageEntry(
 // so an AI can decide which pages to fetch for full content.
 function generateBookLlmsTxt(book: Book): string {
   const entries = parseSummary(book.summaryPath);
-  const lines: string[] = [
-    `# ${book.label}`,
-    "",
-  ];
+  const lines: string[] = [`# ${book.label}`, ""];
 
   if (book.description) {
     lines.push(`> ${book.description}`);
@@ -232,10 +234,7 @@ function generateBookLlmsTxt(book: Book): string {
 // Generate llms-full.txt content for a single book
 function generateBookLlmsFullTxt(book: Book): string {
   const entries = parseSummary(book.summaryPath);
-  const parts: string[] = [
-    `# ${book.label} — Full Content`,
-    "",
-  ];
+  const parts: string[] = [`# ${book.label} — Full Content`, ""];
 
   if (book.description) {
     parts.push(`> ${book.description}`);
@@ -336,7 +335,9 @@ function main() {
   console.log("Generating llms.txt...");
 
   const books = discoverBooks();
-  console.log(`  Found ${books.length} book(s): ${books.map((b) => b.name).join(", ")}`);
+  console.log(
+    `  Found ${books.length} book(s): ${books.map((b) => b.name).join(", ")}`,
+  );
 
   // Ensure output directory exists
   if (!existsSync(OUT_DIR)) {
@@ -360,7 +361,9 @@ function main() {
     const bookLlmsFullTxt = generateBookLlmsFullTxt(book);
     const bookLlmsFullPath = join(bookOutDir, "llms-full.txt");
     writeFileSync(bookLlmsFullPath, bookLlmsFullTxt);
-    console.log(`  Wrote ${bookLlmsFullPath} (${(bookLlmsFullTxt.length / 1024).toFixed(0)}KB)`);
+    console.log(
+      `  Wrote ${bookLlmsFullPath} (${(bookLlmsFullTxt.length / 1024).toFixed(0)}KB)`,
+    );
   }
 
   // Global combined llms.txt and llms-full.txt
@@ -372,7 +375,9 @@ function main() {
   const llmsFullTxt = generateGlobalLlmsFullTxt(books);
   const llmsFullPath = join(OUT_DIR, "llms-full.txt");
   writeFileSync(llmsFullPath, llmsFullTxt);
-  console.log(`  Wrote ${llmsFullPath} (${(llmsFullTxt.length / 1024).toFixed(0)}KB)`);
+  console.log(
+    `  Wrote ${llmsFullPath} (${(llmsFullTxt.length / 1024).toFixed(0)}KB)`,
+  );
 
   console.log("Done!");
 }
