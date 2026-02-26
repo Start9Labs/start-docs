@@ -1,33 +1,22 @@
 #!/bin/bash
 set -e
 
-source versions.conf
-
 # Clean output
 rm -rf docs
 mkdir -p docs
 
-# Build books with versioned paths
-(cd start-os && MDBOOK_OUTPUT__HTML__SITE_URL="/start-os/$START_OS_VERSION/" \
-  mdbook build -d "../docs/start-os/$START_OS_VERSION")
+# Build each book listed in versions.conf
+while IFS='=' read -r book version; do
+  [[ -z "$book" || "$book" =~ ^# ]] && continue
 
-(cd start-tunnel && MDBOOK_OUTPUT__HTML__SITE_URL="/start-tunnel/$START_TUNNEL_VERSION/" \
-  mdbook build -d "../docs/start-tunnel/$START_TUNNEL_VERSION")
+  (cd "$book" && MDBOOK_OUTPUT__HTML__SITE_URL="/$book/$version/" \
+    mdbook build -d "../docs/$book/$version")
 
-(cd packaging && MDBOOK_OUTPUT__HTML__SITE_URL="/packaging/$PACKAGING_VERSION/" \
-  mdbook build -d "../docs/packaging/$PACKAGING_VERSION")
-
-(cd bitcoin-guides && MDBOOK_OUTPUT__HTML__SITE_URL="/bitcoin-guides/$BITCOIN_GUIDES_VERSION/" \
-  mdbook build -d "../docs/bitcoin-guides/$BITCOIN_GUIDES_VERSION")
-
-# Redirect stubs: /book/ → /book/version/
-for pair in "start-os:$START_OS_VERSION" "start-tunnel:$START_TUNNEL_VERSION" "packaging:$PACKAGING_VERSION" "bitcoin-guides:$BITCOIN_GUIDES_VERSION"; do
-  book="${pair%%:*}"
-  version="${pair##*:}"
+  # Redirect stub: /book/ → /book/version/
   cat > "docs/$book/index.html" <<EOF
 <!doctype html><meta http-equiv="refresh" content="0; url=/$book/$version/">
 EOF
-done
+done < versions.conf
 
 # Landing page
 cp landing/index.html docs/index.html

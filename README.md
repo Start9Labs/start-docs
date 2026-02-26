@@ -15,13 +15,13 @@ The official documentation for [Start9](https://start9.com) products — coverin
 
 ## How It Works
 
-Built with [mdBook](https://rust-lang.github.io/mdBook/) and deployed to GitHub Pages. Each product is an independent mdBook instance sharing a common theme.
+Built with [mdBook](https://rust-lang.github.io/mdBook/) and deployed via rsync to a VPS. Each product is an independent mdBook instance sharing a common theme.
 
 On push to `master`, GitHub Actions:
-1. Builds all books into a single `docs/` output directory
+1. Builds all books into versioned `docs/` output directories
 2. Generates `llms.txt` and `llms-full.txt` for LLM consumption
 3. Indexes the content for the embedded [Start Bot](widget/) chat widget via RAG ([Voyage AI](https://www.voyageai.com/) embeddings + [start9-me](https://github.com/Start9Labs/start9-me) semantic search)
-4. Deploys to GitHub Pages
+4. Deploys to the VPS via rsync and reloads nginx
 
 ## Getting Started
 

@@ -37,7 +37,7 @@ We welcome contributions! Whether you spot a typo or want to suggest new content
 
 ## Writing Docs
 
-All documentation lives under `start-os/src/`, `start-tunnel/src/`, or `packaging/src/` as Markdown files. The sidebar for each book is defined by its `src/SUMMARY.md`.
+All documentation lives under `start-os/src/`, `start-tunnel/src/`, `packaging/src/`, or `bitcoin-guides/src/` as Markdown files. The sidebar for each book is defined by its `src/SUMMARY.md`.
 
 ### Admonitions
 

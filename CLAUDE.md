@@ -10,6 +10,7 @@ See README.md for what this project is, CONTRIBUTING.md for how to work on it, a
 - Cross-book links must use absolute paths (`/start-tunnel/user-manual/devices.html`), not relative paths.
 - Every page should have introductory prose between the H1 heading and the first H2. This text is auto-extracted for `llms.txt` to help AI decide which pages to fetch.
 - When creating a new page, add it to the book's `src/SUMMARY.md` or it won't appear in the sidebar or build.
+- When adding a new book, add a single line to `versions.conf` — build, deploy, and nginx routing all derive from it. No other config files need updating.
 
 ## Maintenance
 
@@ -31,3 +32,4 @@ See README.md for what this project is, CONTRIBUTING.md for how to work on it, a
 - **StartOS 0.4.0**: Tor is a marketplace service (not built into StartOS core). Holesail is also a marketplace service. Outbound gateways support a system default plus per-service override.
 - **Packaging guide**: The docs are the single source of truth for service packaging. Code examples are based on the [hello-world](https://github.com/Start9Labs/hello-world-startos) template.
 - **StartTunnel**: A WireGuard-based gateway service for clearnet access. Separate product, separate book.
+- **Bitcoin Guides**: Wallet indexes, Electrum servers, archival vs pruned nodes, LND migration. The Bitcoin package on StartOS integrates btc-rpc-proxy for on-demand block fetching, so pruned nodes work transparently with multiple downstream services.

@@ -42,7 +42,12 @@ start-docs/
 │   ├── theme -> ../theme
 │   └── src/
 │       ├── SUMMARY.md
-│       └── README.md
+│       ├── README.md
+│       ├── archival-vs-pruned.md
+│       ├── electrum-servers.md
+│       ├── bitcoin-wallets.md
+│       ├── lightning-wallets.md
+│       └── lnd-migration.md
 ├── landing/              ← Static landing page at docs.start9.com/
 ├── theme/                ← Shared theme (CSS, JS, favicon)
 ├── widget/               ← docs-agent chat widget (TypeScript)
@@ -69,18 +74,20 @@ The `theme/` directory at repo root is the single source of truth for styling. E
 
 Each book is versioned independently via `versions.conf` at repo root:
 
-```bash
-START_OS_VERSION="0.4.0.x"
-START_TUNNEL_VERSION="1.0.x"
-PACKAGING_VERSION="0.4.0.x"
-BITCOIN_GUIDES_VERSION="0.4.0.x"
 ```
+start-os=0.4.0.x
+start-tunnel=1.0.x
+packaging=0.4.0.x
+bitcoin-guides=1.0.x
+```
+
+Adding a new book only requires adding a line to `versions.conf` — the build script, deploy workflow, and nginx routing all derive from this file automatically.
 
 Build output goes to `docs/<book>/<version>/` (e.g. `docs/start-os/0.4.0.x/`). The `site-url` is set via environment variable at build time so mdbook generates correct search indexes and canonical URLs for the versioned path.
 
 ## Build Pipeline
 
-`build.sh` sources `versions.conf` and runs `mdbook build` in each book directory with versioned output paths. The landing page is copied to `docs/index.html`. CI then generates `llms.txt` and `llms-full.txt` for LLM consumption.
+`build.sh` iterates over `versions.conf` and runs `mdbook build` in each book directory with versioned output paths. The landing page is copied to `docs/index.html`. CI then generates `llms.txt` and `llms-full.txt` for LLM consumption.
 
 ## Deployment
 
@@ -90,6 +97,8 @@ Deployment is via GitHub Actions (`.github/workflows/deploy.yml`):
 2. rsync each versioned book directory to the VPS at `/var/www/html/docs.start9.com/`
 3. Generate and upload `book_versions.conf` (nginx map config) from `versions.conf`
 4. Reload nginx
+
+The nginx site configs are fully generic — they contain no book names. The book list is controlled entirely by `book_versions.conf`, which the deploy workflow generates from `versions.conf`. Unversioned URLs (e.g. `/start-os/`) are redirected to the latest version via nginx maps. The `?version=` query param can override this for linking to specific versions.
 
 The deploy key is stored as the `DOCS_DEPLOY_KEY` GitHub Actions secret.
 
