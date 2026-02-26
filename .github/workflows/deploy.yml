@@ -70,6 +70,7 @@ jobs:
           # Sync each book's versioned directory + llms.txt
           while IFS='=' read -r book version; do
             [[ -z "$book" || "$book" =~ ^# ]] && continue
+            ssh docs-vps "mkdir -p $DEST/$book/$version"
             rsync -az --delete "docs/$book/$version/" "docs-vps:$DEST/$book/$version/"
             rsync -az docs/$book/llms*.txt "docs-vps:$DEST/$book/$version/" 2>/dev/null || true
           done < versions.conf
