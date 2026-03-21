@@ -47,7 +47,7 @@ You can then push to any git hosting provider of your choice.
 
 {{#endtabs}}
 
-## Build
+## Build the Package
 
 Install dependencies and build the package:
 

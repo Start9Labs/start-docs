@@ -106,7 +106,7 @@ result: {
 
 Actions can be surfaced to users as tasks — notifications that prompt them to run a specific action at the right time. See [Tasks](./tasks.md) for details.
 
-## Common Patterns
+## Implementation Examples
 
 ### Auto-Generate Passwords
 

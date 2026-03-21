@@ -2,12 +2,12 @@
 
 Start9's 2023 Server One was the Intel NUC11ATKC4, whose BIOS was refered to as "ATJSLCPX" by Intel, and whose latest release was AT0043.cap before they officially discontinued support for the product line.
 
-## You Will Need
+## Required Equipment
 
 - A monitor and keyboard.
 - A USB stick, formatted FAT32.
 
-## Instructions
+## BIOS Update Steps
 
 1. Download [Intel_ATJSLCPX-AT0043.cap](assets/firmware/binaries/Intel_ATJSLCPX-AT0043.cap) to the USB stick
 

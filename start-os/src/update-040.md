@@ -96,7 +96,7 @@ Before starting any services, create a [full system backup](backup-create.md) to
 
 Once all services are updated and backed up, you can start them.
 
-## Notes
+## Post-Migration Notes
 
 ### Tor Cleanup
 

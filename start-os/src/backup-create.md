@@ -9,7 +9,7 @@ Back up your server's data to a physical drive or a network folder. Backups can 
 
 <div class="yt-video" data-id="omHymkqroRk" data-title="Creating Backups"></div>
 
-## What You Need to Know
+## Important Info
 
 1. You can create backups to a [physical drive](#physical-drive) plugged directly into your server, or over-the-air to another device on the same LAN (a [network folder](#network-folder)).
 
@@ -22,6 +22,8 @@ Back up your server's data to a physical drive or a network folder. Backups can 
 1. A service cannot be used while it is backing up. You may, however, continue to use your server and other services.
 
 1. Upon completion, StartOS issues a backup report, indicating which services were backed up, as well as any errors.
+
+1. Backups are differential — each new backup to the same target overwrites the previous one. To maintain multiple backup points, use multiple backup targets.
 
 1. Backups taken from a specific system architecture (x86, ARM, RISC-V) are backed up for just that architecture. If restored to another architecture, they will likely need to be reinstalled to run efficiently.
 
@@ -61,9 +63,9 @@ A network folder backup sends your encrypted backup over the LAN to a shared fol
 
 1. Click the toggle to enable file sharing, then click the "plus" icon and select your backups folder.
 
-1. Click "Options".
+1. Click "Options" and ensure "Share files and folders using SMB" is checked.
 
-1. Select the user who owns the folder.
+1. Check the box next to the user who owns the folder, then click "Done".
 
 > [!TIP]
 > You can find the hostname at the top of the sharing window. The hostname will be an address beginning with `smb://`. To use as hostname, disregard the `smb://` and simply enter the IP address that follows it. Alternatively, you can use the computer hostname (open Terminal and type `hostname`). Either method will work.
@@ -88,7 +90,7 @@ A network folder backup sends your encrypted backup over the LAN to a shared fol
    > [!WARNING]
    > If you get a dialog about your network being "Public", you may wish to change to "Private" if this is your home network. Otherwise you may turn on network sharing for public networks.
 
-1. Note the Windows directory path in grey text, beginning at the first single slash (`\`). You will need this path when connecting from StartOS.
+1. Note the share name shown in the network path (e.g. `\\COMPUTERNAME\SharedFolder` — the share name is `SharedFolder`). You will need this when connecting from StartOS.
 
 {{#endtab}}
 
@@ -96,28 +98,55 @@ A network folder backup sends your encrypted backup over the LAN to a shared fol
 
 1.  Install Samba if not already:
 
+    ```
     sudo apt install samba && sudo systemctl enable smbd
+    ```
 
 1.  Add your user to samba, replacing `$USER` with your Linux username.
 
-        sudo smbpasswd -a $USER
+    ```
+    sudo smbpasswd -a $USER
+    ```
 
     You will be prompted for your linux password. Then, you must create a new SMB password for the user with permission to write to your new backup share. Keep the password somewhere safe, such as Vaultwarden.
 
-1.  Identify or create a folder to store your server backups.
+1.  Identify or create a folder to store your server backups. For example:
+
+    ```
+    mkdir -p /home/$USER/start9-backup
+    ```
+
+    replacing `$USER` with your Linux username and "start9-backup" with whatever you want the folder to be named.
 
     > [!TIP]
     > This folder can be located on an external drive connected to your Linux machine.
 
-1.  Right click the folder and click "Properties".
+1.  Configure Samba by adding the following to the end of your `/etc/samba/smb.conf` file:
 
-1.  Click "Local Network Share".
+    ```
+    [start9-backup]
+        path = /home/$USER/start9-backup
+        create mask = 0600
+        directory mask = 0700
+        read only = no
+        guest ok = no
+    ```
 
-1.  Select "Share this folder" and give the folder a Share name. _Remember the name_, you will need it later. Then click "Create Share".
+    Where:
+    - `[start9-backup]` is the share name — you can change it, but _remember the name_, you will need it later.
+    - `path` is the full directory path to the folder you created above.
+
+1.  Restart Samba to apply the changes:
+
+    ```
+    sudo systemctl restart smbd
+    ```
 
 1.  If your installation of Ubuntu is running a firewall by default or due to your own custom configuration, enter this command to allow connections to Samba. If it generates an error, you can safely ignore it:
 
+    ```
     sudo ufw allow Samba
+    ```
 
 {{#endtab}}
 
@@ -125,12 +154,16 @@ A network folder backup sends your encrypted backup over the LAN to a shared fol
 
 1.  Install Samba if not already:
 
+    ```
     sudo apt install samba && sudo systemctl enable smbd
+    ```
 
 1.  Add your user to samba, replacing `$USER` with your Linux username.
 
-        sudo usermod -a -G sambashare $USER
-        sudo smbpasswd -a $USER
+    ```
+    sudo usermod -a -G sambashare $USER
+    sudo smbpasswd -a $USER
+    ```
 
     You will be prompted for your linux password. Then, you must create a new SMB password for the user with permission to write to your new backup share. Keep the password somewhere safe, such as Vaultwarden.
 
@@ -141,11 +174,13 @@ A network folder backup sends your encrypted backup over the LAN to a shared fol
 
 1.  Right click the folder and click "Sharing Options".
 
-1.  Select "Share this folder" and give the folder a Share name (maximum 12 characters). _Remember the name_, you will need it later. Click "Create Share".
+1.  Select "Share this folder" and give the folder a Share name. _Remember the name_, you will need it later. Click "Create Share".
 
 1.  If your installation of Mint is running a firewall by default or due to your own custom configuration, enter this command to allow connections to Samba. If it generates an error, you can safely ignore it:
 
+    ```
     sudo ufw allow Samba
+    ```
 
 {{#endtab}}
 
@@ -196,12 +231,14 @@ A network folder backup sends your encrypted backup over the LAN to a shared fol
 
 1.  Configure Samba by adding the following to the end of your `/etc/samba/smb.conf` file:
 
-        [backup-share]
-            path = "/home/$USER/start9-backup"
-            create mask = 0600
-            directory mask = 0700
-            read only = no
-            guest ok = no
+    ```
+    [backup-share]
+        path = /home/$USER/start9-backup
+        create mask = 0600
+        directory mask = 0700
+        read only = no
+        guest ok = no
+    ```
 
     Where:
     - `[backup-share]` can be replaced with whatever you want (must remain inside brackets). This is your `Share Name`. _Remember the name_, you will need it later.
@@ -209,19 +246,32 @@ A network folder backup sends your encrypted backup over the LAN to a shared fol
 
 1.  Open a terminal and enter the following command, replacing `$USER` with your Linux username:
 
-        sudo smbpasswd -a $USER
+    ```
+    sudo smbpasswd -a $USER
+    ```
 
     This creates a password for the Local Network Share. Keep it somewhere safe, such as Vaultwarden.
+
+1.  Enable and restart Samba to apply the changes:
+
+    ```
+    sudo systemctl enable smbd
+    sudo systemctl restart smbd
+    ```
 
 1.  If your Linux system has a firewall enabled by default or due to custom configuration, you may need to allow connections to Samba. The command varies depending on the firewall in use:
     - For systems using UFW (commonly found on Debian-based distros):
 
-          sudo ufw allow Samba
+      ```
+      sudo ufw allow Samba
+      ```
 
     - For systems using firewalld (common on RHEL-based distros):
 
-          sudo firewall-cmd --permanent --add-service=samba
-          sudo firewall-cmd --reload
+      ```
+      sudo firewall-cmd --permanent --add-service=samba
+      sudo firewall-cmd --reload
+      ```
 
 {{#endtab}}
 
@@ -244,25 +294,41 @@ A network folder backup sends your encrypted backup over the LAN to a shared fol
 
 {{#endtab}}
 
-{{#tab name="TrueNAS"}}
+{{#tab name="TrueNAS SCALE"}}
 
-1. Ensure you have already created a ZFS disk pool in `Storage > Pool` as a place to store your backups. If you need help with this step, see the [TrueNAS documentation](https://www.truenas.com/docs/scale/scaletutorials/storage/pools/createpoolscale/#creating-a-pool).
+1. Ensure you have already created a storage pool. If you need help, see the [TrueNAS SCALE documentation](https://www.truenas.com/docs/scale/scaletutorials/storage/pools/createpoolscale/#creating-a-pool).
 
-1. In the TrueNAS UI, create a user for writing backups. Go to `Accounts > Users > ADD`.
+1. Create a dataset for backups. Go to `Datasets`, select your pool, and click "Add Dataset". Give it a name (e.g. `start9-backup`) and click "Save".
 
-1. Enter a Full Name, Username, and Password for the new user. Near the bottom, click "Shell: nologin", and enable "Samba Authentication". Click "SUBMIT".
+1. Create a user for writing backups. Go to `Credentials > Local Users` and click "Add". Enter a Full Name, Username, and Password. Set Shell to `nologin`. Click "Save".
+
+1. Go to `System > Services`. Enable "SMB" and check "Start Automatically".
+
+1. Go to `Shares` and click "Add" under "Windows (SMB) Shares". Set the Path to your dataset (e.g. `/mnt/pool/start9-backup`). Give the share a name. Click "Save".
+
+1. When prompted to configure the ACL, click "Configure Now". Under "User", select the user you created and set permissions to "Full Control". Click **Save**.
+
+{{#endtab}}
+
+{{#tab name="TrueNAS CORE"}}
+
+1. Ensure you have already created a ZFS pool in `Storage > Pools`. If you need help, see the [TrueNAS CORE documentation](https://www.truenas.com/docs/core/coretutorials/storage/pools/poolcreate/).
+
+1. Create a user for writing backups. Go to `Accounts > Users > ADD`. Enter a Full Name, Username, and Password. Near the bottom, set "Shell" to `nologin` and enable "Samba Authentication". Click "SUBMIT".
 
 1. Go to `Services > SMB`. Enable SMB and check the box "Start Automatically".
 
 1. Open a shell and create your backups directory. For example:
 
+   ```
    mkdir /mnt/zpooldisk1/start9backupshare
+   ```
 
-1. Under `Sharing > Windows Shares (SMB)`, drill down into the path until you find the directory to be shared. Give the share a name and click "SUBMIT".
+1. Under `Sharing > Windows Shares (SMB)`, click "ADD". Set the path to the directory you created. Give the share a name and click "SUBMIT".
 
-1. A `Configure ACL` dialog will emerge. Click "CONFIGURE NOW".
+1. A "Configure ACL" dialog will appear. Click "CONFIGURE NOW".
 
-1. On the `Edit ACL` screen, under "User", click "Apply User" and select the username you created. On the right-hand side, `Permissions Type` should be set to "Basic" and `Permissions` should be set to "Full Control". Click **SAVE**.
+1. On the "Edit ACL" screen, click "Apply User" and select the user you created. Set `Permissions Type` to "Basic" and `Permissions` to "Full Control". Click **SAVE**.
 
 {{#endtab}}
 
@@ -287,17 +353,17 @@ A network folder backup sends your encrypted backup over the LAN to a shared fol
 
    {{#tab name="Windows"}}
    1. **Hostname**: Your Windows computer name (shown after `\\` in the sharing dialog).
-   1. **Path**: The folder path from the sharing dialog, replacing backslashes `\` with forward slashes `/` (e.g. `/Users/win/Desktop/SharedFolder`).
+   1. **Path**: The share name from the sharing dialog (e.g. `SharedFolder`), _not_ the full directory path.
    1. **Username**: Your Windows user who owns the shared folder.
    1. **Password**: Your password for the above user. You _cannot_ use a PIN.
 
    > [!WARNING]
    > Ensure you are not using a PIN and that Office365 accounts are not in use — try a regular local user instead. If you receive `mount error(115): Operation now in progress`, navigate to `Start > Settings > Network & Internet > Ethernet (or WiFi)` and select the "Private" profile.
-      {{#endtab}}
+   > {{#endtab}}
 
    {{#tab name="Ubuntu"}}
    1. **Hostname**: The name of your Linux machine on the LAN.
-   1. **Path**: The "Share Name" from the sharing dialog, _not_ the full directory path.
+   1. **Path**: The share name from your Samba config (e.g. `start9-backup`), _not_ the full directory path.
    1. **Username**: Your Linux username on the remote machine.
    1. **Password**: The SMB password you created with `smbpasswd`.
       {{#endtab}}
@@ -323,10 +389,17 @@ A network folder backup sends your encrypted backup over the LAN to a shared fol
    1. **Password**: Your password for the above user.
       {{#endtab}}
 
-   {{#tab name="TrueNAS"}}
+   {{#tab name="TrueNAS SCALE"}}
    1. **Hostname**: The name of your TrueNAS device on the LAN (e.g. `truenas.local`).
-   1. **Path**: The _name_ of your shared folder, _not_ the full directory path (e.g. `nasshare`).
-   1. **Username**: Your TrueNAS user who owns the shared folder.
+   1. **Path**: The share name you chose when creating the SMB share, _not_ the full directory path.
+   1. **Username**: The TrueNAS user you created for backups.
+   1. **Password**: Your password for the above user.
+      {{#endtab}}
+
+   {{#tab name="TrueNAS CORE"}}
+   1. **Hostname**: The name of your TrueNAS device on the LAN (e.g. `truenas.local`).
+   1. **Path**: The share name you chose when creating the SMB share, _not_ the full directory path.
+   1. **Username**: The TrueNAS user you created for backups.
    1. **Password**: Your password for the above user.
       {{#endtab}}
 

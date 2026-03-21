@@ -133,7 +133,7 @@ Apply an available update.
 
 - `--format` — Output format
 
-## Server
+## Server Management
 
 ### `start-tunnel restart`
 

@@ -2,7 +2,7 @@
 
 The Marketplace is where you discover services to install on your StartOS server. It is a collection of independent registries, like stores in a mall, each offering its own curated list of services.
 
-## How It Works
+## Registry System and Navigation
 
 Each registry in the Marketplace is maintained independently. When you open the Marketplace, you browse one registry at a time. To switch between registries, click the arrows underneath the current registry title.
 

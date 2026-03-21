@@ -2,14 +2,10 @@
 
 Make your services publicly reachable on the Internet using standard domains (`.com`, `.net`, etc.). This requires [gateway](gateways.md) selection, a domain name, DNS configuration, and port forwarding.
 
-## Use Case
-
-This connection method permits hosting a service interface on the public Internet.
-
 > [!WARNING]
 > If your ISP uses [CGNAT](cgnat.md), your router cannot accept inbound connections and port forwarding will not work. You **must** use a [StartTunnel](/start-tunnel/) gateway for clearnet hosting.
 
-## Choosing a Gateway
+## Router vs StartTunnel Gateway
 
 When hosting services on the clearnet, anyone who connects will know the IP address of the gateway used. Knowing a gateway's IP address reveals its approximate geographic location:
 
@@ -31,7 +27,7 @@ If your gateway is your home router, you are revealing the approximate location 
 | **CGNAT compatible** | No. If your ISP uses [CGNAT](cgnat.md), you cannot use your router as a gateway. | Yes |
 | **Port forwarding** | Configured in router admin panel | Configured in [StartTunnel](/start-tunnel/port-forwarding.html) |
 
-## Adding a Public Domain
+## Add a Public Domain
 
 1. On the service interface page, locate your preferred gateway and click "Add Domain", then select "Public Domain".
 
@@ -45,7 +41,7 @@ If your gateway is your home router, you are revealing the approximate location 
 
 1. StartOS will automatically test your DNS record and port forwarding. If both pass, the domain is ready to use. If either test fails, a setup modal will appear showing the failing tests with instructions to remedy and the ability to re-test.
 
-## Configuring DNS
+## Set Up DNS Records
 
 StartOS tests DNS automatically when you add or enable a public domain, and will guide you through the setup if the test fails. For reference, here is what is needed:
 
@@ -56,7 +52,7 @@ StartOS tests DNS automatically when you add or enable a public domain, and will
    > [!TIP]
    > It can take up to a few hours for DNS changes to propagate. You can check propagation using [https://dnschecker.org](https://dnschecker.org).
 
-## Port Forwarding
+## Configure Port Forwarding
 
 To expose a public domain to the Internet, the appropriate port must be forwarded in the corresponding gateway. StartOS tests port forwarding automatically when you add or enable a public domain, and will guide you through the setup if the test fails.
 

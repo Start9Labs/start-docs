@@ -144,7 +144,7 @@ const shape = object({
 })
 ```
 
-## Best Practices
+## Design Guidelines
 
 ### Prefer Direct FileModel Over store.json + Environment Variables
 
@@ -186,7 +186,7 @@ await configToml.merge(effects, { allow_registration: !current })
 > [!WARNING]
 > Do NOT read a FileModel in main.ts and then write it back to the subcontainer rootfs. The file already lives on the volume — just mount it.
 
-## Common Patterns
+## Configuration Examples
 
 ### Optional Fields with Defaults
 

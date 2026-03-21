@@ -2,7 +2,7 @@
 
 Tasks are notifications that prompt you to take action on a service. They appear on the dashboard and guide you through setup, configuration, and ongoing maintenance.
 
-## Levels
+## Task Severity Levels
 
 Tasks have three levels:
 

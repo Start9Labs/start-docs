@@ -11,7 +11,7 @@ Dependencies are other services that a service requires or can optionally integr
 
 When you install a service, StartOS checks its dependencies. If a required dependency is not installed, you will be prompted to install it. StartOS also monitors version compatibility — if a dependency is installed but running an incompatible version, you will be notified.
 
-## Configuration
+## Configuring Dependencies
 
 Some dependencies need to be configured to work with the services that depend on them. When this is the case, a [task](tasks.md) will appear on the dashboard guiding you through the necessary steps. These tasks often link directly to an [action](actions.md) on the dependency, with form fields pre-filled to simplify configuration.
 

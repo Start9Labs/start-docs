@@ -10,7 +10,7 @@ A service interface is a network endpoint exposed by a service running on your s
 
 - **P2P** — A peer-to-peer endpoint for the service to communicate with other nodes on its network. Examples: Bitcoin P2P, Lightning P2P.
 
-## Addresses
+## Viewing Interface Addresses
 
 Clicking a service interface from the dashboard opens its **addresses page**. This page shows all the ways that interface can be reached, organized by [gateway](gateways.md).
 
@@ -39,7 +39,7 @@ You can add domains to a gateway table by clicking "Add Domain" on the gateway a
 - **[Public Domain](clearnet.md)** — A clearnet domain (e.g. `mysite.com`) accessible from the Internet. Requires DNS configuration and port forwarding.
 - **[Private Domain](private-domains.md)** — A custom domain (e.g. `nextcloud.private`) that works on LAN and VPN. Requires your gateway to use StartOS for DNS. Only available on Ethernet and Wireless gateways — not WireGuard (StartTunnel) gateways.
 
-### Tor
+### Tor Onion Addresses
 
 If the [Tor](tor.md) service is installed and running, a **Tor** table also appears on the addresses page. Tor functions like a gateway but is managed as a marketplace service rather than a system gateway.
 
@@ -55,7 +55,7 @@ The Tor table is empty by default. To add onion addresses:
 
 1. To view your onion addresses, go to **Actions > View Onion Addresses**. They will also appear in the Tor table on each service interface's addresses page.
 
-### Holesail
+### Holesail Tunnels
 
 If the [Holesail](holesail.md) service is installed and running, a **Holesail** table also appears on the addresses page. Like Tor, Holesail is managed as a marketplace service.
 

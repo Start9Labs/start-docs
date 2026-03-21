@@ -9,7 +9,7 @@ Public access is for services you intentionally want to share with others. For e
 > [!WARNING]
 > If your ISP uses [CGNAT](cgnat.md), your router cannot accept inbound connections. Clearnet hosting and public IP access require a [StartTunnel](/start-tunnel/) gateway. Tor and Holesail work regardless of CGNAT.
 
-## Strategies
+## Public Hosting Methods
 
 - **[Clearnet](clearnet.md)** — Host services on the public Internet using standard domains (`.com`, `.net`, etc.). Requires [gateway](gateways.md) selection, a domain name, DNS configuration, and port forwarding. Anyone can access your service using a normal browser.
 

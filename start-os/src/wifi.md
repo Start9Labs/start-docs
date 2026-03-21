@@ -32,6 +32,6 @@ To connect to a network that does not broadcast its SSID, tap the **Add** button
 - **Save for later** - Saves the credentials without connecting immediately.
 - **Save and connect** - Saves the credentials and connects right away.
 
-## Troubleshooting
+## Fix WiFi Connection Issues
 
 If a connection attempt fails, you will see a "Failed to connect" warning. Double-check the password and try again. The system retries several times before reporting failure, so the process may take a moment.

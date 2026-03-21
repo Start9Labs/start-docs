@@ -2,15 +2,7 @@
 
 An Electrum server sits between your Bitcoin node and your wallet. It indexes the blockchain so wallets can quickly look up balances, transaction history, and unspent outputs for any address — without scanning the entire chain themselves. Most Bitcoin wallets connect to your self-hosted infrastructure through an Electrum server rather than directly via Bitcoin RPC.
 
-## Why You Need One
-
-A Bitcoin node stores every block ever produced, but it does not maintain an index of which addresses own which coins. When a wallet asks "what is the balance of this address?", the node would have to scan the entire blockchain to answer. This is slow and impractical for everyday use.
-
-An Electrum server solves this by building a persistent index that maps addresses to their transactions and unspent outputs. Once the index is built, lookups are instant. The server speaks the Electrum protocol, a lightweight client-server protocol that wallets already know how to use.
-
-The result: your wallet connects to your own Electrum server, your Electrum server talks to your own Bitcoin node, and you get fast address lookups without trusting anyone else's infrastructure.
-
-## How It Works
+A Bitcoin node stores every block ever produced, but it does not maintain an index of which addresses own which coins. When a wallet asks "what is the balance of this address?", the node would have to scan the entire blockchain to answer. An Electrum server solves this by building a persistent index that maps addresses to their transactions and unspent outputs. Once the index is built, lookups are instant. The server speaks the Electrum protocol, a lightweight client-server protocol that wallets already know how to use.
 
 ```
 ┌──────────┐      Electrum       ┌─────────────────┐       RPC        ┌──────────────┐

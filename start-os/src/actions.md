@@ -15,7 +15,7 @@ Actions vary by service. Common examples include:
 
 Click an action in the sidebar to run it. Some actions execute immediately and display a result. Others present a form for you to fill out before submitting.
 
-## Availability
+## When Actions Are Available
 
 Not all actions are available at all times. Some actions only appear — or can only be run — when a service is running, stopped, or in a particular state. If an action is unavailable, it will be grayed out or hidden.
 

@@ -2,7 +2,7 @@
 
 Every StartOS package README should document **how your service on StartOS differs from the upstream version**. Users should be able to read your README and understand exactly what is different -- everything else, they can find in the upstream docs.
 
-## Philosophy
+## Guiding Principles
 
 **Do not duplicate upstream documentation.** If something is not mentioned in your README, users should assume the upstream docs are accurate.
 
