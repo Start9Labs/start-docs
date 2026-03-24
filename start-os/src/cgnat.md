@@ -35,7 +35,7 @@ CGNAT does **not** affect:
 
 ## The Solution: StartTunnel
 
-[StartTunnel](/start-tunnel/) is a WireGuard-based gateway that runs on a VPS with a public IP address. Your server connects _outbound_ to the VPS, and the VPS accepts inbound connections on your behalf. Because the VPS has a real public IP, CGNAT is completely bypassed.
+[StartTunnel](/start-tunnel/) is a virtual private router (VPR) — a minimal, self-hosted router that runs on a VPS with a public IP address. Your server connects _outbound_ to the VPS, and the VPS accepts inbound connections on your behalf — just like a home router, but in the cloud. Because the VPS has a real public IP, CGNAT is completely bypassed.
 
 With a StartTunnel gateway, you get full [clearnet hosting](clearnet.md), [public IP access](public-ip.md), and [inbound VPN](inbound-vpn.md) — regardless of your ISP's network configuration.
 

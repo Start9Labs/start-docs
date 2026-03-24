@@ -18,15 +18,14 @@ await sdk.action.createOwnTask(effects, getAdminCredentials, 'critical', {
 | ---------- | ------------------------------------------ | ------------------------------------------------------ |
 | `effects`  | `Effects`                                  | Provided by the calling context                        |
 | `action`   | `ActionDefinition`                         | The action to prompt the user to run                   |
-| `severity` | `'critical' \| 'high' \| 'medium' \| 'low'` | How urgently the task is surfaced in the UI           |
+| `severity` | `'critical' \| 'important' \| 'optional'` | How urgently the task is surfaced in the UI           |
 | `options`  | `{ reason: string }`                       | Human-readable explanation shown to the user           |
 
 ### Severity Levels
 
-- **critical** — Blocks the service from starting until the user completes the task. Use for essential setup like retrieving generated passwords or accepting terms.
-- **high** — Prominently displayed but does not block the service.
-- **medium** — Standard priority notification.
-- **low** — Informational, least prominent.
+- **critical** — Blocks the service from starting until the user completes the task. Use for essential setup like retrieving generated passwords or selecting a backend.
+- **important** — Prominently displayed but does not block the service. Use for post-install reminders like disabling registrations.
+- **optional** — Informational, least prominent.
 
 ## Common Patterns
 
@@ -100,7 +99,7 @@ export const setDependencies = sdk.setupDependencies(async ({ effects }) => {
     'dependency-id': {
       kind: 'running',
       versionRange: '>=1.0.0:0',
-      healthChecks: [],
+      healthChecks: ['dependency-id'],
     },
   }
 })
@@ -113,7 +112,7 @@ export const setDependencies = sdk.setupDependencies(async ({ effects }) => {
 | `effects`  | `Effects`                                  | Provided by the calling context                        |
 | `packageId`| `string`                                   | The dependency's service ID                            |
 | `action`   | `ActionDefinition`                         | Imported from the dependency's package                 |
-| `severity` | `'critical' \| 'high' \| 'medium' \| 'low'` | How urgently the task is surfaced                    |
+| `severity` | `'critical' \| 'important' \| 'optional'` | How urgently the task is surfaced                    |
 | `options`  | `object`                                   | See below                                              |
 
 ### Options

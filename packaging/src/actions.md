@@ -27,7 +27,7 @@ export const getAdminCredentials = sdk.Action.withoutInput(
 
   // Handler
   async ({ effects }) => {
-    const store = await storeJson.read((s) => s).once();
+    const store = await storeJson.read().once();
 
     return {
       version: "1",
@@ -96,8 +96,8 @@ result: {
 result: {
   type: 'group',
   value: [
-    { type: 'single', name: 'Username', value: 'admin', masked: false, copyable: true, qr: false },
-    { type: 'single', name: 'Password', value: 'secret', masked: true, copyable: true, qr: false },
+    { type: 'single', name: 'Username', description: null, value: 'admin', masked: false, copyable: true, qr: false },
+    { type: 'single', name: 'Password', description: null, value: 'secret', masked: true, copyable: true, qr: false },
   ],
 }
 ```
@@ -142,6 +142,8 @@ export const initializeService = sdk.setupOnInit(async (effects, kind) => {
 });
 
 // In actions/toggleRegistrations.ts
+import { configToml } from '../fileModels/config.toml'
+
 export const toggleRegistrations = sdk.Action.withoutInput(
   "toggle-registrations",
   async ({ effects }) => {
@@ -176,38 +178,85 @@ export const toggleRegistrations = sdk.Action.withoutInput(
 );
 ```
 
+## Action With Input
+
+For actions that accept user input, use `sdk.Action.withInput()` with an `InputSpec` form, a prefill function, and a handler:
+
+```typescript
+import { sdk } from '../sdk'
+import { configFile } from '../fileModels/config'
+import { i18n } from '../i18n'
+const { InputSpec, Value } = sdk
+
+const inputSpec = InputSpec.of({
+  timeout: Value.number({
+    name: i18n('Session Timeout'),
+    description: i18n('How long before idle sessions expire'),
+    required: false,
+    default: 30,
+    min: 1,
+    max: 1440,
+    step: 1,
+    integer: true,
+    units: 'minutes',
+  }),
+})
+
+export const configure = sdk.Action.withInput(
+  'configure',
+  {
+    name: i18n('Configure'),
+    description: i18n('Adjust service settings'),
+    warning: null,
+    allowedStatuses: 'any',
+    group: null,
+    visibility: 'enabled',
+  },
+  inputSpec,
+  // Prefill form with current values
+  async ({ effects }) => {
+    const current = await configFile.read((c) => c.timeout).once()
+    return { timeout: current }
+  },
+  // Handler — write new values
+  async ({ effects, input }) => {
+    await configFile.merge(effects, { timeout: input.timeout })
+  },
+)
+```
+
+The five arguments to `withInput` are: action ID, metadata (static object or async function), input spec, prefill function, and handler.
+
 ## SMTP Configuration
 
-The SDK provides a built-in SMTP input specification for managing email credentials. This supports three modes: disabled, system SMTP (from StartOS settings), or custom SMTP.
+The SDK provides a built-in SMTP input specification for managing email credentials. This supports three modes: disabled, system SMTP (from StartOS settings), or custom SMTP with provider presets (Gmail, Amazon SES, SendGrid, Mailgun, Proton Mail, or custom).
 
 ### 1. Add SMTP to store.json.ts
 
-Add the SMTP validator to your store's shape definition. See [File Models](./file-models.md) for more on file model patterns.
+Use the SDK's `smtpShape` zod schema in your store's shape definition. See [File Models](./file-models.md) for more on file model patterns.
 
 ```typescript
-import { matches, FileHelper } from "@start9labs/start-sdk";
+import { FileHelper, smtpShape, z } from "@start9labs/start-sdk";
 import { sdk } from "../sdk";
 
-const { object, string } = matches;
-
-const shape = object({
-  adminPassword: string.optional().onMismatch(undefined),
-  secretKey: string.optional().onMismatch(undefined),
-  smtp: sdk.inputSpecConstants.smtpInputSpec.validator.onMismatch({
-    selection: "disabled",
-    value: {},
-  }),
+const shape = z.object({
+  adminPassword: z.string().optional(),
+  secretKey: z.string().optional(),
+  smtp: smtpShape,
 });
 
 export const storeJson = FileHelper.json(
-  { volumeId: "main", subpath: "store.json" },
+  { base: sdk.volumes.main, subpath: "./store.json" },
   shape,
 );
 ```
 
 ### 2. Create the manageSmtp Action
 
+Use `smtpPrefill()` in the prefill function to bridge between the stored `SmtpSelection` type and the input spec's expected type. These types represent the same data but are structurally different in TypeScript (the store uses a flat union, the input spec uses a distributed discriminated union), so `smtpPrefill()` handles the conversion.
+
 ```typescript
+import { smtpPrefill } from "@start9labs/start-sdk";
 import { i18n } from "../i18n";
 import { storeJson } from "../fileModels/store.json";
 import { sdk } from "../sdk";
@@ -234,7 +283,7 @@ export const manageSmtp = sdk.Action.withInput(
 
   // Pre-fill form with current values
   async ({ effects }) => ({
-    smtp: (await storeJson.read((s) => s.smtp).const(effects)) || undefined,
+    smtp: smtpPrefill(await storeJson.read((s) => s.smtp).const(effects)),
   }),
 
   // Save to store
@@ -262,7 +311,7 @@ In your `main.ts`, resolve the SMTP credentials based on the user's selection:
 import { T } from "@start9labs/start-sdk";
 
 export const main = sdk.setupMain(async ({ effects }) => {
-  const store = await storeJson.read((s) => s).const(effects);
+  const store = await storeJson.read().const(effects);
 
   // Resolve SMTP credentials based on selection
   const smtp = store?.smtp;
@@ -275,8 +324,17 @@ export const main = sdk.setupMain(async ({ effects }) => {
       smtpCredentials.from = smtp.value.customFrom;
     }
   } else if (smtp?.selection === "custom") {
-    // Use custom SMTP credentials
-    smtpCredentials = smtp.value;
+    // Use custom SMTP credentials from the selected provider
+    const { host, from, username, password, security } =
+      smtp.value.provider.value;
+    smtpCredentials = {
+      host,
+      port: Number(security.value.port),
+      from,
+      username,
+      password: password ?? null,
+      security: security.selection,
+    };
   }
   // If smtp.selection === 'disabled', smtpCredentials remains null
 
@@ -304,14 +362,43 @@ await storeJson.write(effects, {
 
 ### T.SmtpValue Type
 
-The resolved SMTP credentials have this structure:
+The resolved SMTP credentials (returned by `sdk.getSystemSmtp()`) have this structure:
 
 ```typescript
 interface SmtpValue {
-  server: string;
+  host: string;
   port: number;
-  login: string;
-  password?: string | null;
   from: string;
+  username: string;
+  password: string | null | undefined;
+  security: "starttls" | "tls";
 }
+```
+
+### SmtpSelection Type
+
+The stored SMTP selection (from `smtpShape`) has this structure:
+
+```typescript
+type SmtpSelection =
+  | { selection: "disabled"; value: Record<string, never> }
+  | { selection: "system"; value: { customFrom?: string | null } }
+  | {
+      selection: "custom";
+      value: {
+        provider: {
+          selection: string; // "gmail", "ses", "sendgrid", etc.
+          value: {
+            host: string;
+            from: string;
+            username: string;
+            password?: string | null;
+            security: {
+              selection: "tls" | "starttls";
+              value: { port: string };
+            };
+          };
+        };
+      };
+    };
 ```

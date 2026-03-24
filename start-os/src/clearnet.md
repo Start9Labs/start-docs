@@ -5,7 +5,7 @@ Make your services publicly reachable on the Internet using standard domains (`.
 > [!WARNING]
 > If your ISP uses [CGNAT](cgnat.md), your router cannot accept inbound connections and port forwarding will not work. You **must** use a [StartTunnel](/start-tunnel/) gateway for clearnet hosting.
 
-## Router vs StartTunnel Gateway
+## Home Router vs Virtual Private Router
 
 When hosting services on the clearnet, anyone who connects will know the IP address of the gateway used. Knowing a gateway's IP address reveals its approximate geographic location:
 
@@ -17,7 +17,7 @@ When hosting services on the clearnet, anyone who connects will know the IP addr
 | Zip Code / Neighborhood | 30–50%                |
 | Exact Street Address    | Requires ISP subpoena |
 
-If your gateway is your home router, you are revealing the approximate location of your home. If your gateway is a VPS running StartTunnel, you are revealing the approximate location of the VPS, not your home.
+If your gateway is your home router, you are revealing the approximate location of your home. If your gateway is a virtual private router ([StartTunnel](/start-tunnel/)), you are revealing the approximate location of the VPS, not your home.
 
 | | Router | [StartTunnel](/start-tunnel/) |
 | --- | --- | --- |

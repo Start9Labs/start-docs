@@ -19,10 +19,25 @@ What makes this experience possible is a unique package format (`.s9pk`) that pe
 - Grant users flexible networking options such as LAN, Tor, and clearnet
 - Offer one-click, encrypted backups of targeted data
 
-## Table of Contents
+## Where to Start
+
+- **"I want to..."** — Start with the [Recipes](./recipes.md). Each recipe answers one question and provides a working code pattern with links to reference docs and real-world example packages.
+- **First time packaging?** — Follow [Environment Setup](./environment-setup.md) then [Quick Start](./quick-start.md) to build and install your first package.
+- **Need API details?** — The Reference section covers every SDK construct in depth.
+
+## Recipes
+
+Intent-driven guides for common packaging tasks. Start here if you know *what* you want to accomplish.
+
+- [What Do You Want To Do?](./recipes.md) - Browse all recipes by intent
+
+## Getting Started
 
 1. [Environment Setup](./environment-setup.md) - Install the required development tools
 1. [Quick Start](./quick-start.md) - Create, build, and install your first package
+
+## Reference
+
 1. [Project Structure](./project-structure.md) - Understand the file layout of a StartOS package
 1. [Manifest](./manifest.md) - Define your service metadata, release notes, and alerts
 1. [Versions](./versions.md) - Handle install, update, and downgrade logic

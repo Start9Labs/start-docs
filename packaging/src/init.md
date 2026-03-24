@@ -5,6 +5,7 @@
 | Kind | When | Use For |
 |------|------|---------|
 | `'install'` | Fresh install | Generate passwords, create admin users, bootstrap via API |
+| `'update'` | After a package version upgrade | Re-apply config, handle post-migration setup |
 | `'restore'` | Restoring from backup | Re-register triggers, skip password generation |
 | `null` | Container rebuild, server restart | Register long-lived triggers (e.g., `.const()` watchers) |
 
@@ -252,13 +253,14 @@ await sdk.action.createOwnTask(effects, getAdminPassword, 'critical', {
 })
 ```
 
-Priority levels: `'critical'`, `'high'`, `'medium'`, `'low'`
+Severity levels: `'critical'`, `'important'`, `'optional'`
 
 ### Checking Init Kind
 
 ```typescript
 export const initializeService = sdk.setupOnInit(async (effects, kind) => {
   // kind === 'install': Fresh install
+  // kind === 'update': After version upgrade
   // kind === 'restore': Restoring from backup
   // kind === null: Container rebuild / server restart
 
@@ -267,9 +269,9 @@ export const initializeService = sdk.setupOnInit(async (effects, kind) => {
   }
 
   if (kind !== null) {
-    // Runs on install OR restore (skip container rebuild)
+    // Runs on install, update, OR restore (skip container rebuild)
   }
 
-  // No check: runs on ALL init types (install, restore, container rebuild)
+  // No check: runs on ALL init types (install, update, restore, container rebuild)
 })
 ```

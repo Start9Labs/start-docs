@@ -61,7 +61,7 @@ export const setDependencies = sdk.setupDependencies(async ({ effects }) => {
     'dependency-id': {
       kind: 'running',
       versionRange: '>=1.0.0:0',
-      healthChecks: [],
+      healthChecks: ['dependency-id'],
     },
   }
 })
@@ -100,7 +100,7 @@ const url = await sdk.serviceInterface
     effects,
     { id: 'interface-id', packageId: 'dependency-id' },
     (i) => {
-      const urls = i?.addressInfo?.format('urlstring')
+      const urls = i?.addressInfo?.format()
       if (!urls || urls.length === 0) return null
       return urls[0]
     },

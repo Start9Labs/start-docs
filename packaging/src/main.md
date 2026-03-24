@@ -235,11 +235,13 @@ sdk.Mounts.of()
 For config files that are *generated from code* on every startup (e.g., a Python settings file built from hostnames and secrets), write directly to the subcontainer's rootfs:
 
 ```typescript
+import { writeFile } from 'node:fs/promises'
+
 // Write a generated config to subcontainer rootfs
 await writeFile(
   `${appSub.rootfs}/app/config.py`,
   generateConfig({ secretKey, allowedHosts }),
-);
+)
 ```
 
 > [!WARNING]
@@ -409,10 +411,9 @@ When the upstream service needs a PostgreSQL connection string, include the pass
   exec: {
     command: sdk.useEntrypoint(),
     env: {
-      // .NET-style connection string
-      DATABASE_URL: `User ID=postgres;Password=${pgPassword};Host=127.0.0.1;Port=5432;Database=mydb`,
-      // Or standard PostgreSQL URI
+      // Standard PostgreSQL URI
       DATABASE_URL: `postgresql://postgres:${pgPassword}@127.0.0.1:5432/mydb`,
+      // Or .NET-style: `User ID=postgres;Password=${pgPassword};Host=127.0.0.1;Port=5432;Database=mydb`
     },
   },
   requires: ['postgres'],

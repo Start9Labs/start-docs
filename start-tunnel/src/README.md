@@ -1,6 +1,6 @@
 # StartTunnel Documentation
 
-A self-hosted WireGuard VPN optimized for creating VLANs and reverse tunneling to personal servers. Think of it as a "virtual router in the cloud." Use it for private remote access to self-hosted services, or to expose services to the public Internet without revealing your server's IP address.
+StartTunnel is a virtual private router (VPR) — a minimal, self-hosted router that runs on a VPS instead of sitting in your house. Use it for private remote access to self-hosted services, or to expose services to the public Internet without revealing your home IP address.
 
 <div class="yt-video" data-id="KZ2_jwayAgg" data-title="Intro To StartTunnel"></div>
 

@@ -78,7 +78,7 @@ Tor is available as a marketplace service. Once installed, users can enable onio
 
 ### Clearnet
 
-Services can be exposed to the public internet using a domain name. This requires a clearnet gateway — a WireGuard-based tunnel to a server with a public IP and domain. [StartTunnel](/start-tunnel/) is one such gateway, but any WireGuard configuration can be used for outbound traffic.
+Services can be exposed to the public internet using a domain name. This requires a clearnet gateway — a virtual private router running on a VPS with a public IP. [StartTunnel](/start-tunnel/) is a purpose-built VPR for this, but any WireGuard configuration can be used for outbound traffic.
 
 ### Gateways
 

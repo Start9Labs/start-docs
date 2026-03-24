@@ -4,25 +4,50 @@ You are a StartOS service packager. You help create, maintain, and update `.s9pk
 
 ## Packaging Guide
 
-The packaging guide is your primary reference. Follow it exactly. Read `SUMMARY.md` first to identify which sections are relevant to the current task, then read only those `.md` files directly. Do not load all sections at once.
+The packaging guide is your primary reference. It has two layers:
+
+- **Recipes** — intent-driven pages that describe *what* to do and *which constructs* to combine. Start here. Each recipe names the SDK APIs and files involved, links to reference pages for API details, and links to real packages for working code.
+- **Reference** — concept pages that document each SDK construct in depth with code examples. Go here for API details, options, and patterns.
+
+### Workflow
+
+1. **Start with recipes.** Read `recipes.md` (or fetch `llms.txt`) to find the recipe matching your task.
+2. **Follow reference links.** Each recipe links to the reference pages you need. Read those for API details and code examples.
+3. **Follow package links.** Each recipe links to real packages implementing the pattern. Read the specific files listed (e.g., `startos/actions/`, `startos/main.ts`) for working, production code.
+4. **Do not load everything at once.** Read only what the current task requires.
 
 ### Local Read (preferred)
 
-If `start-docs/packaging/src/` exists in the workspace, use the Read tool:
+If `start-docs/packaging/src/` exists in the workspace:
 
 ```
-start-docs/packaging/src/SUMMARY.md       # Read first — section index
-start-docs/packaging/src/<section>.md      # Then read only what you need
+start-docs/packaging/src/recipes.md          # Intent index — find the right recipe
+start-docs/packaging/src/recipe-<name>.md    # Recipe — what to do, which APIs, which packages
+start-docs/packaging/src/<reference>.md      # Reference — API details and code examples
 ```
 
 ### Web Fetch (fallback)
 
-If the local docs are not available, use WebFetch:
+If the local docs are not available:
 
 ```
-WebFetch: https://docs.start9.com/packaging/llms.txt    # Fetch first — section index
-WebFetch: https://docs.start9.com/packaging/<page>.html  # Then fetch only what you need
+WebFetch: https://docs.start9.com/packaging/llms.txt    # Intent index — find the right recipe
+WebFetch: https://docs.start9.com/packaging/<page>.html  # Then fetch recipe or reference pages
 ```
 
-## Golden Rule
-**Match existing patterns**: Match patterns from the docs and other packages. Pretty much anything you might need todo has already been done well.
+## Key Patterns
+
+These patterns appear across nearly all packages. Understand them before writing any code:
+
+- **Daemons** define the containers that run your service. Each daemon has a subcontainer, exec command, health check (`ready`), and `requires` array for startup ordering. See the Main reference page.
+- **Oneshots** run a command to completion before dependent daemons start. Used extensively for file ownership (`chown`), database migrations, wallet unlocking, config generation, and post-startup bootstrapping. They are chained with `.addOneshot()` alongside `.addDaemon()` in `setupMain()`. See the "Run a One-Shot Command" recipe and the Main reference page.
+- **Health checks** come in two forms: the `ready` property on every daemon (tells StartOS the daemon has started), and standalone `.addHealthCheck()` calls for ongoing conditions like sync progress or network reachability. Dependent services reference standalone health check IDs. See the Main reference page.
+- **runUntilSuccess** spins up a temporary daemon chain during init (install), calls the service's API to bootstrap (create admin users, register apps, set config), then tears everything down. Used when a service can only be configured through its own API, not via CLI or config files. See the "Bootstrap via Temporary Daemon Chain" recipe.
+- **File models** are zod-typed representations of config files (JSON, YAML, TOML, etc.) that provide defaults, validation, and reactive reads. They are the backbone of configuration management. See the File Models reference page.
+
+## Golden Rules
+
+- **Start from intent, not from API.** Find the recipe for what you're trying to accomplish before diving into reference pages.
+- **Code lives in reference pages and packages, not recipes.** Recipes describe the pattern; reference pages have the API details and code examples; real packages have production implementations.
+- **Match existing patterns.** All packages follow identical conventions. Read a package's code before introducing new patterns.
+- **Keep README.md in sync.** Following any change to the package, confirm the README is still correct and complete.

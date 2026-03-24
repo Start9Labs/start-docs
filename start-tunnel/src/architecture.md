@@ -1,10 +1,8 @@
 # StartTunnel
 
-A self-hosted WireGuard VPN optimized for creating VLANs and reverse tunneling to personal servers.
+StartTunnel is a virtual private router (VPR) — a minimal, self-hosted router that runs on a VPS instead of sitting in your house. Just like a home router, it creates private networks, assigns IP addresses to devices, and forwards ports to the public Internet. The difference is that it exists in the cloud, so it works regardless of your home network's limitations.
 
-Think of it as a "virtual router in the cloud." Use it for private remote access to self-hosted services, or to expose services to the public Internet without revealing your server's IP address.
-
-- **Clearnet hosting** like Cloudflare Tunnels, but you control the server
+- **Clearnet hosting** like Cloudflare Tunnels, but you control the router
 - **Private access** like Tailscale, but fully self-hosted
 - **Dead simple** — one command to install, manage everything from the CLI or web UI
 - **Open source** — audit it, fork it, own it
@@ -14,9 +12,9 @@ Think of it as a "virtual router in the cloud." Use it for private remote access
 
 ## Features
 
-- **Create Subnets** — Each subnet creates a private VLAN, similar to the LAN created by a home router
-- **Add Devices** — Servers, phones, laptops get a LAN IP and unique WireGuard config
-- **Forward Ports** — Expose specific ports on specific devices to the public Internet
+- **Create Subnets** — Each subnet is a private LAN, just like the one your home router creates
+- **Add Devices** — Servers, phones, laptops join the LAN and get an IP address and WireGuard config
+- **Forward Ports** — Expose specific ports on specific devices to the public Internet, just like port forwarding on a home router
 
 ## How StartTunnel Compares
 
@@ -24,7 +22,7 @@ StartTunnel occupies a unique position between Cloudflare Tunnel and Tailscale. 
 
 ### Architecture
 
-**StartTunnel** is a WireGuard VPN server that runs on a VPS you control. Clients connect via standard WireGuard tunnels. Port forwarding uses kernel-level iptables NAT (Layer 3/4) to route public traffic to devices on the VPN. There is no central service, no coordination server, and no third party in the data path.
+**StartTunnel** is a virtual private router that runs on a VPS you control. Like a home router, it creates private networks, assigns IPs, and forwards ports — but using WireGuard tunnels instead of physical cables. Port forwarding uses kernel-level iptables NAT (Layer 3/4) to route public traffic to devices on the VPN. There is no central service, no coordination server, and no third party in the data path.
 
 **Cloudflare Tunnel** runs a daemon (`cloudflared`) on your machine that makes outbound connections to Cloudflare's global edge network. Public traffic hits Cloudflare's CDN first, where Cloudflare terminates TLS, inspects the request at Layer 7, and proxies it to your origin through the tunnel.
 

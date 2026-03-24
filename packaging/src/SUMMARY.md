@@ -4,8 +4,69 @@
 
 ---
 
+# Getting Started
+
 - [Environment Setup](environment-setup.md)
 - [Quick Start](quick-start.md)
+
+# Recipes
+
+- [Browse All Recipes](recipes.md)
+
+## Configuration
+
+- [Set Up a Basic Service](recipe-basic-service.md)
+- [Create Configuration Actions](recipe-config-actions.md)
+- [Generate Config Files](recipe-config-files.md)
+- [Pass Config via Environment Variables](recipe-env-vars.md)
+- [Hardcode Config Values](recipe-hardcode-config.md)
+- [Set a Primary URL](recipe-primary-url.md)
+- [Set Up SMTP / Email](recipe-smtp.md)
+
+## Credentials & Access Control
+
+- [Auto-Generate Internal Secrets](recipe-internal-secrets.md)
+- [Prompt User to Create Admin Credentials](recipe-admin-credentials.md)
+- [Reset a Password](recipe-reset-password.md)
+- [Gate User Registration](recipe-registration-gating.md)
+
+## Setup & Lifecycle
+
+- [Require Setup Before Starting](recipe-require-setup.md)
+- [Run One-Time Setup on Install](recipe-install-init.md)
+- [Bootstrap via Temporary Daemon Chain](recipe-run-until-success.md)
+- [Handle Version Upgrades](recipe-version-migrations.md)
+- [Handle Restore from Backup](recipe-restore-init.md)
+
+## Daemons & Containers
+
+- [Run Multiple Containers](recipe-multi-daemon.md)
+- [Run a PostgreSQL Sidecar](recipe-postgresql.md)
+- [Run a MySQL/MariaDB Sidecar](recipe-mysql.md)
+- [Run a Redis/Valkey Cache](recipe-valkey.md)
+- [Create Dynamic Daemons](recipe-dynamic-daemons.md)
+- [Run a One-Shot Command](recipe-oneshot.md)
+
+## Networking
+
+- [Expose a Web UI](recipe-web-ui.md)
+- [Expose Multiple Interfaces](recipe-multi-interface.md)
+- [Expose an API-Only Interface](recipe-api-interface.md)
+
+## Dependencies
+
+- [Depend on Another Service](recipe-dependency.md)
+- [Enforce Settings on a Dependency](recipe-enforce-dependency.md)
+- [Mount Volumes from Another Service](recipe-mount-dependency.md)
+- [Support Alternative Dependencies](recipe-alternative-deps.md)
+
+## Data & Health
+
+- [Back Up and Restore Data](recipe-backups.md)
+- [Add Standalone Health Checks](recipe-health-checks.md)
+
+# Reference
+
 - [Project Structure](project-structure.md)
 - [Manifest](manifest.md)
 - [Versions](versions.md)
