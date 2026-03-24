@@ -1,6 +1,6 @@
 # Environment Setup
 
-Before building service packages, you need to install several development tools on your workstation. This page lists each prerequisite and how to install it.
+Before building service packages, you need to install several development tools on your workstation. This page lists each prerequisite and how to install it. The final section — [Coding with Claude](#coding-with-claude-recommended) — sets up the AI-assisted development environment that all packaging is designed around.
 
 ## StartOS Device
 

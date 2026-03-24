@@ -70,4 +70,6 @@ See [Installation](./makefile.md#installation).
 
 ## Next Steps
 
-With Hello World running on your server, explore the rest of this packaging guide to learn how to build your own service.
+With Hello World running on your server, you're ready to package your own service. Browse the [Recipes](./recipes.md) to find the patterns your service needs — each recipe describes the approach and points you to reference docs and real package code.
+
+If you set up [Claude Code](./environment-setup.md#coding-with-claude-recommended) during environment setup, point your agent at the recipe for your first task and let it work from there.

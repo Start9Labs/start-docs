@@ -4,6 +4,12 @@ StartOS is a _Server OS_ -- a Linux distribution optimized for administering ser
 
 Through the StartOS web interface, users can discover, download, install, configure, monitor, back up, and generally manage any variety of self-hosted, open-source software.
 
+## Designed for AI-Assisted Development
+
+StartOS service packaging is designed to be done with an AI coding agent. This guide, the SDK, and every existing package are structured so that an AI assistant can read the docs, study real packages, and write or modify package code with minimal human intervention. You do not need to be an expert TypeScript developer -- you need to understand *what* your service requires and let the AI handle *how* to implement it.
+
+The recommended setup is [Claude Code](https://claude.com/claude-code) with this guide and your package in the same workspace. See [Environment Setup](./environment-setup.md#coding-with-claude-recommended) for instructions.
+
 ## What is a StartOS Package?
 
 What makes this experience possible is a unique package format (`.s9pk`) that permits services to take advantage of StartOS APIs. In its most basic form, a package is a thin metadata wrapper around a service that allows it to be discovered, installed, and run on StartOS. Beyond that, the StartOS APIs grant developers an incredible degree of creative capacity to define the end-user experience for their service. Developers can:
@@ -21,13 +27,13 @@ What makes this experience possible is a unique package format (`.s9pk`) that pe
 
 ## Where to Start
 
-- **"I want to..."** — Start with the [Recipes](./recipes.md). Each recipe answers one question and provides a working code pattern with links to reference docs and real-world example packages.
-- **First time packaging?** — Follow [Environment Setup](./environment-setup.md) then [Quick Start](./quick-start.md) to build and install your first package.
-- **Need API details?** — The Reference section covers every SDK construct in depth.
+1. **Set up your environment** — Follow [Environment Setup](./environment-setup.md), including the Claude Code section.
+2. **Build your first package** — Follow [Quick Start](./quick-start.md) to create, build, and install the Hello World template.
+3. **Use recipes to build your service** — Browse [Recipes](./recipes.md) to find the patterns you need. Each recipe describes *what* to do, links to reference pages for API details, and points to real packages for working code. Your AI agent reads these docs and writes the code.
 
 ## Recipes
 
-Intent-driven guides for common packaging tasks. Start here if you know *what* you want to accomplish.
+Intent-driven guides for common packaging tasks. These are the primary entry point for both you and your AI coding agent.
 
 - [What Do You Want To Do?](./recipes.md) - Browse all recipes by intent
 

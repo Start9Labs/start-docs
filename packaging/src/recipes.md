@@ -1,6 +1,8 @@
 # Recipes
 
-This is the intent-driven entry point for StartOS service packaging. Each recipe answers one question and connects you to the reference documentation and real-world package code you need. Start here if you know *what* you want to accomplish but not *how* to accomplish it.
+This is the primary entry point for StartOS service packaging — for both you and your AI coding agent. Each recipe describes a common packaging pattern, names the SDK constructs involved, links to reference pages for API details, and points to real packages for working code. Your agent reads these to understand what to build; you read them to understand what to ask for.
+
+If you're using [Claude Code](https://claude.com/claude-code) (recommended), point your agent at the recipe for your task and let it follow the reference and package links from there.
 
 ## Configuration
 
