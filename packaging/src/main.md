@@ -50,6 +50,53 @@ export const main = sdk.setupMain(async ({ effects }) => {
 });
 ```
 
+## SubContainers
+
+SubContainers are isolated filesystem environments created from Docker images. They provide the rootfs for running daemons, oneshots, and one-off commands.
+
+### Creating SubContainers
+
+**`SubContainer.of()`** -- creates a long-lived subcontainer (for daemons and oneshots):
+
+```typescript
+const appSub = await sdk.SubContainer.of(
+  effects,
+  { imageId: "my-app" },
+  sdk.Mounts.of().mountVolume({
+    volumeId: "main",
+    subpath: null,
+    mountpoint: "/data",
+    readonly: false,
+  }),
+  "my-app-sub",
+);
+```
+
+**`SubContainer.withTemp()`** -- creates a temporary subcontainer that is automatically destroyed after the callback completes. Use this for one-off commands in actions, init functions, or migrations:
+
+```typescript
+await sdk.SubContainer.withTemp(
+  effects,
+  { imageId: "my-app" },
+  mounts,
+  "temp-task",
+  async (sub) => {
+    await sub.execFail(["my-command", "--flag"]);
+  },
+);
+```
+
+### Image Options
+
+The second argument to `SubContainer.of()` and `SubContainer.withTemp()` accepts:
+
+| Option      | Type    | Default | Description                                                            |
+| ----------- | ------- | ------- | ---------------------------------------------------------------------- |
+| `imageId`   | string  | —       | Required. The Docker image ID from the manifest `images` field         |
+| `sharedRun` | boolean | `false` | Bind-mount the host's `/run` directory into the subcontainer           |
+
+By default, subcontainers share `/dev` and `/sys` with the host. Setting `sharedRun: true` additionally shares `/run`, giving access to host runtime sockets (D-Bus, systemd, PID files). Most services do not need this -- only use it when the container must communicate with host system services.
+
 ## Reactive vs One-time Reads
 
 When reading configuration in `main.ts`, you choose how the system responds to changes:
