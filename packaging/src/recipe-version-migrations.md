@@ -10,4 +10,4 @@ Define a `VersionGraph` with a `current` version and an array of `other` (previo
 
 ## Examples
 
-See `startos/install/versionGraph.ts` and `startos/install/versions/` in: [bitcoin-core](https://github.com/Start9Labs/bitcoin-core-startos), [cln](https://github.com/Start9Labs/cln-startos), [lnd](https://github.com/Start9Labs/lnd-startos), [monerod](https://github.com/Start9Labs/monerod-startos), [nextcloud](https://github.com/Start9Labs/nextcloud-startos), [simplex](https://github.com/Start9Labs/simplex-startos), [tor](https://github.com/Start9Labs/tor-startos), [synapse](https://github.com/Start9Labs/synapse-startos)
+See `startos/versions/` in: [bitcoin-core](https://github.com/Start9Labs/bitcoin-core-startos), [cln](https://github.com/Start9Labs/cln-startos), [lnd](https://github.com/Start9Labs/lnd-startos), [monerod](https://github.com/Start9Labs/monerod-startos), [nextcloud](https://github.com/Start9Labs/nextcloud-startos), [simplex](https://github.com/Start9Labs/simplex-startos), [tor](https://github.com/Start9Labs/tor-startos), [synapse](https://github.com/Start9Labs/synapse-startos)

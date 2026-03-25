@@ -23,8 +23,6 @@ my-service-startos/
 │   │       ├── default.ts  # English strings keyed by index
 │   │       └── translations.ts  # Translations for other locales
 │   ├── init/               # Container initialization logic
-│   ├── install/            # Version management and migrations
-│   │   └── versions/
 │   ├── manifest/           # Static service metadata
 │   │   ├── index.ts        # setupManifest() call
 │   │   └── i18n.ts         # Static translations: manifest descriptions/alerts
@@ -34,7 +32,8 @@ my-service-startos/
 │   ├── interfaces.ts       # Network interface definitions
 │   ├── main.ts             # Daemon runtime and health checks
 │   ├── sdk.ts              # SDK initialization (boilerplate)
-│   └── utils.ts            # Package-specific utilities
+│   ├── utils.ts            # Package-specific utilities
+│   └── versions/           # Version management and migrations
 ├── .gitignore
 ├── CONTRIBUTING.md         # Build instructions for contributors
 ├── Dockerfile              # Optional - for custom images
@@ -203,8 +202,8 @@ This file is for defining constants and functions specific to your package that 
 | `fileModels/` | Type-safe representations of config files (.json, .yaml, .toml, etc.) |
 | `i18n/`       | Internationalization: default dictionary and translated strings       |
 | `init/`       | Container initialization logic (install, update, restart)             |
-| `install/`    | Version management and migration logic                                |
 | `manifest/`   | Service metadata (ID, name, description, images) with i18n            |
+| `versions/`   | Version management and migration logic                                |
 
 ### actions/
 
@@ -265,34 +264,20 @@ Container initialization takes place under the following circumstances:
 
 It is possible to limit the execution of custom init functions to specific _kinds_ of initialization. For example, if you only wanted to run a particular init function on fresh install and ignore it for updates and restores, `setupOnInit()` provides a `kind` variable (one of `install`, `update`, `restore`) that you can use for conditional logic. `kind` can also be null, which means the container is being initialized due to a server restart or manual container rebuild, rather than installation.
 
-### install/
-
-```
-install/
-├── versions/
-└── versionGraph.ts
-```
-
-In the `install/` directory, you manage package versions and define pre-install and migration logic. See [Versions](./versions.md) for full details.
-
-#### versionGraph.ts
-
-`VersionGraph.of()` is where you index the current version as well as other versions of your package. The function accepts a `preInstall` argument where you can define custom logic to run once, before anything else, _on initial installation only_. A common use case of the preInstall function is to seed files that other init functions expect to exist.
-
-#### versions/
+### versions/
 
 ```
 versions/
 ├── index.ts
-├── v1_0_3_2.ts
-└── v1_0_2_0.ts
+├── v1.0.3.2.ts
+└── v1.0.2.0.ts
 ```
 
-In the `versions/` directory, you create a new file for each new package version. In each version file, use `VersionInfo.of()` to provide the version number, release notes, and any migrations that should run.
+In the `versions/` directory, you manage package versions and define migration logic. The `index.ts` file uses `VersionGraph.of()` to index the current version and any previous versions of your package. Each version file uses `VersionInfo.of()` to provide the version number, release notes, and any migrations that should run.
 
-Similar to `preInstall`, migration `up` and `down` functions run once, before anything else, _upon updating or downgrading to that version only_.
+Migration `up` and `down` functions run once, before anything else, _upon updating or downgrading to that version only_.
 
-All versions should then be provided in `index.ts`, either as the current version or list of other versions.
+See [Versions](./versions.md) for full details.
 
 > [!WARNING]
 > Migrations are only for migrating data that is _not_ migrated by the upstream service itself.

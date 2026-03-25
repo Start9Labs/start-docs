@@ -67,7 +67,7 @@ When creating a new package:
 
 Ensure these all match for upstream version `X.Y.Z`:
 
-- Version file exists: `startos/install/versions/vX.Y.Z.0.a0.ts`
+- Version file exists: `startos/versions/vX.Y.Z.0.a0.ts`
 - Version string matches: `version: 'X.Y.Z:0-alpha.0'` in VersionInfo
 - Docker tag matches: `dockerTag: 'image:X.Y.Z'` in `manifest/index.ts` (if using pre-built image)
 - Git submodule checked out to `vX.Y.Z` tag (if applicable)
@@ -75,8 +75,8 @@ Ensure these all match for upstream version `X.Y.Z`:
 ## File Structure
 
 ```
-startos/install/versions/
-├── index.ts              # Exports current and historical versions
+startos/versions/
+├── index.ts              # VersionGraph + exports current and historical versions
 ├── v1.0.0.0.a0.ts        # Version 1.0.0:0-alpha.0
 ├── v1.0.0.0.ts           # Version 1.0.0:0 (stable)
 └── v1.1.0.0.a0.ts        # Version 1.1.0:0-alpha.0
@@ -121,8 +121,13 @@ export const v_X_Y_Z_0_a0 = VersionInfo.of({
 ### index.ts
 
 ```typescript
-export { v_X_Y_Z_0_a0 as current } from './vX.Y.Z.0.a0'
-export const other = []  // Add previous versions here for migrations
+import { VersionGraph } from '@start9labs/start-sdk'
+import { v_X_Y_Z_0_a0 } from './vX.Y.Z.0.a0'
+
+export const versionGraph = VersionGraph.of({
+  current: v_X_Y_Z_0_a0,
+  other: [],  // Add previous versions here for migrations
+})
 ```
 
 ## Incrementing Versions
