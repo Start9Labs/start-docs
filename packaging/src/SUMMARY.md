@@ -79,4 +79,4 @@
 - [Dependencies](dependencies.md)
 - [Makefile](makefile.md)
 - [Writing READMEs](writing-readmes.md)
-- [start-registry CLI](start-registry-cli.md)
+- [CLI Reference](cli.md)

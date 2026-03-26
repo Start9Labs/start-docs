@@ -2,7 +2,7 @@
 
 The primary CLI for managing a StartOS server. Connect via [SSH](ssh.md) to run commands locally, or use `--host` to manage a server remotely. Pass `-h` at any level to see subcommands and options.
 
-`start-cli` also includes `registry` and `tunnel` subcommand groups — these are documented separately in the [start-registry CLI Reference](/packaging/start-registry-cli.html) and the [StartTunnel CLI Reference](/start-tunnel/cli-reference.html).
+Service developers will find the [S9PK Packaging](#s9pk-packaging) and [Registry](#registry) sections especially useful. The `tunnel` subcommand group is documented separately in the [StartTunnel CLI Reference](/start-tunnel/cli-reference.html).
 
 ## Global Options
 
@@ -755,6 +755,264 @@ Add a container image to the s9pk.
 - `--arch <ARCH>` — CPU architecture filter
 - `--emulate-missing-as <ARCH>` — Emulate missing arch
 - `--nvidia-container` — Enable NVIDIA support
+
+## Registry
+
+Manage a StartOS package registry — the server that hosts, indexes, and distributes s9pk packages and OS updates. These commands can be run remotely via `start-cli registry`, or locally on the registry server using the standalone `start-registry` binary (same subcommands, different entry point).
+
+### `start-cli registry index`
+
+List registry metadata and all packages.
+
+- `--format` — Output format
+
+### `start-cli registry info`
+
+Display the registry name and icon.
+
+- `--format` — Output format
+
+### `start-cli registry info set-name <NAME>`
+
+Set the registry's display name.
+
+### `start-cli registry info set-icon <ICON>`
+
+Set the registry's icon from a file path.
+
+### Registry Admin Management
+
+Manage registry administrators and their signing keys.
+
+### `start-cli registry admin add <SIGNER> [DATABASE]`
+
+Add a signer as an administrator.
+
+### `start-cli registry admin remove <SIGNER>`
+
+Remove an administrator.
+
+### `start-cli registry admin list`
+
+List all administrators.
+
+- `--format` — Output format
+
+### `start-cli registry admin signer add [DATABASE]`
+
+Register a new signer identity.
+
+- `-n, --name <NAME>` — Signer display name (required)
+- `-c, --contact <INFO>` — Contact information
+- `--key <KEY>` — Public key
+
+### `start-cli registry admin signer edit <ID>`
+
+Edit a signer's metadata.
+
+- `-n, --set-name <NAME>` — Update name
+- `-c, --add-contact <INFO>` — Add contact
+- `-k, --add-key <KEY>` — Add public key
+- `-C, --remove-contact <INFO>` — Remove contact
+- `-K, --remove-key <KEY>` — Remove public key
+
+### `start-cli registry admin signer list`
+
+List all registered signers.
+
+- `--format` — Output format
+
+### Registry Package Management
+
+Add, remove, index, and distribute service packages.
+
+### `start-cli registry package index`
+
+List all packages and categories.
+
+- `--format` — Output format
+
+### `start-cli registry package add <FILE>`
+
+Add a package to the registry from a local s9pk file.
+
+- `--url <URL>` — URL of the package
+- `--no-verify` — Skip signature verification
+
+### `start-cli registry package remove <ID> <VERSION>`
+
+Remove a package version from the registry.
+
+- `--sighash <HASH>` — Hash for signature verification
+
+### `start-cli registry package get [ID] [OTHER_VERSIONS]`
+
+List installation candidates for a package.
+
+- `-v, --target-version <RANGE>` — Version range constraint
+- `--source-version <VERSION>` — Source version for upgrade path
+- `--format` — Output format
+- `OTHER_VERSIONS` — Detail level: `none`, `short`, or `full`
+
+### `start-cli registry package download <ID>`
+
+Download an s9pk package file.
+
+- `-v, --target-version <RANGE>` — Version constraint
+- `-d, --dest <PATH>` — Destination path
+
+### `start-cli registry package add-mirror <FILE> <URL>`
+
+Add a download mirror for a package.
+
+- `--no-verify` — Skip signature verification
+
+### `start-cli registry package remove-mirror <ID> <VERSION>`
+
+Remove a package mirror.
+
+- `--url <URL>` — Mirror URL to remove (required)
+
+### Registry Package Categories
+
+Organize packages into browseable categories.
+
+### `start-cli registry package category add <ID> <NAME>`
+
+Create a new category.
+
+### `start-cli registry package category remove <ID>`
+
+Delete a category.
+
+### `start-cli registry package category list`
+
+List all categories.
+
+- `--format` — Output format
+
+### `start-cli registry package category add-package <ID> <PACKAGE>`
+
+Add a package to a category.
+
+### `start-cli registry package category remove-package <ID> <PACKAGE>`
+
+Remove a package from a category.
+
+### Registry Package Signers
+
+Manage cryptographic signers authorized for packages.
+
+### `start-cli registry package signer add <ID> <SIGNER>`
+
+Authorize a signer for a package.
+
+- `--versions <RANGE>` — Version range to authorize
+- `--merge` — Merge with existing range instead of replacing
+
+### `start-cli registry package signer remove <ID> <SIGNER>`
+
+Revoke a signer for a package.
+
+### `start-cli registry package signer list <ID>`
+
+List authorized signers for a package.
+
+- `--format` — Output format
+
+### Registry OS Versions
+
+Manage StartOS version records in the registry.
+
+### `start-cli registry os index`
+
+List all OS versions.
+
+- `--format` — Output format
+
+### `start-cli registry os version add <VERSION> <HEADLINE> <RELEASE_NOTES> <SOURCE_VERSION>`
+
+Register a new OS version.
+
+### `start-cli registry os version get`
+
+Get OS version information with filters.
+
+- `--src <VERSION>` — Source version to upgrade from
+- `--target-version <VERSION>` — Target version constraint
+- `--id <SERVER_ID>` — Server identifier
+- `--platform <PLATFORM>` — Target platform
+- `--format` — Output format
+
+### `start-cli registry os version remove <VERSION>`
+
+Remove an OS version.
+
+### `start-cli registry os version signer add <VERSION> <SIGNER>`
+
+Add a signer for an OS version.
+
+### `start-cli registry os version signer remove <VERSION> <SIGNER>`
+
+Remove a signer from an OS version.
+
+### `start-cli registry os version signer list <VERSION>`
+
+List signers for an OS version.
+
+- `--format` — Output format
+
+### Registry OS Assets
+
+Upload and manage OS installation images (IMG, ISO, squashfs).
+
+### `start-cli registry os asset add <FILE> <URL>`
+
+Upload an OS asset to the registry.
+
+- `-p, --platform <PLATFORM>` — Target platform (required)
+- `-v, --version <VERSION>` — OS version (required)
+
+### `start-cli registry os asset sign <FILE>`
+
+Sign an OS asset and register the signature.
+
+- `-p, --platform <PLATFORM>` — Target platform (required)
+- `-v, --version <VERSION>` — OS version (required)
+
+### `start-cli registry os asset remove`
+
+Remove an OS asset.
+
+### `start-cli registry os asset get img <VERSION> <PLATFORM>`
+
+Download an IMG file.
+
+- `-d, --download <DIR>` — Download directory
+- `-r, --reverify` — Verify hash after download
+
+### `start-cli registry os asset get iso <VERSION> <PLATFORM>`
+
+Download an ISO file. Same options as `get img`.
+
+### `start-cli registry os asset get squashfs <VERSION> <PLATFORM>`
+
+Download a squashfs file. Same options as `get img`.
+
+### Registry Database
+
+Low-level access to the registry database.
+
+### `start-cli registry db dump [-p <POINTER>] [PATH]`
+
+Dump database contents, optionally filtered by JSON pointer.
+
+- `-p, --pointer <PTR>` — JSON pointer
+- `--format` — Output format
+
+### `start-cli registry db apply <EXPR> [PATH]`
+
+Apply a patch expression to the database.
 
 ## Initial Setup
 
