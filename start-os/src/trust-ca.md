@@ -136,7 +136,7 @@ This should work for most Debian-based systems, such as Debian, Ubuntu, Mint, Po
 
     If successful, you will see the output `1 added`.
 
-1.  If using Firefox, Thunderbird, or Librewolf, complete this [final step](#debian--ubuntu-1).
+1.  If using Firefox, Thunderbird, or Librewolf, complete this [final step](#3-mozilla-apps-firefox-thunderbird-librewolf).
 
 {{#endtab }}
 {{#tab name="Arch / Garuda" }}
