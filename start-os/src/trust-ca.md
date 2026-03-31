@@ -50,7 +50,7 @@ Select your platform:
 
 1. You will see your server's CA certificate as trusted now, signified by a blue (+) sign and the CA cert information will now say "This certificate is marked as trusted for all users" in Keychain Access:
 
-1. If using Firefox, Thunderbird, or Librewolf, complete this [final step](#mac--windows).
+1. If using Firefox, Thunderbird, or Librewolf, complete this [final step](#3-mozilla-apps-firefox-thunderbird-librewolf).
 
 {{#endtab }}
 {{#tab name="Windows" }}
@@ -79,7 +79,7 @@ Select your platform:
 
 1. You can save the console settings (where we added a snap-in), if desired. Your Root CA will remain imported to the CA certificate store either way, and you will likely use this guide if you need to import a new certificate.
 
-1. If using Firefox, Thunderbird, or Librewolf, complete this [final step](#mac--windows).
+1. If using Firefox, Thunderbird, or Librewolf, complete this [final step](#3-mozilla-apps-firefox-thunderbird-librewolf).
 
 {{#endtab }}
 {{#tab name="iOS" }}
