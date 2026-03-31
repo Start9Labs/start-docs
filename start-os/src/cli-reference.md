@@ -245,7 +245,7 @@ Display logs from a service.
 
 ### `start-cli package attach <ID> [COMMAND]`
 
-Open a shell inside a service's LXC container, or run a one-off command. See [Accessing Service Containers](service-containers.md) for details.
+Open a shell inside a service's subcontainer (within the LXC container), or run a one-off command. If the service has only one subcontainer, you are placed directly into it; if there are multiple, you will be prompted to choose. See [Accessing Service Containers](service-containers.md) for details.
 
 - `-s, --subcontainer <NAME>` — Target a specific subcontainer
 - `-n, --name <NAME>` — Container name

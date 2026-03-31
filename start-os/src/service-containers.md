@@ -1,6 +1,6 @@
 # Accessing Service Containers
 
-Every service on StartOS runs inside its own isolated LXC container. StartOS provides `start-cli package attach` to open a shell inside a service's container — this is the supported way to access containers. StartOS does not use Docker or Podman; standard container tooling will not work. See the [CLI Reference](cli-reference.md) for the full list of `start-cli` options.
+Every service on StartOS runs inside its own isolated LXC container. Within each LXC container, the service runs in one or more **subcontainers**. StartOS provides `start-cli package attach` to open a shell inside a service's subcontainer — this is the supported way to access containers. StartOS does not use Docker or Podman; standard container tooling will not work. See the [CLI Reference](cli-reference.md) for the full list of `start-cli` options.
 
 > [!WARNING]
 > Accessing a service container is an advanced operation. Modifying files, stopping processes, or changing configuration inside the container can break the service or cause data loss. Proceed with caution.
@@ -29,4 +29,29 @@ Replace `<PACKAGE>` with the package identifier (e.g., `bitcoind`, `lnd`). You c
 start-cli package list
 ```
 
-Once attached, you are dropped into a shell inside the service's container. Type `exit` or press `Ctrl+D` to return to the host.
+This drops you into a shell inside the service's **subcontainer** (not the LXC container itself). If the service has only one subcontainer, you are placed directly into it. If there is more than one subcontainer, you will be prompted to choose one. To skip the prompt, specify the subcontainer ID directly:
+
+```bash
+start-cli package attach <PACKAGE> <SUBCONTAINER>
+```
+
+Type `exit` or press `Ctrl+D` to return to the host.
+
+## Accessing the LXC Container
+
+In rare cases, you may need to access the LXC container itself rather than a subcontainer. For example, subcontainers are only accessible while the service is running, but the LXC container remains accessible even when the service is stopped — useful for inspecting or repairing state that prevents a service from starting.
+
+First, obtain the container ID:
+
+```bash
+start-cli package stats <PACKAGE>
+```
+
+Then attach directly to the LXC container:
+
+```bash
+lxc-attach <CONTAINER-ID>
+```
+
+> [!WARNING]
+> This bypasses StartOS's managed access layer. Only use this if you have a specific reason that `start-cli package attach` cannot fulfill.
