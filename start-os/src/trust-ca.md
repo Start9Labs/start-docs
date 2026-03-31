@@ -127,11 +127,12 @@ This should work for most Debian-based systems, such as Debian, Ubuntu, Mint, Po
 
         cd ~/Downloads
 
-1.  Add your Root CA to your OS trust store. Be certain to replace `your-server-name` with your server's unique hostname:
+1.  Add your Root CA to your OS trust store. Be certain to replace `your-server-name` with your server's unique hostname on the first line:
 
+        hostname=your-server-name.local
         sudo mkdir -p /usr/share/ca-certificates/start9
-        sudo cp "your-server-name.crt" /usr/share/ca-certificates/start9/
-        sudo bash -c "echo 'start9/your-server-name.crt' >> /etc/ca-certificates.conf"
+        sudo cp "${hostname}.crt" /usr/share/ca-certificates/start9/
+        sudo bash -c "echo 'start9/${hostname}.crt' >> /etc/ca-certificates.conf"
         sudo update-ca-certificates
 
     If successful, you will see the output `1 added`.
@@ -148,7 +149,7 @@ This should work for most Debian-based systems, such as Debian, Ubuntu, Mint, Po
 1.  Add your Root CA to your OS trust store. Be certain to replace `your-server-name` with your server's unique hostname in the second command:
 
         sudo pacman -S ca-certificates
-        sudo cp "your-server-name.crt" /etc/ca-certificates/trust-source/anchors/
+        sudo cp "your-server-name.local.crt" /etc/ca-certificates/trust-source/anchors/
         sudo update-ca-trust
 
     Despite no output from the last command, you can test your app right away.
@@ -163,7 +164,7 @@ This should work for most Debian-based systems, such as Debian, Ubuntu, Mint, Po
 1.  Add your Root CA to your OS trust store. Be certain to replace `your-server-name` with your server's unique hostname in the second command:
 
         sudo dnf install ca-certificates
-        sudo cp "your-server-name.crt" /etc/pki/ca-trust/source/anchors/
+        sudo cp "your-server-name.local.crt" /etc/pki/ca-trust/source/anchors/
         sudo update-ca-trust
 
     There will be no output if the update-ca-trust command completes successfully.
