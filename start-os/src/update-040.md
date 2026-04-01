@@ -9,7 +9,7 @@ StartOS 0.4.0 is a completely new operating system. It will eventually be availa
 
 ## Before You Begin
 
-StartOS 0.4.0 is currently in alpha. The latest release is **0.4.0-alpha.21**, available on the [GitHub releases page](https://github.com/Start9Labs/start-os/releases/tag/v0.4.0-alpha.21).
+StartOS 0.4.0 is currently in beta. The latest beta release is vailable on the [GitHub releases page](https://github.com/Start9Labs/start-os/releases/latest).
 
 ## Step 1: Uninstall Unneeded Services
 
@@ -41,7 +41,7 @@ After updating your services, create a [full system backup](backup-create.md). B
 
 ## Step 6: Flash the USB Drive
 
-Download the 0.4.0-alpha.21 ISO for your platform from the [GitHub releases page](https://github.com/Start9Labs/start-os/releases/tag/v0.4.0-alpha.21). Under "ISO Downloads" at the top of the release notes, select the ISO for your hardware:
+Download the 0.4.0-beta ISO for your platform from the [GitHub releases page](https://github.com/Start9Labs/start-os/releases/latest). Under "ISO Downloads" at the top of the release notes, select the ISO for your hardware:
 
 - **Server One (2023)** or other x86_64 hardware — download the **x86_64 (AMD64)** ISO
 - **Server Pure** — download the **x86_64 (AMD64) Slim (FOSS-only)** ISO
@@ -66,7 +66,7 @@ Shut down the server through the StartOS UI.
 1. The installer should boot from the USB drive and become available at `http://start.local`.
 
 > [!TIP]
-> If the server boots into your existing StartOS instead of the installer, you may need to enter your BIOS settings and change the boot order to prioritize USB. This should not be necessary on Start9 hardware, but may be needed on third-party devices.
+> If the server boots into your existing StartOS instead of the installer, you may need to attach a monitor and keyboard, and enter your BIOS settings to change the boot order to prioritize USB. The StartOS Server Pure does this automatically, but this may be needed on third-party devices and is required on the StartOS Server One.  On StartOS Server One devices, hit the ESC key at boot time to enter the BIOS.  Arrow over to the boot tab near the top right, and change Boot Option #1 to your inserted USB thumb drive.
 
 ## Step 10: Run the Installer
 

@@ -53,4 +53,6 @@ This guide is for flashing StartOS to a USB drive, then installing it onto a des
 
 1. The StartOS install wizard will now be available at `http://start.local`. You can also use a monitor, keyboard, and mouse. This is known as "Kiosk Mode".
 
-1. Choose "Re-Install" to preserve existing StartOS data, or "Factory Reset" to start fresh. After install is complete, you will be prompted to remove the USB drive and refresh the page.
+1. Select your language and press Continue, then at the Select Drives dialog, 
+
+1. If a previous StartOS install is detected, it will ask whether you want to Overwrite or Preserve the existing StartOS data.  Select Overwrite to start fresh, or Preserve to flash the OS on the booted USB thumb drive over the old installation, while preserving your data.  After install is complete, you will be prompted to Continue to Setup.
