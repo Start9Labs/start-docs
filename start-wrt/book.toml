@@ -1,0 +1,39 @@
+[book]
+authors = ["Start9"]
+language = "en"
+src = "src"
+title = "StartWRT"
+
+[build]
+build-dir = "../docs/start-wrt"
+
+[preprocessor.tabs]
+
+[output]
+
+[output.html]
+sidebar-header-nav = false
+admonitions = true
+no-section-label = false
+default-theme = "ayu"
+preferred-dark-theme = "ayu"
+additional-css = [
+    "./theme/docs-agent.css",
+    "./theme/youtube.css",
+    "./theme/tabs.css",
+    "./accent.css"
+]
+additional-js = [
+    "./theme/docs-agent-init.js",
+    "./theme/docs-agent.js",
+    "./theme/youtube.js",
+    "./theme/tabs.js",
+    "./theme/home-link.js"
+]
+git-repository-url = "https://github.com/start9labs/docs"
+edit-url-template = "https://github.com/start9labs/docs/edit/master/start-wrt/{path}"
+site-url = "/start-wrt/"
+
+[output.html.fold]
+enable = true
+level = 0
