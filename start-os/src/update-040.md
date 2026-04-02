@@ -9,37 +9,9 @@ StartOS 0.4.0 is a completely new operating system. It will eventually be availa
 
 ## Before You Begin
 
-StartOS 0.4.0 is currently in beta. The latest beta release is vailable on the [GitHub releases page](https://github.com/Start9Labs/start-os/releases/latest).
+StartOS 0.4.0 is currently in beta. The latest beta release is available on the [GitHub releases page](https://github.com/Start9Labs/start-os/releases/latest).
 
-## Step 1: Uninstall Unneeded Services
-
-Every installed service must be migrated, and each one adds to the total migration time. If there are services you don't actually use, it is much faster to uninstall them now and install fresh on 0.4.0 afterward.
-
-## Step 2 (Optional): Add an SSH Key
-
-If you haven't already, [add an SSH key](ssh.md) to your server. If something goes wrong during the migration, SSH access makes it much easier to debug.
-
-## Step 3: Update to StartOS 0.3.5.1
-
-You must be running **StartOS 0.3.5.1** before updating to 0.4.0. If you are on an older version, update to 0.3.5.1 first using the normal [update mechanism](updating-startos.md).
-
-## Step 4: Update All Services
-
-On StartOS 0.3.5.1, update **all installed services** to their latest available versions.
-
-> [!WARNING]
-> This step is **required**. If you do not update services before migrating, they may fail to migrate on 0.4.0, potentially requiring you to roll back to 0.3.5.1 or lose data entirely.
-
-The one exception is **Bitcoin**, which can safely remain at version 28.x or 29.x. All other services must be on their latest version.
-
-## Step 5: Create a Full System Backup
-
-After updating your services, create a [full system backup](backup-create.md). Back up every service.
-
-> [!WARNING]
-> Do **not** skip this step. Migration failures are a real possibility during alpha, and without a backup your data could be lost permanently.
-
-## Step 6: Flash the USB Drive
+## Step 1: Flash the USB Drive
 
 Download the 0.4.0-beta ISO for your platform from the [GitHub releases page](https://github.com/Start9Labs/start-os/releases/latest). Under "ISO Downloads" at the top of the release notes, select the ISO for your hardware:
 
@@ -49,9 +21,37 @@ Download the 0.4.0-beta ISO for your platform from the [GitHub releases page](ht
 
 Flash the ISO to a USB drive following the [Download](installing-startos.md#download) and [Flash](installing-startos.md#flash) sections of the install guide.
 
-## Step 7: Stop All Services
+## Step 2: Update to StartOS 0.3.5.1
 
-Return to your running StartOS server and stop all services. Wait for each service to fully stop before proceeding.
+You must be running **StartOS 0.3.5.1** before updating to 0.4.0. If you are on an older version, update to 0.3.5.1 first using the normal [update mechanism](updating-startos.md).
+
+## Step 3: Update All Services
+
+On StartOS 0.3.5.1, update **all installed services** to their latest available versions. Start with services at the base of the dependency tree and work upward — for example, update Bitcoin before LND, and LND before RTL.
+
+> [!WARNING]
+> This step is **required**. If you do not update services before migrating, they may fail to migrate on 0.4.0, potentially requiring you to roll back to 0.3.5.1 or lose data entirely.
+
+The one exception is **Bitcoin**, which can safely remain at version 28.x or 29.x. All other services must be on their latest version.
+
+## Step 4 (Optional): Add an SSH Key
+
+If you haven't already, [add an SSH key](ssh.md) to your server. If something goes wrong during the migration, SSH access makes it much easier to debug.
+
+## Step 5: Uninstall Unneeded Services
+
+Every installed service must be migrated, and each one adds to the total migration time. If there are services you don't actually use, it is much faster to uninstall them now and install fresh on 0.4.0 afterward.
+
+## Step 6: Stop All Services
+
+Stop all remaining services and wait for each one to fully stop before proceeding. This ensures no new data is written before the backup.
+
+## Step 7: Create a Full System Backup
+
+With all services stopped, create a [full system backup](backup-create.md). Back up every service.
+
+> [!WARNING]
+> Do **not** skip this step. Migration failures are a real possibility during beta, and without a backup your data could be lost permanently.
 
 ## Step 8: Shut Down the Server
 
@@ -66,13 +66,11 @@ Shut down the server through the StartOS UI.
 1. The installer should boot from the USB drive and become available at `http://start.local`.
 
 > [!TIP]
-> If the server boots into your existing StartOS instead of the installer, you may need to attach a monitor and keyboard, and enter your BIOS settings to change the boot order to prioritize USB. The StartOS Server Pure does this automatically, but this may be needed on third-party devices and is required on the StartOS Server One.  On StartOS Server One devices, hit the ESC key at boot time to enter the BIOS.  Arrow over to the boot tab near the top right, and change Boot Option #1 to your inserted USB thumb drive.
+> If the installer fails to boot and instead your normal StartOS boots, it means you will need to attach a monitor and keyboard (Kiosk mode) in order to enter the BIOS settings to change the boot priorities. The Server Pure should always boot from USB if present. For the Server One, this is done by hitting the ESC key repeatedly at boot time until the BIOS appears. Arrow over to the boot tab, and change Boot Option #1 to your inserted USB thumb drive, then restart.
 
 ## Step 10: Run the Installer
 
 1. Select your language.
-
-1. Select your keyboard layout (if using kiosk mode).
 
 1. Select the **OS drive** and the **data drive**. These can be the same drive if your server only has one. Double-check that you have selected the correct drive for each.
 
@@ -104,7 +102,11 @@ Before starting any services, create a [full system backup](backup-create.md) to
 
 ## Step 15: Start Your Services
 
-Once all services are updated and backed up, you can start them.
+Once all services are updated and backed up, you can start them. Wait for all services to fully start and confirm they are running correctly.
+
+## Step 16: Create a Second Backup
+
+Some services modify data during their first startup on 0.4.0. After all services have started successfully, create another [full system backup](backup-create.md) to capture this post-startup state.
 
 ## Post-Migration Notes
 
