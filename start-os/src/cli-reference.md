@@ -438,6 +438,13 @@ Display the full DNS routing table.
 
 - `--format` — Output format
 
+### `start-cli net ssl generate-certificate <HOSTNAMES>...`
+
+Generate an SSL certificate signed by the system Root CA. The command outputs the private key and full certificate chain in PEM format.
+
+- `HOSTNAMES` — One or more hostnames or IP addresses to include in the certificate (required)
+- `--ed25519` — Use Ed25519 instead of the default NIST P-256
+
 ### `start-cli net acme init`
 
 Initialize ACME (Let's Encrypt) certificate provisioning.

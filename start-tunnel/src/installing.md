@@ -34,18 +34,42 @@ StartTunnel can be fully managed from the command line, but it also offers a web
 start-tunnel web init
 ```
 
-This initializes a web server, creates a random password, generates a Root Certificate Authority (Root CA), and prints them all the console on completion.
+This initializes a web server, creates a random password, and configures an SSL certificate. You will be prompted to either generate a new Root CA or provide your own certificate.
 
-Save the URL and password to your password manager, then follow instructions to trust the Root CA.
+Save the URL and password to your password manager.
 
 > [!NOTE]
-> The URL, password, and Root CA are only for accessing your StartTunnel's web user interface. None are needed to use StartTunnel from the command line.
+> The URL, password, and certificate are only for accessing your StartTunnel's web user interface. None are needed to use StartTunnel from the command line.
 
-## Trust your Root CA
+### Certificate options
 
-You can access your StartTunnel web UI _without_ trusting its Root CA by powering through the browser warning, but this is less secure and not recommended.
+When prompted for a certificate, you have two choices:
 
-To trust your Root CA, select your operating system and follow instructions:
+{{#tabs global="tunnel-cert" }}
+{{#tab name="Use your StartOS Root CA (recommended)" }}
+
+If you already have a StartOS server and have [trusted its Root CA](/start-os/trust-ca.html), you can sign the StartTunnel certificate with that same CA. This means your browser will trust the StartTunnel web UI automatically — no additional certificate to manage.
+
+1. On your StartOS server, generate a certificate for your StartTunnel's hostname or IP:
+
+   ```bash
+   start-cli net ssl generate-certificate <HOSTNAME_OR_IP>
+   ```
+
+   This outputs a private key and certificate chain in PEM format.
+
+1. During `start-tunnel web init`, when prompted for a certificate, select **Provide**.
+
+1. Paste the **private key** first and press Enter. You may need to press Enter an extra time for it to be accepted.
+
+1. Paste the **certificate chain** next and press Enter. Again, you may need to press Enter an extra time.
+
+{{#endtab }}
+{{#tab name="Generate a new Root CA" }}
+
+Select **Generate** when prompted. StartTunnel will create its own Root CA and use it to sign a certificate. The Root CA will be printed to the console.
+
+Save the URL and password to your password manager, then trust the Root CA on each device that will access the web UI. Select your operating system:
 
 {{#tabs global="platform" }}
 {{#tab name="Mac" }}
@@ -105,6 +129,9 @@ To trust your Root CA, select your operating system and follow instructions:
 1. Send the `tunnel-ca.crt` file to your phone (email, messaging app, etc.).
 
 1. [Trust the certificate](/start-os/trust-ca.html?platform=iOS).
+
+{{#endtab }}
+{{#endtabs }}
 
 {{#endtab }}
 {{#endtabs }}
