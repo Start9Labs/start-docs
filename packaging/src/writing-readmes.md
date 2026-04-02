@@ -14,6 +14,10 @@ Write for two audiences:
 ## Recommended Structure
 
 ````markdown
+<p align="center">
+  <img src="icon.svg" alt="[Service Name] Logo" width="21%">
+</p>
+
 # [Service Name] on StartOS
 
 > **Upstream docs:** <https://docs.example.com/>
@@ -28,7 +32,7 @@ Write for two audiences:
 
 ## Table of Contents
 
-[Links to each section]
+[Links to each section — must include all sections present in the README]
 
 ---
 
@@ -64,6 +68,10 @@ Write for two audiences:
 
 [Endpoint, grace period, messages]
 
+## Dependencies
+
+[Required and optional dependencies — version constraints, health checks, mounted volumes, purpose]
+
 ## Limitations and Differences
 
 [Numbered list of key limitations compared to upstream]
@@ -98,6 +106,18 @@ actions:
 ````
 
 ## Sections to Document
+
+### Logo
+
+Every README should begin with the service icon centered above the title. Use the standard format:
+
+```html
+<p align="center">
+  <img src="icon.svg" alt="[Service Name] Logo" width="21%">
+</p>
+```
+
+Adjust the `src` to match the actual icon filename (e.g., `icon.png` if the icon is a PNG).
 
 ### Image and Container Runtime
 
@@ -165,6 +185,18 @@ For each interface:
 - Grace period
 - Success/failure messages
 
+### Dependencies
+
+For each dependency, document:
+
+- **Service name** and whether it is required or optional
+- **Version constraint** (e.g. `>= 28.3`)
+- **Health checks** that must pass before this service starts
+- **Mounted volumes** — if a dependency volume is mounted, note the mount point and whether it is read-only
+- **Purpose** — why this dependency is needed (e.g. "blockchain data via RPC", "Electrum lookups")
+
+If the service has no dependencies, state "None" explicitly.
+
 ### Limitations
 
 Be explicit about:
@@ -185,6 +217,7 @@ End every README with a YAML block for machine parsing. This block should contai
 - [ ] All volumes and mount points documented
 - [ ] All actions documented with their purpose
 - [ ] All StartOS-managed settings/env vars listed
+- [ ] All dependencies documented (or "None" stated explicitly)
 - [ ] All limitations listed explicitly
 - [ ] "What Is Unchanged" section included
 - [ ] YAML quick reference block for AI consumers
