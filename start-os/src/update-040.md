@@ -48,7 +48,7 @@ Stop all remaining services and wait for each one to fully stop before proceedin
 
 ## Step 7: Create a Full System Backup
 
-With all services stopped, create a [full system backup](backup-create.md). Back up every service.
+With all services stopped, create a [full system backup](/0.3.5.x/user-manual/backups/backup-create.html). Back up every service.
 
 > [!WARNING]
 > Do **not** skip this step. Migration failures are a real possibility during beta, and without a backup your data could be lost permanently.
