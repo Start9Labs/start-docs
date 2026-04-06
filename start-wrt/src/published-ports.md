@@ -56,4 +56,4 @@ Each published port rule shows a status indicator in the table:
 The **Endpoints** column in the table shows the public addresses where each forwarded port can be reached. IPv4 endpoints display the router's public IP (or DDNS domain) with the external port. IPv6 endpoints display the device's IPv6 address with the port directly. These are useful for configuring external services or sharing access details.
 
 > [!NOTE]
-> Port forwarding requires a public IP address. If your ISP uses CGNAT, IPv4 forwarding will not work — the rule will show a "Partial" status if IPv6 is available, or "Error" if not. Check with your ISP or use [Dynamic DNS](ddns.md) with a publicly routable IP.
+> Port forwarding requires a public IP address. If your ISP uses [CGNAT](cgnat.md), IPv4 forwarding will not work — the rule will show a "Partial" status if IPv6 is available, or "Error" if not.

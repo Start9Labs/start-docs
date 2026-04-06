@@ -1,6 +1,9 @@
 # SSH Access
 
-Access your router's command line over SSH for advanced troubleshooting, package management, or direct configuration. SSH uses public key authentication — passwords are not accepted.
+Access your router's command line over SSH for advanced troubleshooting, package management, or direct configuration. SSH accepts both password authentication (using your admin password) and public key authentication.
+
+> [!WARNING]
+> SSH provides root access to the underlying OpenWrt system. Misconfiguration can break networking, lock you out, or require a factory reset. Only use SSH if you are comfortable with the Linux command line.
 
 ## Adding an SSH Key
 
@@ -28,10 +31,8 @@ Access your router's command line over SSH for advanced troubleshooting, package
 Once your key is added, connect from a terminal:
 
 ```
-ssh root@192.168.0.1
+ssh root@router.lan
 ```
-
-Replace `192.168.0.1` with your router's LAN IP address if you have changed it from the default.
 
 ## Removing an SSH Key
 
@@ -39,15 +40,5 @@ Replace `192.168.0.1` with your router's LAN IP address if you have changed it f
 
 1. Select the key and click "Remove".
 
-> [!WARNING]
-> Removing all SSH keys disables SSH access entirely. Ensure you can still access the web interface before removing your last key.
-
-## What You Can Do Over SSH
-
-SSH gives you root access to the underlying OpenWrt system. Common tasks:
-
-- View and edit UCI configuration files in `/etc/config/`
-- Install additional packages with `opkg`
-- Run diagnostic commands (`ping`, `traceroute`, `nslookup`, `tcpdump`)
-- Inspect firewall rules with `nft list ruleset`
-- Monitor WireGuard tunnels with `wg show`
+> [!NOTE]
+> Even with no SSH keys configured, you can still connect using your admin password.

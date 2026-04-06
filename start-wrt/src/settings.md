@@ -8,11 +8,11 @@ The Settings page contains system preferences, account management, and advanced 
 
 - **Theme** — System, Dark, or Light. System follows your browser or OS preference.
 - **Language** — Select the language for the web interface.
-- **Timezone** — Set the router's local timezone. This affects [WAN Schedules](security-profiles.md#wan-schedules), [WiFi Schedules](wifi-schedules.md), activity timestamps, and log timestamps.
+- **Timezone** — Set the router's local timezone. This affects [WAN Schedules](security-profiles.md#wan-schedules), [Wi-Fi Schedules](wifi-schedules.md), activity timestamps, and log timestamps.
 
 ### Remote Access
 
-Controls whether the web interface is accessible from outside the local network.
+Controls whether the web interface is accessible from outside the local network. When remote access is enabled, the router detects whether it has a public or private WAN IP and adjusts accordingly. Remote access works over the router's WAN IP or [Dynamic DNS](ddns.md) domain, and is also reachable through an [Inbound VPN](inbound-vpn.md) connection.
 
 - **When behind NAT** (default) — Allows remote access only when the router is behind NAT (typical home network with a private IP). This is the recommended setting for most users.
 - **Never** — Disables remote access entirely. The admin interface is only accessible from devices on the local network.
@@ -23,7 +23,7 @@ Controls whether the web interface is accessible from outside the local network.
 
 ### Security
 
-- **Download Root CA** — Download the router's Root CA certificate. Installing this certificate on your devices allows browsers and apps to trust the router's HTTPS connections without security warnings.
+- **Download Root CA** — Download the router's Root CA certificate. See [Trusting Your Root CA](trust-ca.md) for installation instructions.
 
 ### Updates
 
@@ -31,7 +31,7 @@ When a firmware update is available, a banner appears at the top of the General 
 
 ## Password
 
-Change your admin password. The admin password protects the web interface and is separate from the WiFi password.
+Change your admin password. The admin password protects the web interface and is separate from the Wi-Fi password.
 
 1. Navigate to `System > Settings > Password`.
 
@@ -64,7 +64,7 @@ The Advanced tab contains power-user tools:
 
 - **Launch LuCI Interface** — Opens the underlying OpenWrt LuCI admin panel in a new tab for direct access to low-level configuration.
 - **Download Support Diagnostics** — Generates and downloads a diagnostic bundle for troubleshooting with Start9 support.
-- **Factory Reset** — Erases all settings and reboots the router. See [Factory Reset](factory-reset.md) for details.
+- **Factory Reset** — Erases all settings (excluding the sticker Wi-Fi password) and reboots the router. See [Factory Reset](factory-reset.md) for details.
 
 > [!WARNING]
 > Factory reset is irreversible. Create a [backup](backups.md) first if you want to preserve your configuration.

@@ -8,7 +8,7 @@ Each physical Ethernet port on the router maps to a Security Profile. The port a
 
 ## Wi-Fi
 
-StartWRT uses one WiFi network (one SSID) with multiple passwords. Each password maps to a different Security Profile. The password a device uses to join the network determines its profile. See [Wi-Fi](wifi.md).
+StartWRT uses one Wi-Fi network (one SSID) with multiple passwords. Each password maps to a different Security Profile. The password a device uses to join the network determines its profile. See [Wi-Fi](wifi.md).
 
 ## Inbound VPN
 
@@ -16,4 +16,4 @@ Each WireGuard VPN server on the router maps to a Security Profile. Remote devic
 
 ## Why Entry Points Matter
 
-Traditional routers require you to think in terms of VLANs, firewall rules, and subnets. StartWRT replaces all of that with a simple mental model: **how you connect determines what you can access**. Whether a device plugs into a specific Ethernet port, uses a specific WiFi password, or connects through a specific VPN server, the result is the same — it gets assigned a profile that governs its network access.
+Traditional routers require you to think in terms of VLANs, firewall rules, and subnets. StartWRT replaces all of that with a simple mental model: **how you connect determines what you can access**. Whether a device plugs into a specific Ethernet port, uses a specific Wi-Fi password, or connects through a specific VPN server, the result is the same — it gets assigned a profile that governs its network access.

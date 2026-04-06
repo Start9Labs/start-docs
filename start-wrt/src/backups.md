@@ -1,6 +1,6 @@
 # Backups
 
-Back up your router's configuration so you can restore it after an update, factory reset, or hardware failure. Backups capture your settings — security profiles, WiFi passwords, firewall rules, VPN configurations, SSH keys, and other customizations.
+Back up your router's configuration so you can restore it after an update, factory reset, or hardware failure. Backups capture your settings — security profiles, Wi-Fi passwords, firewall rules, VPN configurations, SSH keys, and other customizations.
 
 ## Creating a Backup
 
@@ -13,7 +13,7 @@ Back up your router's configuration so you can restore it after an update, facto
 Store the backup file in a safe location, such as a password manager or encrypted drive.
 
 > [!TIP]
-> Create a backup before performing firmware updates. While the Update path preserves settings, having a backup provides an extra safety net.
+> Create a backup before performing firmware updates. While the "Keep Settings" path preserves settings, having a backup provides an extra safety net.
 
 ## Restoring a Backup
 
@@ -34,14 +34,13 @@ The router will apply the configuration and restart.
 
 | Included | Not Included |
 |----------|--------------|
-| Security Profiles | Admin password |
-| WiFi passwords | System logs |
-| Firewall rules | Device history |
-| VPN server and client configs | Data usage counters |
+| Security Profiles | System logs |
+| Wi-Fi passwords | Device history |
+| Published Ports | Data usage counters |
+| Ethernet port assignments | |
+| Inbound and Outbound VPN configs | |
 | SSH keys | |
 | DDNS settings | |
 | LAN/WAN settings | |
+| Admin password | |
 | Router name, timezone, language | |
-
-> [!NOTE]
-> The admin password is never included in backups. After restoring, you will use the admin password you set during the restore process, not the one from the backup.

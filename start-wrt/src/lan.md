@@ -14,15 +14,15 @@ Configure the router's LAN IPv4 addressing.
 > DHCP is managed automatically for each Security Profile. You do not need to configure DHCP ranges or lease times.
 
 > [!WARNING]
-> Changing the Network Block or Router IP changes the router's LAN address. You will need to navigate to the new address to access the web interface. If any inbound VPN servers exist, they will be deleted because their client configurations become invalid with the new addressing.
+> Changing the Network Block or Router IP changes the router's LAN address. If you are connected to the gateway IP address (opposed to `router.lan`), you will need to navigate to the new address to access the web interface. If any inbound VPN servers exist, they will be deleted because their client configurations become invalid with the new addressing.
 
 ## IPv6
 
-Configure IPv6 for the LAN if your ISP supports it.
+Configure IPv6 addressing on the LAN.
 
 - **SLAAC** — Toggle to enable or disable IPv6 on the LAN via Stateless Address Autoconfiguration. When enabled, devices generate their own IPv6 addresses from the router's advertised prefix.
 
 - **Prefix Length** — Shown when SLAAC is enabled. The LAN IPv6 prefix length must be larger (a higher number) than your WAN prefix to create a valid subnet. For example, if your ISP assigns you a `/48` prefix, you can use `/56`, `/60`, or `/64` for the LAN. A `/64` is recommended for most home networks.
 
 > [!NOTE]
-> LAN IPv6 requires WAN IPv6 to be enabled first. See [WAN Settings](wan.md#ipv6). If published port rules use IPv6, SLAAC cannot be disabled until those rules are removed.
+> If published port rules use IPv6, SLAAC cannot be disabled until those rules are removed.

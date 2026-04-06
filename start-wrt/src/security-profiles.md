@@ -20,7 +20,7 @@ You do not need to configure any of these individually. When you create a profil
 A device's Security Profile is determined by its **point of entry** — how it connects to the network:
 
 - **Ethernet** — The physical port a device plugs into. Each port maps to a profile. See [Ethernet](ethernet.md).
-- **WiFi** — The password a device uses to join the WiFi network. Each password maps to a profile. See [Wi-Fi](wifi.md).
+- **Wi-Fi** — The password a device uses to join the Wi-Fi network. Each password maps to a profile. See [Wi-Fi](wifi.md).
 - **Inbound VPN** — The WireGuard server a device connects to remotely. Each VPN server maps to a profile. See [Inbound VPNs](inbound-vpn.md).
 
 One SSID, multiple passwords. One router, multiple isolated networks. The profile abstraction keeps it simple.
@@ -70,7 +70,7 @@ One SSID, multiple passwords. One router, multiple isolated networks. The profil
 1. Click "Delete".
 
 > [!WARNING]
-> Deleting a profile disconnects all devices assigned to it. You must first remove or reassign all points of entry (Ethernet ports, WiFi passwords, VPN servers) that reference the profile.
+> Deleting a profile disconnects all devices assigned to it. Associated points of entry (Wi-Fi passwords, Ethernet port assignments, VPN servers) are automatically removed.
 
 > [!NOTE]
 > The primary LAN profile cannot be deleted.

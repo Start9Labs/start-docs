@@ -1,11 +1,12 @@
 # StartWRT Documentation
 
-StartWRT is a router operating system designed specifically for home-based self-hosting. Built on OpenWrt, it pairs a hardened networking backend with a modern web interface that makes advanced features — VPN chaining, per-device security profiles, WiFi schedules, dynamic DNS — accessible to everyone.
+StartWRT is a router operating system designed specifically for home-based self-hosting. Built on OpenWrt, it pairs a hardened networking backend with a modern web interface that makes advanced features — VPN chaining, per-device security profiles, Wi-Fi schedules, dynamic DNS — accessible to everyone.
 
 ## Getting Started
 
 - [Installing StartWRT](installing.md)
 - [Initial Setup](initial-setup.md)
+- [Trusting Your Root CA](trust-ca.md)
 - [Updating](updating.md)
 
 ## Core Concepts
@@ -29,7 +30,7 @@ StartWRT is a router operating system designed specifically for home-based self-
 
 - [Ethernet](ethernet.md)
 - [Wi-Fi](wifi.md)
-- [WiFi Schedules](wifi-schedules.md)
+- [Wi-Fi Schedules](wifi-schedules.md)
 - [Inbound VPNs](inbound-vpn.md)
 
 ## System
@@ -41,6 +42,6 @@ StartWRT is a router operating system designed specifically for home-based self-
 
 ## Reference
 
+- [CGNAT](cgnat.md)
 - [Architecture](architecture.md)
-- [CLI Reference](cli-reference.md)
 - [FAQ](faq.md)

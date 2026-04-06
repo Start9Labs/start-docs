@@ -22,11 +22,11 @@ Configure the router's IPv4 Internet connection. The default is DHCP, which work
 
 Configure IPv6 if your ISP supports it.
 
-- **SLAAC** — Automatic IPv6 configuration. The most common option if your ISP supports IPv6.
+- **SLAAC** (default) — Automatic IPv6 configuration. The most common option if your ISP supports IPv6.
 - **DHCPv6** — The ISP assigns an IPv6 address via DHCP. Use if SLAAC does not work with your ISP.
 - **Static** — Manually configure a fixed IPv6 address, prefix length, and gateway.
 - **6RD** — Tunnels IPv6 over an IPv4 connection. Required by some ISPs that do not provide native IPv6. Configuration fields: IPv6 Prefix, IPv6 Prefix Length, IPv4 Prefix Length, and Border Relay IP (the IPv4 address of the ISP's relay server).
-- **Disabled** — No IPv6 on the WAN interface. This is the default.
+- **Disabled** — No IPv6 on the WAN interface.
 
 For SLAAC and DHCPv6, an optional **IPv6 Prefix** field lets you request a specific prefix length from your ISP for prefix delegation (e.g. `/48`, `/56`, `/64`). Leave empty to let your ISP decide automatically.
 

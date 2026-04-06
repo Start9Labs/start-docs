@@ -30,4 +30,4 @@ Click a device name to open its detail page:
 > Reserve an IP for any device you plan to use with [Published Ports](published-ports.md). Port forwarding rules require a stable IP address to ensure traffic always reaches the correct device.
 
 > [!NOTE]
-> Forgetting a device only removes it from the list. If the device reconnects, it will reappear.
+> Forgetting a device only removes it from the list. If the device reconnects, it will reappear. To prevent a device from accessing the network, delete the [Wi-Fi password](wifi.md) or [Inbound VPN client](inbound-vpn.md) it uses to connect.

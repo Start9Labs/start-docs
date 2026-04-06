@@ -1,42 +1,23 @@
 # Updating
 
-StartWRT firmware updates are installed by booting from a microSD card. This ensures the update process is reliable and recoverable — if anything goes wrong, the router's existing firmware remains untouched until you explicitly choose to flash.
+StartWRT does not update automatically. Updating the firmware always requires explicit action. That said, we highly recommend keeping StartWRT up to date for the latest security and performance patches, as well as to take advantage of new features.
 
-## Check for Updates
+## Update through the UI
 
-Navigate to `System > Settings` in the web interface. If a newer version is available, you will see a notification with the version number.
+1. When a new version of StartWRT is available, a banner will appear on the Settings page showing the new version number.
 
-## Perform the Update
+1. Navigate to `System > Settings > General` and expand the update banner to view release notes.
 
-1. Download the latest StartWRT firmware image from the [Start9 releases page](https://github.com/Start9Labs/start-wrt/releases).
+1. Click "Update".
 
-1. Write the image to a microSD card. See [Installing StartWRT](installing.md#write-the-image-to-microsd) for platform-specific instructions.
+   > [!WARNING]
+   > Ensure you have a stable Internet connection before beginning an update, and do not unplug your router while StartWRT is downloading.
 
-1. Power off the router.
+1. Once the download is complete, the router will restart to apply the update.
 
-1. Insert the microSD card and power the router back on.
+   > [!WARNING]
+   > Do not unplug your router during the restart. The update may take several minutes to apply. All network traffic — Wi-Fi, Ethernet, VPN connections, and port forwarding — will be interrupted until the router finishes restarting.
 
-1. Connect to the `StartWRT` WiFi network using your WiFi password.
+## Update by Reflashing
 
-1. The captive portal will open the setup wizard. Select **Update**.
-
-1. Create a new admin password when prompted.
-
-1. When the process completes, power off the router, remove the microSD card, and power it back on.
-
-> [!NOTE]
-> The Update path preserves your settings — security profiles, WiFi passwords, firewall rules, SSH keys, and other configuration. The admin password is always reset during an update as a security measure, since physical access to the microSD slot is sufficient authorization.
-
-## What Gets Preserved
-
-| Preserved | Not Preserved |
-|-----------|---------------|
-| Security Profiles | Admin password (re-created during update) |
-| WiFi passwords and settings | User-installed package binaries |
-| Firewall rules | |
-| VPN configurations | |
-| SSH keys | |
-| Device names | |
-
-> [!TIP]
-> User-installed package config files are preserved even though the binaries are wiped. After updating, reinstall any additional packages and their previous configuration will still be in place.
+If something went wrong with a UI update (very rare), you can update StartWRT by reflashing from a microSD card. Follow the guide for [Installing StartWRT](installing.md).

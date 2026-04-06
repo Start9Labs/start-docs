@@ -1,6 +1,6 @@
 # Inbound VPNs
 
-Create WireGuard VPN servers on your router for secure remote access to your home network. Each VPN server maps to a [Security Profile](security-profiles.md), so remote devices receive the same access controls as if they were physically connected.
+Create WireGuard VPN servers on your router for secure remote access to your home network. Each VPN server maps to a [Security Profile](security-profiles.md), so remote devices receive the same access controls as if they were connected locally.
 
 ## How It Works
 
@@ -37,6 +37,9 @@ Each VPN server has a client management page listing all peers. Navigate to a VP
    - **Public Key** — (Optional) Enter an existing WireGuard public key if the device already has a keypair configured. Leave empty to auto-generate a keypair.
    - **Route all traffic through tunnel** — When enabled, all of the client's Internet traffic routes through the VPN (full tunnel). When disabled (the default), only LAN traffic uses the tunnel and the client uses its own Internet connection for everything else (split tunnel).
 
+   > [!TIP]
+   > "Route all traffic through tunnel" is especially useful when the VPN server's Security Profile uses an [Outbound VPN](outbound-vpn.md). Most devices only support one active VPN at a time, so a phone, for example, could either use WireGuard to access your LAN or use Mullvad/Proton directly — but not both. With full tunnel routing, the device connects to your router via WireGuard and its Internet traffic is then routed through the Outbound VPN automatically, giving you both LAN access and VPN protection in a single connection. This adds some latency since traffic passes through two tunnels.
+
 1. A WireGuard configuration is generated.
 
 ### Viewing Client Configuration
@@ -46,15 +49,15 @@ After creating a client, the configuration can be viewed in two formats:
 - **File** — Displays the configuration as text. Use the copy button to copy to clipboard, or the download button to save as a `.conf` file that WireGuard apps can import.
 - **QR** — Displays the configuration as a QR code. Scan with the WireGuard mobile app to configure the client without manual entry.
 
-> [!TIP]
-> Save the configuration file to your password manager. If you lose it, you will need to remove the client and create a new one.
-
 ### Changing Client Routing
 
-After creating a client, you can switch between routing modes from the actions menu on the client list:
+You can switch between routing modes from the actions menu on the client list:
 
-- **All traffic** — Full tunnel. All Internet traffic routes through the VPN.
-- **LAN only** — Split tunnel. Only local network traffic uses the tunnel.
+- **Switch to All traffic** — Full tunnel. All Internet traffic routes through the VPN.
+- **Switch to LAN only** — Split tunnel. Only local network traffic uses the tunnel.
+
+> [!WARNING]
+> Changing the routing mode deletes the existing peer and creates a new one. You will need to reconfigure the device with the new configuration.
 
 ### Renaming a Client
 
@@ -66,92 +69,10 @@ Select "Delete" from the client's actions menu. The client's WireGuard configura
 
 ## Connecting Remote Devices
 
-Install WireGuard on the remote device and import the configuration file.
+Install the [WireGuard app](https://www.wireguard.com/install/) on the remote device and import the configuration:
 
-{{#tabs global="platform"}}
-
-{{#tab name="Mac"}}
-
-1. Install WireGuard from the [App Store](https://apps.apple.com/us/app/wireguard/id1451685025).
-
-1. Open WireGuard, click "Import tunnel(s) from file", and select the config file.
-
-1. MacOS will ask you to allow the VPN configuration. Click "Allow".
-
-1. Activate the tunnel from the WireGuard app or from System Settings > VPN.
-
-{{#endtab}}
-
-{{#tab name="Windows"}}
-
-1. Install WireGuard from the [official website](https://www.wireguard.com/install/).
-
-1. Click "Import tunnel(s) from file" and select the config file.
-
-1. Click "Activate" to connect.
-
-{{#endtab}}
-
-{{#tab name="iOS"}}
-
-1. Install WireGuard from the [App Store](https://itunes.apple.com/us/app/wireguard/id1441195209?ls=1&mt=8).
-
-1. Tap "Add a tunnel" and either scan the QR code or import the config file.
-
-1. Allow the VPN configuration when prompted.
-
-1. Toggle the tunnel on to connect.
-
-{{#endtab}}
-
-{{#tab name="Android / Graphene"}}
-
-1. Install WireGuard from the [Play Store](https://play.google.com/store/apps/details?id=com.wireguard.android) or the [WireGuard website](https://www.wireguard.com/install/).
-
-1. Tap the `+` button and either scan the QR code or import the config file.
-
-1. Allow the VPN connection when prompted.
-
-{{#endtab}}
-
-{{#tab name="Linux"}}
-
-1. Install WireGuard:
-   - Debian / Ubuntu: `sudo apt update && sudo apt install wireguard`
-   - Fedora / RHEL: `sudo dnf update && sudo dnf install wireguard-tools`
-   - Arch / Manjaro: `sudo pacman -Syu && sudo pacman -S wireguard-tools wireguard`
-
-1. Copy the config file:
-
-   ```
-   sudo cp myconfig.conf /etc/wireguard/wg0.conf
-   sudo chmod 600 /etc/wireguard/wg0.conf
-   ```
-
-1. Connect:
-
-   ```
-   sudo wg-quick up wg0
-   ```
-
-1. Verify:
-
-   ```
-   sudo wg
-   ```
-
-1. (Optional) Enable on boot:
-
-   ```
-   sudo systemctl enable wg-quick@wg0
-   ```
-
-> [!TIP]
-> To disconnect: `sudo wg-quick down wg0`
-
-{{#endtab}}
-
-{{#endtabs}}
+- **Phone or tablet**: Scan the QR code from the client configuration page using the WireGuard app.
+- **Laptop or desktop**: Download the `.conf` file and import it into the WireGuard app.
 
 ## Removing a VPN Server
 

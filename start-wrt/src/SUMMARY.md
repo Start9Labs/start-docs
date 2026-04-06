@@ -8,6 +8,7 @@
 
 - [Installing StartWRT](installing.md)
 - [Initial Setup](initial-setup.md)
+- [Trusting Your Root CA](trust-ca.md)
 - [Updating](updating.md)
 
 ---
@@ -39,7 +40,7 @@
 
 - [Ethernet](ethernet.md)
 - [Wi-Fi](wifi.md)
-- [WiFi Schedules](wifi-schedules.md)
+- [Wi-Fi Schedules](wifi-schedules.md)
 - [Inbound VPNs](inbound-vpn.md)
 
 ---
@@ -55,6 +56,6 @@
 
 # Reference
 
+- [CGNAT](cgnat.md)
 - [Architecture](architecture.md)
-- [CLI Reference](cli-reference.md)
 - [FAQ](faq.md)
