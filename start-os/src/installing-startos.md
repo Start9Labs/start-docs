@@ -8,13 +8,29 @@ This guide is for flashing StartOS to a USB drive, then installing it onto a des
 
 ## Download
 
-1.  Visit the [Github release page](https://github.com/Start9Labs/start-os/releases/latest) to find the latest version of StartOS.
+1.  Visit the [StartOS download index](https://sourceforge.net/projects/startos.mirror/files/) to find the latest version of StartOS.
 
-1.  Under "ISO Downloads", select the ISO for your architecture. StartOS is available in x86_64 (AMD64), aarch64 (ARM64), and RISC-V (RVA23). For x86_64 and aarch64, two variants are available:
+    The actual ISO images are hosted on Start9's DigitalOcean Spaces CDN. SourceForge provides a mirror page with links to the CDN.
 
-    - **Standard**: Includes proprietary firmware and drivers for broader hardware compatibility, including display and wireless. Recommended for most users.
+1.  Select the ISO for your architecture. StartOS is available in x86_64 (AMD64), aarch64 (ARM64), and RISC-V (RVA23). For x86_64 and aarch64, three variants are available:
+
+    - **Standard (nonfree)**: Includes proprietary firmware and drivers for broader hardware compatibility, including display and wireless. **Recommended for VMs and most hardware**.
 
     - **Slim (FOSS-only)**: 100% open source, containing **no** proprietary firmware or drivers. Only compatible with certain hardware, such as the Start9 Server Pure.
+
+    - **NVIDIA**: Includes NVIDIA proprietary drivers for GPU support. Use if your hardware requires NVIDIA firmware.
+
+    CDN URL pattern (replace `<tag>` and `<arch>` with the appropriate values):
+    ```
+    https://startos-images.nyc3.cdn.digitaloceanspaces.com/<tag>/startos-<tag>-<gitsha>_<arch>-<flavor>.iso
+    ```
+
+    Available flavors:
+    - `x86_64.iso` (slim/FOSS)
+    - `x86_64-nonfree.iso` (with proprietary firmware)
+    - `x86_64-nvidia.iso` (with NVIDIA drivers)
+    - `aarch64.iso`, `aarch64-nonfree.iso`, `aarch64-nvidia.iso`
+    - `riscv64.iso`, `riscv64-nonfree.iso`, `riscv64-nvidia.iso`
 
 1.  Verify the SHA256 checksum against the one listed on GitHub (optional but recommended).
     - **Mac**. Open a terminal and run:

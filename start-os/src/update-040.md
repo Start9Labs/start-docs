@@ -9,7 +9,7 @@ StartOS 0.4.0 is a completely new operating system. It will eventually be availa
 
 ## Before You Begin
 
-StartOS 0.4.0 is currently in beta. The latest beta release is available on the [GitHub releases page](https://github.com/Start9Labs/start-os/releases/latest).
+StartOS 0.4.0 is currently in beta. The latest beta release information is available on the [GitHub releases page](https://github.com/Start9Labs/start-os/releases/latest). For ISO downloads, see the [Downloading](#downloading) section below.
 
 ### Services with special handling
 
@@ -20,6 +20,28 @@ The following services cannot be migrated automatically. Review these before sta
 - **Ghost** — Completely redesigned for StartOS 0.4.0 and incompatible with the old version. Before updating, open your old Ghost admin UI and use Ghost's built-in **Export** tool to download your content. After updating, install the new Ghost from the marketplace and use Ghost's built-in **Import** tool to restore your content.
 
 - **Synapse** — The old Synapse was Tor-only. The new Synapse is clearnet-only. These are different services now with no migration path.
+
+### Downloading
+
+StartOS ISO images are hosted on Start9's DigitalOcean Spaces CDN, not in GitHub releases. Visit the [SourceForge mirror page](https://sourceforge.net/projects/startos.mirror/files/) for the download index.
+
+For x86_64 hardware:
+- **Server One (2023)** or other x86_64 hardware — download `x86_64-nonfree.iso` (includes proprietary firmware for broader hardware compatibility)
+- **Server Pure** — download `x86_64.iso` (slim/FOSS-only, no proprietary firmware)
+
+For VM emulation, use the `-nonfree` variant as it has broader hardware/firmware compatibility.
+
+CDN URL pattern (replace `<tag>` and `<arch>` with the appropriate values):
+```
+https://startos-images.nyc3.cdn.digitaloceanspaces.com/<tag>/startos-<tag>-<gitsha>_<arch>-<flavor>.iso
+```
+
+Available flavors:
+- `x86_64.iso` (slim/FOSS)
+- `x86_64-nonfree.iso` (with proprietary firmware)
+- `x86_64-nvidia.iso` (with NVIDIA drivers)
+- `aarch64.iso`, `aarch64-nonfree.iso`, `aarch64-nvidia.iso`
+- `riscv64.iso`, `riscv64-nonfree.iso`, `riscv64-nvidia.iso`
 
 ### LAN addresses are changing
 
@@ -32,11 +54,13 @@ If you use a password manager, before updating, make sure your saved passwords h
 
 ## Step 1: Flash the USB Drive
 
-Download the 0.4.0-beta ISO for your platform from the [GitHub releases page](https://github.com/Start9Labs/start-os/releases/latest). Under "ISO Downloads" at the top of the release notes, select the ISO for your hardware:
+Download the 0.4.0-beta ISO for your platform from the [StartOS download index](https://sourceforge.net/projects/startos.mirror/files/). The ISO images are hosted on Start9's DigitalOcean Spaces CDN.
 
-- **Server One (2023)** or other x86_64 hardware — download the **x86_64 (AMD64)** ISO
-- **Server Pure** — download the **x86_64 (AMD64) Slim (FOSS-only)** ISO
-- **Raspberry Pi** — not yet available for 0.4.0, but support is coming soon
+For x86_64 hardware:
+- **Server One (2023)** or other x86_64 hardware — download `x86_64-nonfree.iso` (includes proprietary firmware for broader hardware compatibility)
+- **Server Pure** — download `x86_64.iso` (slim/FOSS-only, no proprietary firmware)
+
+For VM emulation, use the `-nonfree` variant as it has broader hardware/firmware compatibility.
 
 Flash the ISO to a USB drive following the [Download](installing-startos.md#download) and [Flash](installing-startos.md#flash) sections of the install guide.
 

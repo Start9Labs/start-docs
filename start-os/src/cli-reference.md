@@ -1000,7 +1000,9 @@ Download an IMG file.
 
 ### `start-cli registry os asset get iso <VERSION> <PLATFORM>`
 
-Download an ISO file. Same options as `get img`.
+Download an ISO file from the Start9 registry. Note that official StartOS ISOs are also available directly from the [DigitalOcean Spaces CDN](https://startos-images.nyc3.cdn.digitaloceanspaces.com/) or via the [SourceForge mirror](https://sourceforge.net/projects/startos.mirror/files/).
+
+Same options as `get img`.
 
 ### `start-cli registry os asset get squashfs <VERSION> <PLATFORM>`
 
