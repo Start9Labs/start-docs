@@ -30,3 +30,15 @@ Set StartOS as your router's primary DNS server. All routers support this featur
 
 > [!TIP]
 > If your private domain is a real domain that you control, you can alternatively configure its DNS record at your registrar to resolve to your server's _LAN IP address_. In this case, the StartOS DNS server is not needed.
+
+## Split DNS: the Same Domain, Public and Private
+
+You can add the _same_ domain as both a [clearnet](clearnet.md) (public) domain on a StartTunnel gateway and a private domain on an Ethernet or WiFi gateway. StartOS serves it as split DNS:
+
+- When you are on your LAN or connected over [VPN](inbound-vpn.md), StartOS resolves the domain to your server's local IP address, so traffic stays on your network at full LAN speed.
+- When you are away, the same domain resolves through public DNS to your StartTunnel gateway, so the service is reachable over the internet.
+
+It's the same domain and the same TLS certificate either way, with no [hairpin routing](https://en.wikipedia.org/wiki/Hairpinning) (LAN traffic looping out to the gateway and back).
+
+> [!TIP]
+> This is especially useful for services that embed their access URL in generated links, such as Nextcloud or Immich share links. Configure the service with the public domain so the links work for external recipients, and you'll still get direct LAN-speed access when you're home.
