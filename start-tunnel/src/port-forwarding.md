@@ -5,6 +5,11 @@ Port forwarding exposes a device's port on your VPS's public IP address. This is
 > [!WARNING]
 > Port forwarding requires a **dedicated public IPv4 address** on your VPS. Shared IPv4 addresses (CGNAT, shared NAT, load-balanced IPs) and IPv6-only VPSes cannot be used to expose services to the clearnet. Confirm with your VPS provider before purchasing.
 
+> [!NOTE]
+> StartTunnel acts as a UPnP gateway for connected devices. A StartOS server using this tunnel opens the ports it needs **automatically** when you enable a public address — the same way it would behind a home router — and removes them when the address is disabled or deleted. For security, an automatically created forward always targets the requesting device's own tunnel IP; a device can only open ports to itself. The steps below are for adding or managing forwards manually.
+
+## Add a forward manually
+
 1. In StartTunnel, navigate to `Port Forwards` and click "Add".
 
 1. Select the external IP address you want to use (there is usually only one).
