@@ -19,6 +19,10 @@ Every device on a StartTunnel subnet — whether it's a server, phone, or laptop
    - **Phone or tablet**: Scan the QR code shown in StartTunnel using the [WireGuard app](https://www.wireguard.com/install/).
    - **Laptop or desktop**: Download the config and import it into the [WireGuard app](https://www.wireguard.com/install/).
 
+## Allowing DNS injection
+
+Each device has an **Allow DNS injection** setting (off by default). Enabling it lets that device manage the DNS records StartTunnel serves for your private domains — see [DNS Records](/start-tunnel/dns-records.html). Only enable it for devices you trust, such as your own StartOS server.
+
 ## Removing a Device
 
 1. Navigate to `Devices`, select the device, and click "Remove".
