@@ -31,15 +31,19 @@ Yes. StartWRT is built on OpenWrt, and the full CLI is accessible over [SSH](ssh
 You have two options:
 
 1. **Factory reset** — Perform a [factory reset](factory-reset.md) from the web interface (if you are still logged in). This wipes all settings but preserves the Wi-Fi password.
-2. **Reflash** — Boot from a microSD card and choose "Keep Settings" to reinstall the firmware while preserving settings. You will be prompted to create a new admin password. See [Installing StartWRT](installing.md).
+2. **Reflash** — Boot from a microSD card and choose "Keep settings" to reinstall the firmware while preserving settings. You will be prompted to create a new admin password. See [Installing StartWRT](installing.md).
 
 ## What if I lose my Wi-Fi sticker password?
 
-Use the `startwrt-bake-password` tool to create a custom firmware image with a new Wi-Fi password, then reflash from microSD. The new password permanently replaces the sticker password. See [Installing StartWRT](installing.md#recovering-a-lost-or-compromised-wifi-password) for the full procedure.
+The Wi-Fi password is printed on the sticker on the bottom of the router and stored in the router's EEPROM — it can also be displayed in the StartWRT GUI on the WiFi tab as the Admin Profile 'Default' label. The EEPROM value is only re-read on a [factory reset](factory-reset.md); if you have replaced the **Default** password with your own, that new password is what's in effect. On a DIY or unprogrammed board with no EEPROM Wi-Fi password, set one via the GUI (if connected via ethernet) or with `startwrt-cli set-wifi-password`. See [Installing StartWRT](installing.md#diy-and-unprogrammed-boards) for the full procedure.
+
+## Why doesn't one of my profiles have IPv6 Internet access?
+
+If your ISP delegates only a single IPv6 prefix (for example, a `/64`), that prefix is assigned to your primary LAN. Non-admin [Security Profiles](security-profiles.md) routed **Direct** to the Internet then receive only a local-only ULA address and have no global IPv6 connectivity — IPv4 still works normally. To give such a profile global IPv6, route it through an IPv6-capable [Outbound VPN](outbound-vpn.md), or ask your ISP for a larger prefix delegation (such as a `/56` or `/48`).
 
 ## Does StartWRT phone home or collect telemetry?
 
-No. StartWRT has no telemetry, no analytics, and no phone-home behavior. The only outbound connection the router initiates on your behalf is to check for firmware updates (if enabled) and to register with a Dynamic DNS provider (if configured). Both are optional and user-initiated.
+No. StartWRT has no telemetry, no analytics, and no phone-home behavior. The only outbound connection the router initiates on your behalf is to check for firmware updates and to register with a Dynamic DNS provider (if configured). Both are optional and user-initiated — StartWRT never updates automatically, and you can also update entirely offline by reflashing from a microSD card. See [Updating](updating.md).
 
 ## Can I use StartWRT with StartOS?
 

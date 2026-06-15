@@ -36,6 +36,18 @@ For example, if "Mullvad" targets "Proton" and "Proton" targets "Internet":
 > [!NOTE]
 > VPN chaining adds latency since traffic passes through multiple servers. For most users, a single VPN provider is sufficient.
 
+## IPv6 and Kill Switch
+
+How IPv6 traffic is handled depends on whether the VPN's WireGuard tunnel supports it:
+
+- **IPv6-capable VPN** — If the imported config includes an IPv6 address for the tunnel interface, profiles routed through the VPN send their IPv6 traffic (`::/0`) through the tunnel, just like IPv4.
+- **IPv4-only VPN** — If the tunnel has no IPv6 address, profiles routed through it get no IPv6. IPv6 is blocked (it "fails closed") so it cannot leak around the tunnel and out your WAN.
+
+A kill switch protects every VPN-routed profile: both IPv4 and IPv6 fail closed. If the tunnel goes down, traffic is blocked rather than leaking out the WAN.
+
+> [!NOTE]
+> Routing IPv6 through a VPN requires the VPN's tunnel config to include an IPv6 address on the tunnel interface. Without one, the VPN carries IPv4 only and IPv6 is blocked for routed profiles.
+
 ## VPN Detail Page
 
 Click a VPN label in the table to open its detail page, which shows:

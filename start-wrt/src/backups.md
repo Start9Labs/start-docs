@@ -13,7 +13,7 @@ Back up your router's configuration so you can restore it after an update, facto
 Store the backup file in a safe location, such as a password manager or encrypted drive.
 
 > [!TIP]
-> Create a backup before performing firmware updates. While the "Keep Settings" path preserves settings, having a backup provides an extra safety net.
+> Create a backup before performing firmware updates. While the "Keep settings" path preserves settings, having a backup provides an extra safety net.
 
 ## Restoring a Backup
 

@@ -25,15 +25,6 @@ StartWRT comes pre-installed on Start9 routers. If you need to reinstall or flas
 
          Get-FileHash startwrt.img
 
-## Bake a Wi-Fi Password (bare devices only)
-
-If you are flashing a bare BananaPi BPI-F3 that was not factory-provisioned by Start9, the image has no Wi-Fi password. You must bake one in before writing to microSD:
-
-```
-startwrt-bake-password startwrt.img <your-password>
-```
-
-This embeds the password directly into the image file. When the router boots, this password will be used for the default Wi-Fi network.
 ## Write the Image to microSD
 
 1. Download and install [balenaEtcher](https://www.balena.io/etcher) onto your Linux, Mac, or Windows computer.
@@ -57,36 +48,35 @@ This embeds the password directly into the image file. When the router boots, th
 
 1. Power on the router. It will boot from the microSD card automatically.
 
-1. Connect to the `StartWRT` Wi-Fi network using your Wi-Fi password (the sticker password for factory devices, or the password you baked into the image).
+1. Connect to the `StartWRT` Wi-Fi network using the Wi-Fi password printed on the sticker on the bottom of the router.
 
 1. A captive portal will open automatically. If it does not, open a browser and navigate to `router.lan`.
 
-1. The setup wizard will prompt you to create a new admin password (minimum 12 characters). If the router already has firmware on the eMMC, you will also be given a choice:
-
-   - **Keep Settings** — Replaces the firmware while preserving your existing configuration.
-   - **Fresh Start** — Erases all router configuration and installs fresh firmware. The Wi-Fi password stored on eMMC is preserved — to change it, use `startwrt-bake-password` and reflash with the resulting image.
-
-   On a new device with no existing firmware, the wizard skips this choice and proceeds directly to the password step.
+1. The setup wizard will guide you through the rest. If the router already has firmware installed, you can choose **Keep settings** or **Fresh Start** (full wipe). On a new device with no existing firmware, the wizard proceeds directly to Fresh Start setup. See [Factory Reset](factory-reset.md#reflash-microsd) for a full walkthrough of the reflash wizard.
 
 1. When the wizard completes, power off the router, remove the microSD card, and power it back on.
 
-## Recovering a Lost or Compromised Wi-Fi Password
+## DIY and Unprogrammed Boards
 
-If you have lost the Wi-Fi password on the sticker, or need to change a compromised password, use the [`startwrt-bake-password`](https://github.com/Start9Labs/start-wrt/tree/master/startwrt-bake-password) Python script from the start-wrt repository to create a recovery image:
+Start9 routers ship with a unique Wi-Fi password programmed into the device's EEPROM and printed on a sticker on the bottom. A vendor-programmed board "just works": flash the image, boot, and connect to the `StartWRT` network with the sticker password.
 
-1. Download the latest StartWRT firmware image from the [Start9 releases page](https://github.com/Start9Labs/start-wrt/releases).
+If you are flashing a bare BananaPi BPI-F3 that was never programmed with a Wi-Fi password, the Wi-Fi access point will **not** come up after boot. To bring it online:
 
-1. Bake a new Wi-Fi password into the image:
+1. Connect to the router over Ethernet (or serial console).
 
-   ```
-   startwrt-bake-password startwrt.img <new-password>
-   ```
+1. Set a Wi-Fi password:
 
-1. Write the image to a microSD card using [balenaEtcher](#write-the-image-to-microsd).
+   - **Random** — Generates a random 12-character password and prints it:
 
-1. Insert the microSD card into the router and boot. Follow the [Flash the Firmware](#flash-the-firmware) steps above, using your new password to connect to Wi-Fi.
+         startwrt-cli set-wifi-password
 
-The baked-in password permanently replaces the original sticker password on the router's eMMC.
+   - **Manual** — Prompts you to enter your own password:
+
+         startwrt-cli set-wifi-password --manual
+
+1. Record the printed (or entered) password — this becomes your Wi-Fi password.
+
+The password lives in the router's configuration. A factory reset re-reads the EEPROM, so on an unprogrammed board you will need to run `startwrt-cli set-wifi-password` again after a reset.
 
 ## Next Steps
 

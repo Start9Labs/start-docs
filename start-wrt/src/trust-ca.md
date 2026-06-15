@@ -7,7 +7,7 @@ In order to establish a secure (HTTPS) connection with your router on the local 
 
 ## Step 1 - Download
 
-Navigate to `System > Settings > General` and click "Download Root CA".
+Navigate to `System > Settings > General` and click "Download Root CA". This saves the certificate as `startwrt-ca.crt`. When you inspect or install it, the certificate is named "StartWRT Local Root CA".
 
 ## Step 2 - Trust
 

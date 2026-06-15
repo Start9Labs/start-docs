@@ -1,23 +1,22 @@
 # Updating
 
-StartWRT does not update automatically. Updating the firmware always requires explicit action. That said, we highly recommend keeping StartWRT up to date for the latest security and performance patches, as well as to take advantage of new features.
+StartWRT never updates automatically — updating always requires explicit action. There are two ways to update: an in-app update from the web interface (recommended), or a microSD reflash (a fallback if an in-app update ever fails). We highly recommend keeping StartWRT up to date for the latest security and performance patches, as well as to take advantage of new features.
 
-## Update through the UI
+## In-App Update (Recommended)
 
-1. When a new version of StartWRT is available, a banner will appear on the Settings page showing the new version number.
+1. Navigate to `System > Settings > General`.
 
-1. Navigate to `System > Settings > General` and expand the update banner to view release notes.
+1. When a newer signed release is available, a "vX.Y.Z released!" accordion appears. Expand it to read the release notes.
 
-1. Click "Update".
+1. Click "Update now" and confirm.
 
-   > [!WARNING]
-   > Ensure you have a stable Internet connection before beginning an update, and do not unplug your router while StartWRT is downloading.
-
-1. Once the download is complete, the router will restart to apply the update.
+1. The download and apply progress is shown live. When it finishes, the router reboots and returns you to the app once it is back online.
 
    > [!WARNING]
-   > Do not unplug your router during the restart. The update may take several minutes to apply. All network traffic — Wi-Fi, Ethernet, VPN connections, and port forwarding — will be interrupted until the router finishes restarting.
+   > Do not unplug your router during the update or reboot. The update can take several minutes to apply. All network traffic — Wi-Fi, Ethernet, VPN connections, and port forwarding — will be interrupted until the router finishes restarting.
 
-## Update by Reflashing
+Firmware integrity is enforced cryptographically (a Blake3 commitment plus ed25519 release signatures), so only properly signed StartWRT releases will install. A tampered or unsigned image is rejected.
 
-If something went wrong with a UI update (very rare), you can update StartWRT by reflashing from a microSD card. Follow the guide for [Installing StartWRT](installing.md).
+## Update by Reflashing (Fallback)
+
+If an in-app update ever fails, you can update StartWRT by reflashing from a microSD card. Use the **Keep settings** path in the reflash wizard, which replaces the firmware while preserving your settings. See [Installing StartWRT](installing.md) for how to create a bootable microSD card, and [Factory Reset](factory-reset.md#reflash-microsd) for a walkthrough of the reflash wizard.

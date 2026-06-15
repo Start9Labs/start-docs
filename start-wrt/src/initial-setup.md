@@ -21,6 +21,9 @@ After unboxing your Start9 router or completing a fresh install, follow these st
 > [!IMPORTANT]
 > All Internet access is blocked until you set an admin password. If you dismiss the captive portal popup, open any browser and navigate to `router.lan`.
 
+> [!NOTE]
+> Your timezone is auto-detected from your browser during setup. You can change it later under [Settings](settings.md).
+
 ## Trust Your Root CA
 
 To access the web interface securely over HTTPS, download and trust your router's Root Certificate Authority (Root CA).

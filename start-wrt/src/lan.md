@@ -6,7 +6,12 @@ The LAN (Local Area Network) page configures the router's internal network addre
 
 Configure the router's LAN IPv4 addressing.
 
-- **Network Block** — Select the `/16` private IP block for your network. The first octet determines the block: `192.168.x.x`, `10.0.x.x`, or `172.16.x.x`. Each [Security Profile](security-profiles.md) receives its own `/24` subnet within this block, allowing up to 256 separate subnets with 254 devices each.
+- **Network Block** — Select the private IP block for your network. The first octet determines the RFC 1918 block: `192.168.x.x`, `172.16.x.x`, or `10.0.x.x`. The second octet selects which `/16` within that block, and the editable range depends on the block:
+  - `192.168.0.0/16` — the second octet is locked to `168`.
+  - `172.16.0.0/12` — the second octet is editable, `16`–`31`.
+  - `10.0.0.0/8` — the second octet is editable, `0`–`255`.
+
+  The default is `192.168`, so existing networks are unaffected. Only RFC 1918 private ranges are accepted; out-of-range values are flagged inline (e.g. "Second octet must be 16–31") and block saving rather than being auto-corrected. Each [Security Profile](security-profiles.md) receives its own `/24` subnet within this block, allowing up to 256 separate subnets with 254 devices each.
 
 - **Router IP** — The router's address within the default subnet. The first two octets are determined by the Network Block, the third octet is configurable (0–254), and the fourth octet is always `1`. For example, with the `192.168.x.x` block and third octet `1`, the router's IP is `192.168.1.1`. This is the address you use to access the web interface.
 
@@ -15,6 +20,9 @@ Configure the router's LAN IPv4 addressing.
 
 > [!WARNING]
 > Changing the Network Block or Router IP changes the router's LAN address. If you are connected to the gateway IP address (opposed to `router.lan`), you will need to navigate to the new address to access the web interface. If any inbound VPN servers exist, they will be deleted because their client configurations become invalid with the new addressing.
+
+> [!NOTE]
+> Changing the second octet counts as a subnet change. Like other subnet changes, it is blocked while any device has a static IP reservation. Remove those reservations first.
 
 ## IPv6
 

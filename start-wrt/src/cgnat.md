@@ -28,7 +28,7 @@ CGNAT does **not** affect:
 
 - **Local network access** — Devices on your LAN connect directly, bypassing the ISP entirely.
 - **[Outbound VPNs](outbound-vpn.md)** — Outbound connections are not blocked by CGNAT.
-- **All other StartWRT features** — Security Profiles, Wi-Fi management, Ethernet configuration, WAN Schedules, and backups work normally.
+- **All other StartWRT features** — Security Profiles, Wi-Fi management, Ethernet configuration, WAN Blackout, and backups work normally.
 
 ## The Solution: StartTunnel
 

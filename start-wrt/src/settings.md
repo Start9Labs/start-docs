@@ -7,14 +7,18 @@ The Settings page contains system preferences, account management, and advanced 
 ### Preferences
 
 - **Theme** — System, Dark, or Light. System follows your browser or OS preference.
-- **Language** — Select the language for the web interface.
-- **Timezone** — Set the router's local timezone. This affects [WAN Schedules](security-profiles.md#wan-schedules), [Wi-Fi Schedules](wifi-schedules.md), activity timestamps, and log timestamps.
+- **Language** — A dropdown for the web interface language. Available languages are English, Spanish, German, French, and Polish (English is the fallback). The choice is saved per-router (server-side) and only takes effect when you click "Save" — there is no automatic browser-language detection.
+- **Timezone** — A searchable combo box populated from the device, listing hundreds of IANA time zones (e.g. labelled like "(GMT-6) America/Denver"). It's auto-detected from your browser during [initial setup](initial-setup.md) (falling back to UTC if detection fails). Changing the timezone restarts the schedule engine so that [WAN Blackout](security-profiles.md#wan-blackout) and [Wi-Fi Blackout](wifi-schedules.md) windows fire at the correct local time. It also affects activity timestamps and log timestamps.
+
+### About
+
+The General page shows an About block with the firmware **Version** and a **Build** identifier (a short git hash; hover to see the full hash). These are useful when filing bug reports.
 
 ### Remote Access
 
 Controls whether the web interface is accessible from outside the local network. When remote access is enabled, the router detects whether it has a public or private WAN IP and adjusts accordingly. Remote access works over the router's WAN IP or [Dynamic DNS](ddns.md) domain, and is also reachable through an [Inbound VPN](inbound-vpn.md) connection.
 
-- **When behind NAT** (default) — Allows remote access only when the router is behind NAT (typical home network with a private IP). This is the recommended setting for most users.
+- **When behind NAT** (default) — The recommended setting for most users. The admin-interface access rules (ports 80/443/22) are scoped to private and ULA source ranges (RFC 1918 for IPv4, `fc00::/7` for IPv6), so the admin interface stays reachable from your local network but closed to the public Internet — even if a public, globally routable address later appears on the WAN.
 - **Never** — Disables remote access entirely. The admin interface is only accessible from devices on the local network.
 - **Always** — Enables remote access at all times, even with a public IP.
 
@@ -23,7 +27,7 @@ Controls whether the web interface is accessible from outside the local network.
 
 ### Security
 
-- **Download Root CA** — Download the router's Root CA certificate. See [Trusting Your Root CA](trust-ca.md) for installation instructions.
+- **Download Root CA** — Download the router's Root CA certificate, saved as `startwrt-ca.crt`. See [Trusting Your Root CA](trust-ca.md) for installation instructions.
 
 ### Updates
 

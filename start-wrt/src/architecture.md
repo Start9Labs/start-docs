@@ -29,11 +29,11 @@ When you create a [Security Profile](security-profiles.md), the backend orchestr
 | UCI Config | What Changes |
 |------------|-------------|
 | `network` | New bridge interface, VLAN, and subnet |
-| `firewall` | New zone with inter-zone forwarding rules |
+| `firewall` | New zone with inter-zone forwarding rules (fw4/nftables) |
 | `dhcp` | New DHCP server for the profile's subnet |
 | `wireless` | New PSK entry in `wpa_psk_file` (for Wi-Fi passwords) |
 
-This is why the web interface never exposes raw VLANs or firewall rules — the profile abstraction handles all of it consistently.
+This is why the web interface never exposes raw VLANs or firewall rules — the profile abstraction handles all of it consistently. StartWRT's firewall is built on fw4/nftables, so any custom firewall rules you add must be written as nftables (fw4) rules.
 
 ## Network Isolation
 
@@ -45,11 +45,20 @@ StartWRT's multi-password Wi-Fi uses WPA2's identity PSK feature with dynamic VL
 
 ## Security
 
-- **Admin password** — Stored as a SHA-512 hash
+- **Admin password** — Stored as a SHA-512 hash in `/etc/shadow`
+- **Wi-Fi password** — Printed on the sticker and stored in the router's EEPROM
 - **Sessions** — Random token with 1-day expiry; HTTP-only SameSite=Strict cookie
 - **Rate limiting** — 3 login attempts per 20 seconds
 - **SSH** — Public key authentication or password auth (Admin password)
 - **TLS** — rustls with a Root CA certificate chain
+
+## TLS and Certificates
+
+Certificate generation is delegated to the StartOS SSL primitives. The trust chain uses a root CA with CN "StartWRT Local Root CA" and an intermediate CA with CN "StartWRT Local Intermediate CA" (both with Org/OU "StartWRT"), and the issued server certificate carries a default SAN of `router.lan`. The web server hot-reloads its TLS certificate when the LAN IP changes, so no restart is required. See [Trusting Your Root CA](trust-ca.md) for installation steps.
+
+## IPv6
+
+Each router generates a unique per-device ULA /48 prefix at first boot. This ensures that chained StartWRT routers never collide on the same ULA range.
 
 ## Source Code
 

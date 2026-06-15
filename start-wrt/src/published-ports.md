@@ -57,3 +57,6 @@ The **Endpoints** column in the table shows the public addresses where each forw
 
 > [!NOTE]
 > Port forwarding requires a public IP address. If your ISP uses [CGNAT](cgnat.md), IPv4 forwarding will not work — the rule will show a "Partial" status if IPv6 is available, or "Error" if not.
+
+> [!NOTE]
+> IPv6 forwarding requires the target device to have a globally routable address. If the device only has a local-only ULA address (one that starts with `fc` or `fd`), a warning appears that a global address — from your ISP's prefix delegation — is required. The IPv6 rule is skipped, but saving is not blocked, so any IPv4 rule still applies.

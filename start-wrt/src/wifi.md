@@ -10,10 +10,10 @@ From the user's perspective, everyone connects to the same network name — the 
 
 ## The Default Password
 
-The Wi-Fi password printed on the sticker on the bottom of your router is the default password. It maps to the default Security Profile (typically "Admin" with full access). This password is set during manufacturing and stored securely on the router's eMMC storage.
+The Wi-Fi password printed on the sticker on the bottom of your router is the default password. It maps to the default Security Profile (typically "Admin" with full access). This password is set during manufacturing and stored in the router's EEPROM. The EEPROM value is only authoritative on a [factory reset](factory-reset.md), when it is re-read to restore the default password. During normal operation the active password is whatever is in the router's running configuration: you can delete the **Default** entry and create a new one, and that new password is respected regardless of the EEPROM value. It also appears on the `Points of Entry > Wi-Fi > Passwords` page as the **Default** entry (mapped to the Admin profile), where you can reveal or copy it.
 
 > [!NOTE]
-> Keep the sticker password safe. If lost or compromised [reflashing](installing.md#recovering-a-lost-or-compromised-wi-fi-password) using an image with a new "baked-in" password will be required.
+> Keep the sticker password safe. On a DIY or unprogrammed board with no EEPROM Wi-Fi password, set one in the GUI (if connected via ethernet) or with `startwrt-cli set-wifi-password`. See [Installing StartWRT](installing.md#diy-and-unprogrammed-boards).
 
 ## Adding a Wi-Fi Password
 
@@ -24,7 +24,7 @@ The Wi-Fi password printed on the sticker on the bottom of your router is the de
 1. Configure the password:
 
    - **Label** — A descriptive name for this password (e.g. "Home", "Guest Network", "Kids").
-   - **Password** — Enter a password (minimum 8 characters) or click "Generate" to create a strong random password.
+   - **Password** — Enter a password (8–63 characters) or click "Generate" to create a strong random password.
    - **Security Profile** — Select the [Security Profile](security-profiles.md) this password should map to.
 
 1. Click "Save".

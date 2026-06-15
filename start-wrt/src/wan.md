@@ -24,11 +24,13 @@ Configure IPv6 if your ISP supports it.
 
 - **SLAAC** (default) — Automatic IPv6 configuration. The most common option if your ISP supports IPv6.
 - **DHCPv6** — The ISP assigns an IPv6 address via DHCP. Use if SLAAC does not work with your ISP.
-- **Static** — Manually configure a fixed IPv6 address, prefix length, and gateway.
+- **Static** — Manually configure a fixed IPv6 address, prefix length, and gateway. A **LAN Prefix** field sets the IPv6 prefix delegated to your LAN.
 - **6RD** — Tunnels IPv6 over an IPv4 connection. Required by some ISPs that do not provide native IPv6. Configuration fields: IPv6 Prefix, IPv6 Prefix Length, IPv4 Prefix Length, and Border Relay IP (the IPv4 address of the ISP's relay server).
 - **Disabled** — No IPv6 on the WAN interface.
 
 For SLAAC and DHCPv6, an optional **IPv6 Prefix** field lets you request a specific prefix length from your ISP for prefix delegation (e.g. `/48`, `/56`, `/64`). Leave empty to let your ISP decide automatically.
+
+The WAN summary shows an IPv6 status badge indicating whether IPv6 is Enabled or Disabled, along with its mode (SLAAC, DHCPv6, Static, or 6RD).
 
 ## DNS
 

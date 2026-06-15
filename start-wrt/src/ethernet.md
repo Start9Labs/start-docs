@@ -24,7 +24,7 @@ One Ethernet port is designated as the WAN port, which connects to your ISP mode
 > Changes take effect immediately. A device currently plugged into a port will be reassigned to the new profile without needing to unplug and replug.
 
 > [!NOTE]
-> If you connect a network switch to an Ethernet port, all devices on that switch share the same Security Profile. StartWRT cannot differentiate between devices beyond its onboard Ethernet ports.
+> If you connect a network switch to an Ethernet port, all devices on that switch share the same Security Profile. StartWRT cannot differentiate between devices beyond its onboard Ethernet ports. Those devices still appear individually in the [Devices](devices.md) list — including hosts with static IPs or only IPv6 addresses — because the router learns them from the bridge forwarding table even without a DHCP lease.
 
 ## Changing the WAN Port
 

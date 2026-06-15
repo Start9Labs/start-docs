@@ -40,7 +40,7 @@
 
 - [Ethernet](ethernet.md)
 - [Wi-Fi](wifi.md)
-- [Wi-Fi Schedules](wifi-schedules.md)
+- [Wi-Fi Blackout](wifi-schedules.md)
 - [Inbound VPNs](inbound-vpn.md)
 
 ---
