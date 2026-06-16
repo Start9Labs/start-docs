@@ -292,9 +292,9 @@ urllib.request.urlopen(req)`,
 
 Init progress is surfaced in the **Installing** / **Updating** phase of the install, so a long first-run setup (migrations, bootstrapping a server, downloading assets) shows a moving bar instead of an apparent stall. This mirrors backup progress reporting.
 
-You never call the progress effect directly. The init harness builds a `FullProgressTracker` and hands **each** init handler its own tracker as a third argument. Add phases to it and call `progress.sync(effects)` — that walks up to the root tracker and reports to the host under the hood. Handlers are unaware of one another; their phases simply accumulate, and even handlers that report nothing advance the bar as each one completes.
+You never call the progress effect directly. The init harness builds a `FullProgressTracker` and hands **each** init handler its own tracker as a third argument. Add phases and update them — **every update auto-reports to the host in the background**, so there's nothing to flush by hand. Handlers are unaware of one another; their phases simply accumulate, and even handlers that report nothing advance the bar as each one completes.
 
-`progress.addPhase(name, contribution)` returns a `PhaseHandle` with `start()`, `setTotal(n)`, `setDone(n)`, `setUnits('steps' | 'bytes')`, and `complete()`. Update the handle, then `sync` to push the snapshot.
+`progress.addPhase(name, contribution)` returns a `PhaseHandle` with `start()`, `setTotal(n)`, `setDone(n)`, `setUnits('steps' | 'bytes')`, and `complete()`. Just update the handle; the report follows automatically.
 
 ```typescript
 export const initializeService = sdk.setupOnInit(
@@ -304,22 +304,21 @@ export const initializeService = sdk.setupOnInit(
     const phase = progress.addPhase('Seeding files', 1)
     phase.setUnits('steps')
     phase.setTotal(seedFiles.length)
-    await progress.sync(effects)
 
     for (let i = 0; i < seedFiles.length; i++) {
       await seedFiles[i](effects)
-      phase.setDone(i + 1)
-      await progress.sync(effects)
+      phase.setDone(i + 1) // auto-reports in the background
     }
 
     phase.complete()
-    await progress.sync(effects)
   },
 )
 ```
 
+Auto-sync is coalesced — at most one report is in flight and one queued, so a tight update loop collapses to the latest snapshot instead of stacking up calls. If you ever need to guarantee the latest state has landed before doing something else, `await progress.sync()` flushes the in-flight and queued reports (the harness already does this when your handler returns).
+
 > [!NOTE]
-> `sync(effects)` is a no-op outside the install / update / restore transition — it only feeds the install-progress UI — so it's always safe to call. If you need to construct a tracker yourself (rare), it's available as `utils.FullProgressTracker`; no deep import.
+> Progress reporting is a no-op outside the install / update / restore transition, so updating phases on a plain container rebuild is harmless. If you need to construct a tracker yourself (rare), it's available as `utils.FullProgressTracker`; no deep import.
 
 ### Reporting Progress From a Migration
 
@@ -339,16 +338,13 @@ export const v2_0_0 = VersionInfo.of({
       const phase = progress.addPhase('Re-encoding records', 1)
       phase.setUnits('steps')
       phase.setTotal(records.length)
-      await progress.sync(effects)
 
       for (let i = 0; i < records.length; i++) {
         await reencode(records[i])
-        phase.setDone(i + 1)
-        await progress.sync(effects)
+        phase.setDone(i + 1) // auto-reports in the background
       }
 
       phase.complete()
-      await progress.sync(effects)
     },
     down: IMPOSSIBLE,
   },
@@ -367,16 +363,12 @@ export const bootstrap = sdk.setupOnInit(async (effects, kind, progress) => {
   const seedPhase = progress.addPhase('Seeding admin user', 1)
 
   dbPhase.start()
-  await progress.sync(effects)
   await initDatabase(effects)
   dbPhase.complete()
-  await progress.sync(effects)
 
   seedPhase.start()
-  await progress.sync(effects)
   await seedAdminUser(effects)
   seedPhase.complete()
-  await progress.sync(effects)
 })
 ```
 
