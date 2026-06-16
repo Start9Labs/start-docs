@@ -27,7 +27,7 @@ Back up your server's data to a physical drive or a network folder.
 
 1. Backups taken from a specific system architecture (x86, ARM, RISC-V) are backed up for just that architecture. If restored to another architecture, they will likely need to be reinstalled to run efficiently.
 
-1. The backup format changed. New backups are written to a `StartOSBackupsV2` folder on the target. If the target still contains an older `StartOSBackups` folder from a previous version, StartOS warns you when you select that drive — and once the new backup completes successfully, you can delete the old `StartOSBackups` folder (do _not_ delete `StartOSBackupsV2`) to reclaim space.
+1. A major performance improvement to StartOS backups changed the backup format. New backups are written to a `StartOSBackupsV2` folder on the target, which makes any older `StartOSBackups` folder from a previous version obsolete. If StartOS detects an old `StartOSBackups` folder when you select a drive, it warns you — be sure to back up every service you want, and once the new backup completes successfully, delete the old `StartOSBackups` folder (do _not_ delete `StartOSBackupsV2`) to reclaim space.
 
    > [!WARNING]
    > If the old `StartOSBackups` folder is larger than the free space remaining on the drive, the new backup will not fit and StartOS will not start it. Delete the old `StartOSBackups` folder first, or choose another drive.
