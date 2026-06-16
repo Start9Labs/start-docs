@@ -292,45 +292,93 @@ urllib.request.urlopen(req)`,
 
 Init progress is surfaced in the **Installing** / **Updating** phase of the install, so a long first-run setup (migrations, bootstrapping a server, downloading assets) shows a moving bar instead of an apparent stall. This mirrors backup progress reporting.
 
-`setupInit` reports this automatically: it advances one step for each composed init function as it completes. A service with several `setupOnInit` handlers gets a coarse install/update progress bar for free — no extra code.
+You never call the progress effect directly. The init harness builds a `FullProgressTracker` and hands **each** init handler its own tracker as a third argument. Add phases to it and call `progress.sync(effects)` — that walks up to the root tracker and reports to the host under the hood. Handlers are unaware of one another; their phases simply accumulate, and even handlers that report nothing advance the bar as each one completes.
 
-For finer-grained progress within a single init handler, call `effects.setInitProgress` directly. The argument is a `Progress`: `null` (not started), `false` (started, indeterminate), `true` (complete), `{ done, total, units }` for a leaf reading, or a nested `FullProgress` if you track sub-phases.
-
-```typescript
-export const initializeService = sdk.setupOnInit(async (effects, kind) => {
-  if (kind !== 'install') return
-
-  const steps = seedFiles.length
-  for (let i = 0; i < steps; i++) {
-    await effects.setInitProgress({
-      progress: { done: i, total: steps, units: 'steps' },
-    })
-    await seedFiles[i](effects)
-  }
-  await effects.setInitProgress({ progress: true })
-})
-```
-
-For multi-phase init with its own sub-tasks, build a `FullProgressTracker` and push its `snapshot()` — the same utility `createBackup` uses for backup progress:
+`progress.addPhase(name, contribution)` returns a `PhaseHandle` with `start()`, `setTotal(n)`, `setDone(n)`, `setUnits('steps' | 'bytes')`, and `complete()`. Update the handle, then `sync` to push the snapshot.
 
 ```typescript
-import { FullProgressTracker } from '@start9labs/start-sdk/base/lib/util/FullProgressTracker'
+export const initializeService = sdk.setupOnInit(
+  async (effects, kind, progress) => {
+    if (kind !== 'install') return
 
-const tracker = new FullProgressTracker()
-const migrate = tracker.addPhase('migrate', 1)
-const bootstrap = tracker.addPhase('bootstrap', 1)
-const push = () =>
-  effects.setInitProgress({ progress: tracker.snapshot() }).catch(() => null)
+    const phase = progress.addPhase('Seeding files', 1)
+    phase.setUnits('steps')
+    phase.setTotal(seedFiles.length)
+    await progress.sync(effects)
 
-migrate.start()
-await push()
-// ...run migration, optionally migrate.setTotal/setDone for byte/step detail...
-migrate.complete()
-await push()
+    for (let i = 0; i < seedFiles.length; i++) {
+      await seedFiles[i](effects)
+      phase.setDone(i + 1)
+      await progress.sync(effects)
+    }
+
+    phase.complete()
+    await progress.sync(effects)
+  },
+)
 ```
 
 > [!NOTE]
-> `setInitProgress` is a no-op outside the install/update transition — it only feeds the install-progress UI. Calling it on a plain container rebuild or restart does nothing, so it's safe to call unconditionally.
+> `sync(effects)` is a no-op outside the install / update / restore transition — it only feeds the install-progress UI — so it's always safe to call. If you need to construct a tracker yourself (rare), it's available as `utils.FullProgressTracker`; no deep import.
+
+### Reporting Progress From a Migration
+
+Migrations receive the same kind of tracker through their opts, so a slow data migration shows progress during an update instead of stalling the bar:
+
+```typescript
+// versions/v2_0_0.ts
+import { VersionInfo, IMPOSSIBLE } from '@start9labs/start-sdk'
+import { i18n } from '../i18n'
+
+export const v2_0_0 = VersionInfo.of({
+  version: '2.0.0:0',
+  releaseNotes: i18n('Reticulated splines'),
+  migrations: {
+    up: async ({ effects, progress }) => {
+      const records = await loadRecordsToReencode()
+      const phase = progress.addPhase('Re-encoding records', 1)
+      phase.setUnits('steps')
+      phase.setTotal(records.length)
+      await progress.sync(effects)
+
+      for (let i = 0; i < records.length; i++) {
+        await reencode(records[i])
+        phase.setDone(i + 1)
+        await progress.sync(effects)
+      }
+
+      phase.complete()
+      await progress.sync(effects)
+    },
+    down: IMPOSSIBLE,
+  },
+})
+```
+
+### Multi-phase Handlers
+
+For a handler with several distinct sub-tasks, add one phase per task. The tracker weights them by their `contribution` and reports a combined percentage:
+
+```typescript
+export const bootstrap = sdk.setupOnInit(async (effects, kind, progress) => {
+  if (kind !== 'install') return
+
+  const dbPhase = progress.addPhase('Initializing database', 1)
+  const seedPhase = progress.addPhase('Seeding admin user', 1)
+
+  dbPhase.start()
+  await progress.sync(effects)
+  await initDatabase(effects)
+  dbPhase.complete()
+  await progress.sync(effects)
+
+  seedPhase.start()
+  await progress.sync(effects)
+  await seedAdminUser(effects)
+  seedPhase.complete()
+  await progress.sync(effects)
+})
+```
 
 ## Common Patterns
 
