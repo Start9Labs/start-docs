@@ -288,6 +288,50 @@ urllib.request.urlopen(req)`,
 ]
 ```
 
+## Reporting Init Progress
+
+Init progress is surfaced in the **Installing** / **Updating** phase of the install, so a long first-run setup (migrations, bootstrapping a server, downloading assets) shows a moving bar instead of an apparent stall. This mirrors backup progress reporting.
+
+`setupInit` reports this automatically: it advances one step for each composed init function as it completes. A service with several `setupOnInit` handlers gets a coarse install/update progress bar for free — no extra code.
+
+For finer-grained progress within a single init handler, call `effects.setInitProgress` directly. The argument is a `Progress`: `null` (not started), `false` (started, indeterminate), `true` (complete), `{ done, total, units }` for a leaf reading, or a nested `FullProgress` if you track sub-phases.
+
+```typescript
+export const initializeService = sdk.setupOnInit(async (effects, kind) => {
+  if (kind !== 'install') return
+
+  const steps = seedFiles.length
+  for (let i = 0; i < steps; i++) {
+    await effects.setInitProgress({
+      progress: { done: i, total: steps, units: 'steps' },
+    })
+    await seedFiles[i](effects)
+  }
+  await effects.setInitProgress({ progress: true })
+})
+```
+
+For multi-phase init with its own sub-tasks, build a `FullProgressTracker` and push its `snapshot()` — the same utility `createBackup` uses for backup progress:
+
+```typescript
+import { FullProgressTracker } from '@start9labs/start-sdk/base/lib/util/FullProgressTracker'
+
+const tracker = new FullProgressTracker()
+const migrate = tracker.addPhase('migrate', 1)
+const bootstrap = tracker.addPhase('bootstrap', 1)
+const push = () =>
+  effects.setInitProgress({ progress: tracker.snapshot() }).catch(() => null)
+
+migrate.start()
+await push()
+// ...run migration, optionally migrate.setTotal/setDone for byte/step detail...
+migrate.complete()
+await push()
+```
+
+> [!NOTE]
+> `setInitProgress` is a no-op outside the install/update transition — it only feeds the install-progress UI. Calling it on a plain container rebuild or restart does nothing, so it's safe to call unconditionally.
+
 ## Common Patterns
 
 ### Generate Random Password
