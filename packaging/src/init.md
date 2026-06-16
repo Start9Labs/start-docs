@@ -292,7 +292,7 @@ urllib.request.urlopen(req)`,
 
 Init progress is surfaced in the **Installing** / **Updating** phase of the install, so a long first-run setup (migrations, bootstrapping a server, downloading assets) shows a moving bar instead of an apparent stall. This mirrors backup progress reporting.
 
-You never call the progress effect directly. The init harness builds a `FullProgressTracker` and hands **each** init handler its own tracker as a third argument. Add phases and update them — **every update auto-reports to the host in the background**, so there's nothing to flush by hand. Handlers are unaware of one another; their phases simply accumulate, and even handlers that report nothing advance the bar as each one completes.
+You never call the progress effect directly. The init harness builds one `FullProgressTracker` and passes it to **every** init handler as a third argument. Each handler adds its own phases (with its own names) to the shared tracker, unaware of the others. Add phases and update them — **every update auto-reports to the host in the background**, so there's nothing to flush by hand.
 
 `progress.addPhase(name, contribution)` returns a `PhaseHandle` with `start()`, `setTotal(n)`, `setDone(n)`, `setUnits('steps' | 'bytes')`, and `complete()`. Just update the handle; the report follows automatically.
 
