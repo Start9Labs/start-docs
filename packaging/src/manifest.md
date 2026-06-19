@@ -3,7 +3,7 @@
 The manifest defines service identity, metadata, and build configuration. It lives in `startos/manifest/` as two files:
 
 - `index.ts` -- the `setupManifest()` call
-- `i18n.ts` -- translated strings for `description` and `alerts`
+- `i18n.ts` -- translated strings for `description`
 
 ## manifest/i18n.ts
 
@@ -30,8 +30,6 @@ export const long = {
   fr_FR:
     'Description plus longue expliquant ce que fait le service et ses fonctionnalites principales.',
 }
-
-// Export alertInstall, alertUpdate, etc. as needed (or null for no alert)
 ```
 
 ## manifest/index.ts
@@ -53,14 +51,6 @@ export const manifest = setupManifest({
   images: {
     /* see Images Configuration below */
   },
-  alerts: {
-    install: null,
-    update: null,
-    uninstall: null,
-    restore: null,
-    start: null,
-    stop: null,
-  },
   dependencies: {},
 })
 ```
@@ -80,7 +70,6 @@ export const manifest = setupManifest({
 | `description.long`  | Locale object (see `manifest/i18n.ts`)                 |
 | `volumes`           | Storage volumes (usually `['main']`)                   |
 | `images`            | Docker image configuration (including `arch`)          |
-| `alerts`            | User notifications for lifecycle events (locale objects or `null`) |
 | `dependencies`      | Service dependencies                                   |
 
 ## License
@@ -267,33 +256,6 @@ images: {
     source: { dockerTag: 'postgres:15' },
     arch: ['x86_64', 'aarch64'],
   },
-},
-```
-
-## Alerts
-
-Display messages to users during lifecycle events. Use locale objects for translated alerts, or `null` for no alert:
-
-```typescript
-// In manifest/i18n.ts
-export const alertInstall = {
-  en_US: 'After installation, run the "Get Admin Credentials" action to retrieve your password.',
-  es_ES: 'Despues de la instalacion, ejecute la accion "Obtener credenciales de administrador" para recuperar su contrasena.',
-  de_DE: 'Fuhren Sie nach der Installation die Aktion "Admin-Zugangsdaten abrufen" aus, um Ihr Passwort abzurufen.',
-  pl_PL: 'Po instalacji uruchom akcje "Pobierz dane administratora", aby uzyskac haslo.',
-  fr_FR: "Apres l'installation, executez l'action 'Obtenir les identifiants admin' pour recuperer votre mot de passe.",
-}
-
-// In manifest/index.ts
-import { short, long, alertInstall } from './i18n'
-
-alerts: {
-  install: alertInstall,
-  update: null,
-  uninstall: null,
-  restore: null,
-  start: null,
-  stop: null,
 },
 ```
 

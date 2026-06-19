@@ -26,7 +26,7 @@ my-service-startos/
 │   ├── init/               # Container initialization logic
 │   ├── manifest/           # Static service metadata
 │   │   ├── index.ts        # setupManifest() call
-│   │   └── i18n.ts         # Static translations: manifest descriptions/alerts
+│   │   └── i18n.ts         # Static translations: manifest descriptions
 │   ├── backups.ts          # Backup volumes and exclusions
 │   ├── dependencies.ts     # Service dependencies
 │   ├── index.ts            # Exports (boilerplate)
@@ -268,7 +268,7 @@ The barebones scaffold ships no `interfaces.ts` — many services (background wo
 
 #### manifest/
 
-The manifest directory defines static metadata about the service, such as ID, name, description, release notes, helpful links, volumes, images, hardware requirements, alerts, and dependencies. See [Manifest](./manifest.md) for details.
+The manifest directory defines static metadata about the service, such as ID, name, description, release notes, helpful links, volumes, images, hardware requirements, and dependencies. See [Manifest](./manifest.md) for details.
 
 #### sdk.ts
 

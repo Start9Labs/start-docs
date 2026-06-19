@@ -21,7 +21,7 @@ Every service on StartOS runs inside its own isolated [LXC container](https://li
 
 Services are distributed as `.s9pk` files — a custom archive format built on a merkle tree. An S9PK contains:
 
-- **manifest.json** — Package metadata: ID, title, version, license, descriptions, alerts, dependency declarations, and image definitions.
+- **manifest.json** — Package metadata: ID, title, version, license, descriptions, dependency declarations, and image definitions.
 - **icon** — The package icon displayed in the marketplace and UI.
 - **LICENSE.md** — The applicable license.
 - **javascript.squashfs** — The compiled SDK code that defines the service's behavior on StartOS (daemons, actions, health checks, interfaces, etc.).

@@ -19,7 +19,7 @@ The recommended setup is [Claude Code](https://claude.com/claude-code) with this
 What makes this experience possible is a unique package format (`.s9pk`) that permits services to take advantage of StartOS APIs. In its most basic form, a package is a thin metadata wrapper around a service that allows it to be discovered, installed, and run on StartOS. Beyond that, the StartOS APIs grant developers an incredible degree of creative capacity to define the end-user experience for their service. Developers can:
 
 - Display instructions and tooltips
-- Present alerts and warnings under certain conditions
+- Present warnings under certain conditions
 - Run arbitrary code on install, update, and uninstall
 - Represent configuration files as validated forms with all varieties of form inputs
 - Define scripts and commands that present as buttons with optional inputs
@@ -50,7 +50,7 @@ Intent-driven guides for common packaging tasks. These are the primary entry poi
 ## Reference
 
 1. [Project Structure](./project-structure.md) - Understand the file layout of a StartOS package
-1. [Manifest](./manifest.md) - Define your service metadata, release notes, and alerts
+1. [Manifest](./manifest.md) - Define your service metadata and release notes
 1. [Versions](./versions.md) - Handle install, update, and downgrade logic
 1. [Main](./main.md) - Configure daemons, health checks, and the service lifecycle
 1. [Initialization](./init.md) - Run code when your service initializes

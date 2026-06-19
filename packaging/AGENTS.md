@@ -49,7 +49,7 @@ Read pages from your local checkout (`start-docs/packaging/src/<page>.md`). Only
 | Find the right recipe for a task | `start-docs/packaging/src/recipes.md` |
 | How to behave on every task (the disciplines below) | `start-docs/packaging/src/workflow.md` |
 | File/directory layout of a package | `start-docs/packaging/src/project-structure.md` |
-| Service metadata, descriptions, alerts | `start-docs/packaging/src/manifest.md` |
+| Service metadata, descriptions | `start-docs/packaging/src/manifest.md` |
 | Versions, migrations, release notes | `start-docs/packaging/src/versions.md` |
 | Daemons, health checks, oneshots, lifecycle | `start-docs/packaging/src/main.md` |
 | Install / update / restore init logic | `start-docs/packaging/src/init.md` |
