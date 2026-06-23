@@ -119,7 +119,7 @@ Every installed service will have an update available for the 0.4.0 marketplace.
 
 ## Step 14: Start All Services
 
-Once all services are updated and backed up, you can start them. Wait for all services to fully start and confirm they are running correctly.
+Once all services are updated, you can start them. Wait for all services to fully start and confirm they are running correctly.
 
 ## Step 15: Create a Backup!
 
