@@ -21,6 +21,8 @@ The following services cannot be migrated automatically. Review these before sta
 
 - **Synapse** — The old Synapse was Tor-only. The new Synapse is clearnet-only. These are different services now with no migration path.
 
+- **Jam** — Jam's backend, JoinMarket, is being replaced by a separate reimplementation (JoinMarket NG) for technical and security reasons, making Jam defunct on StartOS v0.3.5.1 and unavailable on v0.4.0 until that backend matures and a new version of Jam is built for it. You should back up your seed, move out any spendable funds (fidelity-bond funds stay locked until expiry), and uninstall Jam prior to updating to v0.4.0.
+
 ### LAN addresses are changing
 
 In StartOS 0.3.x, each service had its own `.local` address (e.g. `longexamplepublickey.local`). In 0.4.0, services are accessed on unique ports of your server's main `.local` address (e.g. `adjective-noun.local:4545`). Your old per-service `.local` addresses will no longer exist after the update.
