@@ -16,7 +16,7 @@
 For one-time setup that generates new state. Internal-only secrets (DB password, JWT secret, etc.) **are** generated here, because no user interaction is involved:
 
 ```typescript
-export const initializeService = sdk.setupOnInit(async (effects, kind) => {
+export const seedFiles = sdk.setupOnInit(async (effects, kind) => {
   if (kind !== 'install') return
 
   // Internal secret consumed by setupMain — never shown to the user
@@ -33,7 +33,7 @@ User-facing admin credentials follow a different pattern — see [Watch State an
 For setup that should also run when restoring from backup (but not on container rebuild):
 
 ```typescript
-export const initializeService = sdk.setupOnInit(async (effects, kind) => {
+export const reRegisterWebhook = sdk.setupOnInit(async (effects, kind) => {
   if (kind === null) return // Skip on container rebuild
 
   // Runs on both install and restore — e.g. re-register a webhook with an
@@ -47,7 +47,7 @@ export const initializeService = sdk.setupOnInit(async (effects, kind) => {
 For registering `.const()` triggers that need to persist for the container's lifetime. These re-register on container rebuild:
 
 ```typescript
-export const initializeService = sdk.setupOnInit(async (effects, kind) => {
+export const registerWatchers = sdk.setupOnInit(async (effects, kind) => {
   // Runs on install, restore, AND container rebuild
 
   // Register a watcher that lives for the container lifetime
@@ -148,7 +148,7 @@ export const setAdminPassword = sdk.Action.withoutInput(
 
 If the upstream service needs the password applied via CLI or API rather than just read from the store at startup, wrap the work in `sdk.SubContainer.withTemp()` inside the action handler — see the [Reset a Password](recipe-reset-password.md) recipe.
 
-## Registering initializeService
+## Registering a custom init function
 
 Add your custom init function to `init/index.ts`:
 
@@ -159,7 +159,7 @@ import { setInterfaces } from '../interfaces'
 import { versionGraph } from '../versions'
 import { actions } from '../actions'
 import { restoreInit } from '../backups'
-import { initializeService } from './initializeService'
+import { seedFiles } from './seedFiles'
 
 export const init = sdk.setupInit(
   restoreInit,
@@ -167,7 +167,7 @@ export const init = sdk.setupInit(
   setInterfaces,
   setDependencies,
   actions,
-  initializeService, // Add this
+  seedFiles, // Add this
 )
 
 export const uninit = sdk.setupUninit(versionGraph)
@@ -316,7 +316,7 @@ Severity levels: `'critical'`, `'important'`, `'optional'`
 ### Checking Init Kind
 
 ```typescript
-export const initializeService = sdk.setupOnInit(async (effects, kind) => {
+export const seedFiles = sdk.setupOnInit(async (effects, kind) => {
   // kind === 'install': Fresh install
   // kind === 'update': After version upgrade
   // kind === 'restore': Restoring from backup

@@ -177,7 +177,7 @@ Oneshots are tasks that run on every startup before daemons. Use them for idempo
 ```
 
 > [!WARNING]
-> Do NOT put one-time setup tasks (like `createsuperuser`) in `main.ts` oneshots -- they run on every startup and will fail on subsequent runs. Use `init/initializeService.ts` instead. See [Initialization Patterns](./init.md) for details.
+> Do NOT put one-time setup tasks (like `createsuperuser`) in `main.ts` oneshots -- they run on every startup and will fail on subsequent runs. Use a custom init file (e.g. `init/seedFiles.ts`) instead. See [Initialization Patterns](./init.md) for details.
 
 ## Exec Command
 
@@ -468,7 +468,7 @@ The `user` option is optional. If omitted, commands run as the default user defi
 **Use `execFail()` when:**
 
 - The command must succeed for the service to work correctly
-- You are in `initializeService.ts` and want installation to fail if setup fails
+- You are in a custom init file (e.g. `seedFiles.ts`) and want installation to fail if setup fails
 - You want automatic error propagation
 
 **Use `exec()` when:**

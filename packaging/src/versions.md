@@ -270,8 +270,8 @@ export const seedFiles = sdk.setupOnInit(async (effects, kind) => {
 Tasks reference actions, so they must be created in a `setupOnInit` that runs after actions are registered in the init sequence:
 
 ```typescript
-// init/initializeService.ts
-export const initializeService = sdk.setupOnInit(async (effects, kind) => {
+// init/taskDisableRegistrations.ts
+export const taskDisableRegistrations = sdk.setupOnInit(async (effects, kind) => {
   if (kind !== 'install') return
   await sdk.action.createOwnTask(effects, toggleRegistrations, 'important', {
     reason: 'After creating your admin account, disable registrations.',

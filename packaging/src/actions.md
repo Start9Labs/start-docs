@@ -132,8 +132,8 @@ The recommended pattern:
 3. **Provide a toggle action** that reads the current registration state, flips it, and writes back.
 
 ```typescript
-// In init/initializeService.ts
-export const initializeService = sdk.setupOnInit(async (effects, kind) => {
+// In init/taskDisableRegistrations.ts
+export const taskDisableRegistrations = sdk.setupOnInit(async (effects, kind) => {
   if (kind !== "install") return;
   await sdk.action.createOwnTask(effects, toggleRegistrations, "important", {
     reason:
@@ -390,7 +390,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
 
 ### 5. Initialize with SMTP Disabled
 
-In `init/initializeService.ts`, set the default SMTP state alongside any internal-only secrets the service needs. The admin password is set by the `setAdminPassword` action when the user runs its critical task (see [Prompt User to Create Admin Credentials](./recipe-admin-credentials.md)):
+In `init/seedFiles.ts`, set the default SMTP state alongside any internal-only secrets the service needs. The admin password is set by the `setAdminPassword` action when the user runs its critical task (see [Prompt User to Create Admin Credentials](./recipe-admin-credentials.md)):
 
 ```typescript
 await storeJson.merge(effects, {
