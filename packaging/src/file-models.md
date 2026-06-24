@@ -436,6 +436,28 @@ await configToml.merge(effects, {
 } as any);
 ```
 
+> [!WARNING]
+> This removes a stale key your schema doesn't model. It cannot surgically delete one entry of a _typed_ collection that has a `.catch()` default. `merge({ users: { bob: undefined } })` against `users: z.record(...).catch({})` makes the whole `users` value fail validation, so the `.catch({})` replaces the **entire** record with `{}` — every entry is wiped, not just `bob`. To drop one entry while keeping the rest, rebuild the value in code and `write()` it.
+
+### Arrays Are Replaced, Not Merged
+
+`merge()` recurses into plain **objects** key by key, but it treats **arrays and primitives as atomic values** — whatever you pass replaces what was there. For an array this means no element-wise union, append, or de-duplication: the array in your patch becomes the new value in its entirety.
+
+```typescript
+// stored: { friends: ["alice", "bob"] }
+await storeJson.merge(effects, { friends: ["alice"] });
+// result: { friends: ["alice"] }  — "bob" is dropped, not preserved
+```
+
+This produces an asymmetry that is easy to get wrong, because object keys and array elements behave oppositely under the same `merge()` call:
+
+| What you merge                | What happens to what you left out                                                                                |
+| ----------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| An **object** without a key   | The key is **kept** — `merge()` never deletes a key you don't mention (see [Unknown Key Preservation](#unknown-key-preservation)) |
+| An **array** without an entry | The entry is **gone** — the whole array is overwritten                                                            |
+
+So to change one entry of an array, read the current array, edit it in code, and merge the **complete** new array — you cannot add or drop a single element by passing a one-element patch. When you instead need to remove an object key (or otherwise rebuild a structure wholesale), reach for `write()`, which replaces the entire file.
+
 ### Using SDK-Provided Schemas
 
 For complex types like SMTP, use the SDK's built-in zod schemas. See [Actions](./actions.md) for the full SMTP configuration walkthrough.
