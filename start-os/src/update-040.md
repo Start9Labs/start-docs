@@ -105,7 +105,7 @@ Shut down the server through the StartOS UI.
 The migration process can take **hours**, depending on how much data you have. Be patient and do not power off or unplug your server.
 
 > [!TIP]
-> Expect progress to sit at **68%** for a long time — potentially hours. This is when your installed packages are being migrated to the 0.4.0 format, and the time scales with how many packages you have and how much data each one contains. The installer is not stuck.
+> Expect progress to sit at **85%** for a long time — potentially hours. This is when your installed packages are being migrated to the 0.4.0 format, and the time scales with how many packages you have and how much data each one contains. The installer is not stuck.
 
 ## Step 12: Reboot
 
